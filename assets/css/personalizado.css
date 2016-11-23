@@ -1,0 +1,8 @@
+.actividad_seleccionada{
+	border-collapse: collapse;
+	border-style:solid;
+	border-color:#158cba #158cba;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+}
