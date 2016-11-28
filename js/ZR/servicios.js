@@ -36,20 +36,31 @@ function enviar(){
 }
 
 function guardarServicio(){
-    var materiales=JSON.stringify(window.IngresoMaterial.data.materiales);
-    var mat=json_decode(materiales);
-    alert(mat.length);
 
-    /*var options={
-      type : 'post',
-      url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterial',
-      data: {
-        'materiales' : materiales
-      },
-    };
-    $.ajax(options).done(function(msg){
-      alert(msg);
-    });*/
-    alert(materiales)
+  var id=$('#idempleado').val();
+  var idrec=$('#idrecibe').val();
+  var idserv=$('#idservicio').val();
 
+  var materiales=JSON.stringify(window.IngresoMaterial.data.materiales);
+  alert();
+  /*for (var i in materiales) {
+  mat.push([i,materiales[i]]);
+  }
+  for (var i = 0; i < mat.length; i++) {
+  alert(mat[i]);
+  }*/
+  var options={
+    type : 'post',
+    url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterial',
+    data: {
+      'id' : id,
+      'idrec' : idrec,
+      'idserv' : idserv,
+      'materiales' : materiales
+    },
+  };
+  $.ajax(options).done(function(msg){
+    alert(msg);
+  });
+  //alert(materiales)
 }

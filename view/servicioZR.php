@@ -2,6 +2,7 @@
   require_once 'model/tipoesterilizacion.php';
   $ctr=new tipoesterilizacion();
   $ls=$ctr->listartipos();
+  $id=$_SESSION["idusuario"];
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
@@ -16,6 +17,7 @@
 </div>
 <div  class="page-content">
   <input type="hidden" name="propietario" id="propietario" value="s">
+  <input type="hidden" name="idrecibe" id="idrecibe" value=<?php echo $id ?>>
     <form class="form-horizontal" >
       <div class="control-group">
         <label class="control-label" for="form-field-1">Pesona que entrega: </label>

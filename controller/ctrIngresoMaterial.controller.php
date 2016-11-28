@@ -11,8 +11,11 @@
     }
 
     public function regIngresoMaterial(){
-      $mat=json_decode($_post['materiales']);
-      echo $mat;
+      $mat=json_decode($_POST['materiales']);
+      $id=$_POST['id'];
+      $idrec=$_POST['idrec'];
+      $idserv=$_POST['idserv'];
+      echo $idserv;
     }
   }
 

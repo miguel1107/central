@@ -8,7 +8,7 @@
 ?>
 
 <div class="navbar-inner">
-	<input type="hidden" name="idiusuario" value="<?php echo $id ?>">
+	<input type="hidden" name="idusuario" value="<?php echo $id ?>">
 	<div class="container-fluid">
 		<a href="inicio.php" class="brand">
 			<small>
