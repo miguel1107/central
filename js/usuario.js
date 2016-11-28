@@ -10,17 +10,29 @@ $().ready(function() {
 });
 
 $(document).on('click', '#config',function() {
+  var dni=$('#form-input-readonly').val();
   var pas=document.contra.pass.value;
   var pasn=document.contra.newpass.value;
-  var options={
-    type : 'post',
-    url : 'index.php?c=ctrUsuario&a=cambiaContra',
-    data : {
-      'pas': pas,
-      'npas':pasn
-    }
-  };
-  $.ajax(options);
+  if (pas===pasn) {
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrUsuario&a=cambiaContra',
+      data : {
+        'dni' : dni,
+        'pas': pas,
+        'npas':pasn
+      }
+    };
+    $.ajax(options).done(function(msg){
+      if(msg=='true'){
+        alert("Cambio de contraseña exitoso");
+        window.location="salir.php";
+      }
+    });
+  }else{
+    alert("Las contraseñas no coinciden");
+  }
+
 });
 
 

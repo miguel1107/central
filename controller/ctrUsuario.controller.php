@@ -44,12 +44,12 @@ class ctrUsuario {
   public function cambiaContra(){
     $pas=$_POST["pas"];
     $newpas=$_POST["npas"];
-    header('Location: inicio.php');
-    /*if($pas=$newpas){
-      header('Location: inicio.php');
-    }else{
-      header('Location: login.php');
-    }*/
+    $dni=$_POST['dni'];
+    $oUsuario= new Usuario();
+    $a=$oUsuario->cambiarContra($newpas,$dni);
+    if( $a==true){
+        echo "true";
+    }
   }
 
 

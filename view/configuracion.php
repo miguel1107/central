@@ -1,7 +1,7 @@
 <?php
 	require_once __DIR__.'/../model/usuario.php';
 	$usu=$_SESSION["usuario"];
-	$dni=$_SESSION["dniusu"];
+	$dni=$_SESSION["dniusuario"];
 	$oUsuario=new usuario();
 	$ls=$oUsuario->retornaUsuario($dni);
 	if(count($ls)){
@@ -37,7 +37,7 @@
       <div class="control-group">
         <label class="control-label" for="form-field-1">Dni: </label>
         <div class="controls">
-          <input  type="text"  id="form-input-readonly" name="dni" id="dni" value="<?php echo  $dni ?>">
+          <input  type="text"  id="form-input-readonly" name="dni" value="<?php echo  $dni ?>">
         </div>
       </div>
 
