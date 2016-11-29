@@ -36,18 +36,16 @@ function enviar(){
 }
 
 function guardarServicio(){
-
   var id=$('#idempleado').val();
   var idrec=$('#idrecibe').val();
   var idserv=$('#idservicio').val();
 
-  var materiales=JSON.stringify(window.IngresoMaterial.data.materiales);
-  alert();
-  /*for (var i in materiales) {
-  mat.push([i,materiales[i]]);
-  }
-  for (var i = 0; i < mat.length; i++) {
-  alert(mat[i]);
+  var materiales=(window.IngresoMaterial.data.materiales);
+  alert(materiales[0].id);
+  /*var mat=[][];
+  for (var i = 0; i < materiales.length; i++) {
+    mat[i][0]=materiales[i].tipo;
+    mat[i][1]=materiales[i].tipo;
   }*/
   var options={
     type : 'post',
@@ -60,7 +58,7 @@ function guardarServicio(){
     },
   };
   $.ajax(options).done(function(msg){
-    alert(msg);
+    //alert(msg);
   });
   //alert(materiales)
 }

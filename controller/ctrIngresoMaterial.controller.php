@@ -15,7 +15,7 @@
       $id=$_POST['id'];
       $idrec=$_POST['idrec'];
       $idserv=$_POST['idserv'];
-      echo $idserv;
+      echo $mat;
     }
   }
 
