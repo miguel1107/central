@@ -18,7 +18,7 @@
           <tr id="material_detalle" >
             <td class="tipo"></td>
             <td><input type="text" id="codigo" name="codigo[]" value="" onkeypress="return soloNumeros(event);" ><input type="hidden" id="id" name="id[]" value="" ></td>
-            <td><input type="text" id="nombre" name="nombre[]" value="" ></td>
+            <td><input type="text" id="nombre" name="nombre[]" ></td>
             <td><input type="text"id="cantidad" name="cantidad[]" onkeypress="return soloNumeros(event);"></td>
             <td>
               <select name="SelectTipo" id="form-field-select-1">

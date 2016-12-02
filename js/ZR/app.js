@@ -91,8 +91,11 @@ window.IngresoMaterial={
     });
 
     $fila.find("input[name='cantidad[]']").blur(function(){
+      self.data.materiales[index].cantidad = $(this).val();
       $('#cantidadPz').val(suma('cantidad'));
     });
+
+
   },
 
   render : function(){
@@ -146,6 +149,7 @@ window.IngresoMaterial={
       self.render();
     }
   },
+
 
 
 };

@@ -25,7 +25,6 @@ function soloNumeros(evt) {
   }
 }
 
-
 function enviar(){
   var elem={
     tipo:$('#nombreKit').val(),
@@ -41,12 +40,17 @@ function guardarServicio(){
   var idserv=$('#idservicio').val();
 
   var materiales=(window.IngresoMaterial.data.materiales);
-  alert(materiales[0].id);
-  /*var mat=[][];
+  alert(materiales.length);
+  var mat=[];
   for (var i = 0; i < materiales.length; i++) {
-    mat[i][0]=materiales[i].tipo;
-    mat[i][1]=materiales[i].tipo;
-  }*/
+    var m=[];
+    m[0]=materiales[i].tipo;
+    m[1]=materiales[i].id;
+    m[2]=materiales[i].material;
+    m[3]=materiales[i].cantidad;
+    m[4]=materiales[i].combo;
+    mat.push(m);
+  }
   var options={
     type : 'post',
     url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterial',
@@ -54,11 +58,20 @@ function guardarServicio(){
       'id' : id,
       'idrec' : idrec,
       'idserv' : idserv,
-      'materiales' : materiales
+      'materiales' : mat
     },
   };
-  $.ajax(options).done(function(msg){
-    //alert(msg);
+  $.ajax(options)
+  .done(function(data) {
+    //Cuando todo es correcto
+    alert('Guardado correctamente');
+    console.log(data);
+  })
+  .fail(function(xhr) {
+    alert('Hubo un error al guardar :(');
+    console.log(xhr.responseText);
+  })
+  .always(function() {
+    //Se ejecuta en ambos casos después de la respuesta
   });
-  //alert(materiales)
 }
