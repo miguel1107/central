@@ -45,9 +45,9 @@
     </form>
     <?php require_once("view/html/ZR/tablaMat.php") ?>
     <div class="control-group">
-      <label class="control-label" for="form-field-1">Total Piezas: </label>
+      <label class="control-label" for="form-field-1" >Total Piezas: </label>
       <div class="controls">
-        <input type="text" id="cantidadPz">
+        <input type="text" id="cantidadPz" disabled="true">
       </div>
     </div>
     <div class="form-actions">

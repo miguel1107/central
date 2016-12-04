@@ -1,6 +1,7 @@
 
 <?php
   require_once __DIR__.'/../model/ingresoMaterial.php';
+  require_once __DIR__.'/../model/detalleIngMaterial.php';
 
   /**
    *
@@ -10,15 +11,22 @@
     function __construct(){
     }
 
-    public function regIngresoMaterial(){
+    public function regIngresoMaterialServicio(){
       $mat=($_POST['materiales']);
       $id=$_POST['id'];
       $idrec=$_POST['idrec'];
       $idserv=$_POST['idserv'];
-      for ($i=0; $i <$mat.length ; $i++) {
-        echo $mat[i][0]+"--"+$mat[i][1];
+      $totalPi=$_POST['total'];
+      $m=new ingresoMaterial();
+      $im=new detalleIngMaterial();
+      $rs=$m->registrarServicio($id,$idrec,$totalPi,$idserv);
+      if($rs== true){
+        $idRec=$m->retornaId();
+        $rs2=$im->regIngresoDetalleMat($mat,$idRec);
+        echo $rs2;
       }
     }
+
   }
 
  ?>

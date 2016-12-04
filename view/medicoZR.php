@@ -32,7 +32,7 @@
     </form>
     <?php require_once("view/html/ZR/tablaMat.php") ?>
     <div class="form-actions">
-      <button id="material" name="material" class="btn btn-info" type="button" >
+      <button id="material" name="material" class="btn btn-info" type="button" onclick="guardarServicio()" >
             <i class="icon-ok bigger-110"></i>Ingresar
       </button>
     </div>

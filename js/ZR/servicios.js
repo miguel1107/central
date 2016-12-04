@@ -38,9 +38,8 @@ function guardarServicio(){
   var id=$('#idempleado').val();
   var idrec=$('#idrecibe').val();
   var idserv=$('#idservicio').val();
-
+  var total=$('#cantidadPz').val();
   var materiales=(window.IngresoMaterial.data.materiales);
-  alert(materiales.length);
   var mat=[];
   for (var i = 0; i < materiales.length; i++) {
     var m=[];
@@ -53,18 +52,63 @@ function guardarServicio(){
   }
   var options={
     type : 'post',
-    url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterial',
+    url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialServicio',
     data: {
       'id' : id,
       'idrec' : idrec,
       'idserv' : idserv,
+      'total' : total,
       'materiales' : mat
     },
   };
   $.ajax(options)
   .done(function(data) {
     //Cuando todo es correcto
-    alert('Guardado correctamente');
+    alert(data);
+    console.log(data);
+  })
+  .fail(function(xhr) {
+    alert('Hubo un error al guardar :(');
+    console.log(xhr.responseText);
+  })
+  .always(function() {
+    //Se ejecuta en ambos casos después de la respuesta
+  });
+}
+
+function guardarTerceros(){
+  var id=$('#idempleado').val();
+  var idrec=$('#idrecibe').val();
+  var idserv=$('#idservicio').val();
+  var total=$('#cantidadPz').val();
+
+  var materiales=(window.IngresoMaterial.data.materiales);
+  //alert(total);
+  var mat=[];
+  for (var i = 0; i < materiales.length; i++) {
+    var m=[];
+    m[0]=materiales[i].tipo;
+    m[1]=materiales[i].id;
+    m[2]=materiales[i].material;
+    m[3]=materiales[i].cantidad;
+    m[4]=materiales[i].combo;
+    mat.push(m);
+  }
+  var options={
+    type : 'post',
+    url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialServicio',
+    data: {
+      'id' : id,
+      'idrec' : idrec,
+      'idserv' : idserv,
+      'total' : total,
+      'materiales' : mat
+    },
+  };
+  $.ajax(options)
+  .done(function(data) {
+    //Cuando todo es correcto
+    alert(data);
     console.log(data);
   })
   .fail(function(xhr) {
