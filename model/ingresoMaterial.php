@@ -47,6 +47,12 @@ class ingresoMaterial{
 		return $rs;
   }
 
+  public function listaRecepcionesDisponibles(){
+    $stmt = $this->objPDO->prepare("SELECT id_ingreso,tipo_propietario FROM sisesterilizacion.ingreso_material order by fecha_ingreso");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
 
   public function fecha(){
     $conexion=new cado();

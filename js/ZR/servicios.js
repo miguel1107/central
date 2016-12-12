@@ -2,6 +2,8 @@ $(document).on('click', '#kit', function(){
   $("#nuevo_kit").modal('show');
 });
 
+
+
 function suma(a){
   var suma = 0;
   $("input[name='"+a+"[]']").each(function(i){
@@ -65,6 +67,7 @@ function guardarServicio(){
   .done(function(data) {
     //Cuando todo es correcto
     alert("Guadado correctamente");
+    window.location="inicio.php";
     //console.log(data);
   })
   .fail(function(xhr) {
@@ -107,6 +110,7 @@ function guardarMedicos(){
   .done(function(data) {
     //Cuando todo es correcto
     alert("Guardado Correctamente");
+    window.location="inicio.php";
     //console.log(data);
   })
   .fail(function(xhr) {
@@ -150,6 +154,7 @@ function guardarTerceros(){
   .done(function(data) {
     //Cuando todo es correcto
     alert("Guardado Correctamente");
+    window.location="inicio.php";
     //console.log(data);
   })
   .fail(function(xhr) {
@@ -193,6 +198,7 @@ function guardarCasaComercial() {
   .done(function(data) {
     //Cuando todo es correcto
     alert("Guardado Correctamente");
+    window.location="inicio.php";
     //console.log(data);
   })
   .fail(function(xhr) {

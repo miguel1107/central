@@ -9,4 +9,5 @@
   <button id="kit" class="btn btn-info" type="button">
         <i class="icon-ok bigger-110"></i>Agregar Kit
   </button>
+
 </div>
