@@ -13,7 +13,7 @@
     <div class="control-group">
       <label class="control-label" for="form-field-1"> Numero de materiales: </label>
       <div class="controls">
-        <input type="text" id="cantidad" name="cantidad" placeholder="cantidad">
+        <input type="text" id="cantidadKit" name="cantidad" placeholder="cantidad">
       </div>
     </div>
     <div class="form-actions">

@@ -66,7 +66,6 @@
       $idrec=$_POST['idrec'];
       $totalPi=$_POST['total'];
       $m=new ingresoMaterial();
-      $m=new ingresoMaterial();
       $im=new detalleIngMaterial();
       $rs=$m->registrarCasaComercial($idrec,$totalPi,$res,$cen);
       if($rs== true){

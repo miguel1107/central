@@ -80,18 +80,49 @@
   </div>
 </div>
 
-
-
 <div id="modal-table" class="modal hide fade" tabindex="-1">
-  <div style="position:relative">
-    <button type="button" class="close" data-dismiss="modal" style="position:absolute; top: 10px; right: 10px">&times;</button>
-    <iframe id="iframemodal" style="width: 100%; height: 400px;"></iframe>
-  </div>
+    <div class="modal-header no-padding">
+      <div class="table-header">
+        Detalle ingreso
+      </div>
+    </div>
+    <div class="modal-body no-padding">
+      <input type="hidden" id="idc" value="">
+      <div class="row-fluid">
+        <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+          <thead>
+            <tr>
+              <th>estado</th>
+              <th>tipo</th>
+              <th>Descripcion</th>
+              <th>Cantidad</th>
+            </tr>
+          </thead>
+          <tbody id="detalleIngMaterial">
+            <script type="text/template" id="tmpl-detalle">
+              <tr>
+                <th class="check"><input name="form-field-checkbox" type="checkbox" style="opacity:1;"></th>
+                <th class="tipo"></th>
+                <th class="descripcion"></th>
+                <th class="cantidad"></th>
+              </tr>
+            </script>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="ultrazonica.restart();return false">
+        <i class="icon-remove"></i>
+        Close
+      </button>
+    </div>
 </div>
-
-
-
-
-<script src="js/ZR/ultrazonica.js">
-
+<script src="assets/js/jquery-2.0.3.min.js"></script>
+<script src="js/ZR/ultrazonica.js"></script>
+<script src="js/ZR/appUltra.js"></script>
+<script>
+  $(document).ready(function(){
+    window.ultrazonica.init();
+  });
 </script>

@@ -146,10 +146,7 @@ window.IngresoMaterial={
         cantidad : 0
       };
       self.data.materiales.push(m);
-      self.render();
     }
+    self.render();
   },
-
-
-
 };

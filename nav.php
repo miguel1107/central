@@ -90,7 +90,7 @@ $zona=$_SESSION["zona"];
 				 </li>
 
 				 <li>
-					 <a href='?menu=cargaultrazonica'>
+					 <a href='?menu=cargaultrazonica2'>
 						 <span class='menu-text'> Carga Ultrazonica </span>
 					 </a>
 				</li>

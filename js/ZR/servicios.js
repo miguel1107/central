@@ -2,8 +2,6 @@ $(document).on('click', '#kit', function(){
   $("#nuevo_kit").modal('show');
 });
 
-
-
 function suma(a){
   var suma = 0;
   $("input[name='"+a+"[]']").each(function(i){
@@ -29,9 +27,11 @@ function soloNumeros(evt) {
 
 function enviar(){
   var elem={
-    tipo:$('#nombreKit').val(),
-    cantidad:$('#cantidad').val()
+    tipo: $('#nombreKit').val(),
+    cantidad: parseInt($('#cantidadKit').val())
   };
+
+  console.log(elem);
   window.IngresoMaterial.addKit(elem);
   $("#nuevo_kit").modal('hide');
 }
@@ -67,8 +67,8 @@ function guardarServicio(){
   .done(function(data) {
     //Cuando todo es correcto
     alert("Guadado correctamente");
-    window.location="inicio.php";
-    //console.log(data);
+    //window.location="inicio.php";
+    console.log(data);
   })
   .fail(function(xhr) {
     alert('Hubo un error al guardar :(');

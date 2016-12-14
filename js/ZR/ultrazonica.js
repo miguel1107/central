@@ -1,5 +1,21 @@
-function ver(id){
-  alert(id);
+/*function ver(id){
+  var $ifr = $('#iframemodal');
+  $('#iframemodal').attr('src', '/central/view/html/ZR/tabla.php?id='+id);
+
   $("#modal-table").modal('show');
-  $("#idc").val(id);
+  /*$ifr.ready(function(){
+    var $boton = $ifr.contents().find('#cerrariframe');
+    $boton.click(function(){
+      console.log('hizo click');
+    });
+  });*/
+
+
+function ver(id){
+  $("#modal-table").modal('show');
+  window.ultrazonica.llenatabla(id);
+}
+
+function cerrar(){
+  $("#modal-table").modal('hide');
 }
