@@ -159,7 +159,7 @@
     </div>
 
     <div class="form-actions">
-      <input type="submit" class="btn btn-info" value="Guardar" id="btn-save">
+      <input type="submit" class="btn btn-info" value="Guardar" id="btn-save" onclick="if(this.checked == true){alert('estoy seleccionado!')} else{alert('estoy des-seleccionado!')}">
       <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
     </div>
 	</form>

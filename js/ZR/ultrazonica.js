@@ -16,6 +16,7 @@ function ver(id){
   window.ultrazonica.llenatabla(id);
 }
 
-function cerrar(){
+function enviarr(){
+  window.ultrazonica.llenaCarga();
   $("#modal-table").modal('hide');
 }

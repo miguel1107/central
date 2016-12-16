@@ -45,7 +45,7 @@ class detalleIngMaterial {
   }
 
   public function retornaDetalle($id){
-    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$id."' and ultrazonica='FALSE';");
+    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$id."' and ultrazonica='FALSE';");
     $stmt->execute();
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;

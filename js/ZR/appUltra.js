@@ -4,10 +4,15 @@ window.ultrazonica={
     if(!self.tmpl){
       self.tmpl = $("#tmpl-detalle").text();
     }
+    if(!self.tmpl2){
+      self.tmpl2 = $("#tmpl-carga").text();
+    }
     self.data={
       materiales :[]
     };
+
     self.render();
+    self.llenaCarga();
   },
 
   llenatabla: function (id) {
@@ -30,7 +35,8 @@ window.ultrazonica={
       }
       for (var i = 0; i < arr.length; i++) {
         var m={
-          estado :'false',
+          idDetalle : arr[i].id_detalle,
+          estado :'FALSE',
           tipo : arr[i].tipo_ingreso,
           descripcion : arr[i].descripcion,
           cantidad : arr[i].cantidad_material
@@ -62,12 +68,45 @@ window.ultrazonica={
     $m.find('.tipo').text(self.data.materiales[index].tipo);
     $m.find('.descripcion').text(self.data.materiales[index].descripcion);
     $m.find('.cantidad').text(self.data.materiales[index].cantidad);
+    self.addEvents(index,$m);
     return $m;
+  },
+
+  renderCarga: function (index, elemento) {
+    var self=this;
+    var $m=$(self.tmpl2);
+      $m.find('.idCarga').text(self.data.materiales[index].idDetalle);
+      //$m.find('.tipoCarga').text(self.data.materiales[index].tipo);
+      $m.find('.descripcionCarga').text(self.data.materiales[index].descripcion);
+      $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
+      return $m;
+  },
+
+  addEvents: function(index,$fila){
+    var self=this;
+    $fila.find("#estado").change(function (ev) {
+      if( $(this).prop('checked') ) {
+        self.data.materiales[index].estado='TRUE';
+      }else{
+        self.data.materiales[index].estado='FALSE';
+      }
+    });
+  },
+
+  llenaCarga: function () {
+    var self = this;
+    $('#carUltrazonica').empty();
+    self.data.materiales.forEach(function(el, i){
+      if(self.data.materiales[i].estado=='TRUE'){
+          self.renderCarga(i, el).appendTo('#carUltrazonica');
+      }
+    });
   },
 
   restart : function(){
 		var self = this;
     self.init();
   }
+
 
 };
