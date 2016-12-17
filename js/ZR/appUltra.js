@@ -76,7 +76,7 @@ window.ultrazonica={
     var self=this;
     var $m=$(self.tmpl2);
       $m.find('.idCarga').text(self.data.materiales[index].idDetalle);
-      //$m.find('.tipoCarga').text(self.data.materiales[index].tipo);
+      $m.find('.tipoCarga').text(self.data.materiales[index].tipo);
       $m.find('.descripcionCarga').text(self.data.materiales[index].descripcion);
       $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
       return $m;
@@ -101,6 +101,7 @@ window.ultrazonica={
           self.renderCarga(i, el).appendTo('#carUltrazonica');
       }
     });
+    enviar();
   },
 
   restart : function(){

@@ -176,7 +176,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-small pull-left" onclick="ultrazonica.llenaCarga();return false">
+      <button class="btn btn-small pull-left" id="enviar" type="button" onclick="llenaCargaUl()">
         <i class="icon-ok bigger-110"></i>
         Guardar
       </button>
