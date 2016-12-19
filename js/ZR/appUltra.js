@@ -101,13 +101,9 @@ window.ultrazonica={
           self.renderCarga(i, el).appendTo('#carUltrazonica');
       }
     });
-    enviar();
   },
 
   restart : function(){
 		var self = this;
     self.init();
   }
-
-
-};
