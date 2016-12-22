@@ -8,6 +8,8 @@ window.ultrazonica={
       self.tmpl2 = $("#tmpl-carga").text();
     }
     self.data={
+      iding :0,
+      servicio:'false',
       materiales :[]
     };
 
@@ -17,6 +19,23 @@ window.ultrazonica={
 
   llenatabla: function (id) {
     var self=this;
+    var c=0; //0->llena denuevo 1->esta lleno y id iguales 2->esta lleno id dif
+    if (self.data.iding == 0) {
+      self.data.iding=id;
+    }else{
+      if(self.data.servicio =='false'){
+        console.log('servicio-vacio');
+        self.data.iding=id;
+      }else{
+        console.log('servicio-lleno');
+        if(self.data.iding==id){
+          c=1;
+        }else{
+          c=2;
+          alert('SERIVICO EN USO');
+        }
+      }
+    }
     var options={
       type : 'post',
       url : 'index.php?c=ctrDetalleIngresoMaterial&a=retornaDetalleRecion',
@@ -24,34 +43,40 @@ window.ultrazonica={
         'id' : id
       },
     };
-
-    $.ajax(options)
-    .done(function(data) {
-      var json=data;
-      var parsed = JSON.parse(json);
-      var arr = [];
-      for(var x in parsed){
-        arr.push(parsed[x]);
-      }
-      for (var i = 0; i < arr.length; i++) {
-        var m={
-          idDetalle : arr[i].id_detalle,
-          estado :'FALSE',
-          tipo : arr[i].tipo_ingreso,
-          descripcion : arr[i].descripcion,
-          cantidad : arr[i].cantidad_material
-        };
-        self.data.materiales.push(m);
-      }
+    if(c==1){
       self.render();
-    })
-    .fail(function(xhr) {
-      alert('Hubo un error al guardar :(');
-      console.log(xhr.responseText);
-    })
-    .always(function() {
-      //Se ejecuta en ambos casos después de la respuesta
-    });
+    }
+    if(c==0){
+      console.log('llena denuevo');
+      $.ajax(options)
+      .done(function(data) {
+        var json=data;
+        var parsed = JSON.parse(json);
+        var arr = [];
+        for(var x in parsed){
+          arr.push(parsed[x]);
+        }
+        for (var i = 0; i < arr.length; i++) {
+          var m={
+            idDetalle : arr[i].id_detalle,
+            estado :'FALSE',
+            tipo : arr[i].tipo_ingreso,
+            descripcion : arr[i].descripcion,
+            cantidad : arr[i].cantidad_material
+          };
+          self.data.materiales.push(m);
+        }
+        self.data.servicio='true';
+        self.render();
+      })
+      .fail(function(xhr) {
+        alert('Hubo un error al guardar :(');
+        console.log(xhr.responseText);
+      })
+      .always(function() {
+        //Se ejecuta en ambos casos después de la respuesta
+      });
+    }
   },
 
   render: function(){
@@ -65,6 +90,11 @@ window.ultrazonica={
   renderDetalle: function (index,elemento) {
     var self=this;
     var $m=$(self.tmpl);
+    if(self.data.materiales[index].estado=='FALSE'){
+      $m.find('#estado').prop("checked", false);
+    }else{
+      $m.find('#estado').prop("checked",true);
+    }
     $m.find('.tipo').text(self.data.materiales[index].tipo);
     $m.find('.descripcion').text(self.data.materiales[index].descripcion);
     $m.find('.cantidad').text(self.data.materiales[index].cantidad);
@@ -106,4 +136,6 @@ window.ultrazonica={
   restart : function(){
 		var self = this;
     self.init();
-  }
+  },
+
+};

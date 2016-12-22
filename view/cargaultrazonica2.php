@@ -184,7 +184,7 @@
         <i class="icon-ok bigger-110"></i>
         Guardar
       </button>
-      <button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="ultrazonica.restart();return false">
+      <button class="btn btn-small btn-danger pull-left" data-dismiss="modal" >
         <i class="icon-remove"></i>
         Close
       </button>

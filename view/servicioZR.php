@@ -19,35 +19,33 @@
   <input type="hidden" name="propietario" id="propietario" value="s">
   <input type="hidden" name="idrecibe" id="idrecibe" value=<?php echo $id ?>>
   <form class="form-horizontal" >
-      <div class="control-group">
-        <label class="control-label" for="form-field-1">Pesona que entrega: </label>
-        <div class="controls">
-          <input type="text" id="empleado" placeholder="Empleado">
-        </div>
+    <div class="control-group">
+      <label class="control-label" for="form-field-1">Pesona que entrega: </label>
+      <div class="controls">
+        <input type="text" id="empleado" placeholder="Empleado">
       </div>
-
-      <div class="control-group">
-        <label class="control-label" for="form-field-1">Dni: </label>
-        <div class="controls">
-          <input readonly="" type="text" id="form-input-readonly" value="Dni">
-          <input readonly="" type="hidden" id="idempleado">
-        </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="form-field-1">Dni: </label>
+      <div class="controls">
+        <input readonly="" type="text" id="form-input-readonly" value="Dni">
+        <input readonly="" type="hidden" id="idempleado">
       </div>
-
-      <div class="control-group">
-        <label class="control-label" for="form-field-1">Servicio: </label>
-        <div class="controls">
-          <input type="text" id="servicio" placeholder="servicio">
-          <input readonly="" type="hidden" id="idservicio" name="idservicio">
-        </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="form-field-1">Servicio: </label>
+      <div class="controls">
+        <input type="text" id="servicio" placeholder="servicio">
+        <input readonly="" type="hidden" id="idservicio" name="idservicio">
       </div>
-      <?php require_once("view/html/ZR/buttonsZR.php"); ?>
-    </form>
+    </div>
+    <?php require_once("view/html/ZR/buttonsZR.php"); ?>
+  </form>
     <?php require_once("view/html/ZR/tablaMat.php") ?>
     <div class="control-group">
       <label class="control-label" for="form-field-1" >Total Piezas: </label>
       <div class="controls">
-        <input type="text" id="cantidadPz" disabled="true">
+        <input type="text" id="cantidadPz" disabled="true" value='0'>
       </div>
     </div>
     <div class="form-actions">

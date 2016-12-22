@@ -17,7 +17,11 @@ class ingresoMaterial{
     $fecha=$this->fecha();
 		$sql="INSERT INTO sisesterilizacion.ingreso_material(id_ingresa,id_recibe,total_piezas,estado,tipo_propietario,ubicacion,fecha_ingreso,id_servicio) VALUES ('$idIngresa','$idRecibe','$total','P','S','REC','$fecha','$idServicio');";
 		$rs=pg_query($sql) or die(false);
-		return $rs;
+    if ($rs==true) {
+      return "true";
+    }else{
+      return "false";
+    }
   }
 
   public function registrarMedico($idIngresa,$idRecibe,$total){
@@ -35,7 +39,7 @@ class ingresoMaterial{
     $fecha=$this->fecha();
 		$sql="INSERT INTO sisesterilizacion.ingreso_material(id_recibe,total_piezas,estado,tipo_propietario,centro_procedencia,responsable,ubicacion,fecha_ingreso) VALUES ('$idRecibe','$total','P','T','$cen','$res','REC','$fecha');";
 		$rs=pg_query($sql) or die(false);
-		return $rs;
+	  return $rs;
   }
 
   public function registrarCasaComercial($idRecibe,$total,$res,$cen){
@@ -44,7 +48,7 @@ class ingresoMaterial{
     $fecha=$this->fecha();
 		$sql="INSERT INTO sisesterilizacion.ingreso_material(id_recibe,total_piezas,estado,tipo_propietario,responsable,centro_medico,ubicacion,fecha_ingreso) VALUES ('$idRecibe','$total','P','C','$res','$cen','REC','$fecha');";
 		$rs=pg_query($sql) or die(false);
-		return $rs;
+	  return $rs;
   }
 
   public function listaRecepcionesDisponibles(){

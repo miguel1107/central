@@ -17,7 +17,7 @@ class detalleIngMaterial {
     $conexion=new cado();
 		$conexion->conectar();
     $l=count($mat);
-    $sql="INSERT INTO sisesterilizacion.detalle_ingmaterial(id_ingreso_material, tipo_ingreso, id_mat, cantidad_material, codigo_est, ubicacion, procesozr, procesoza,id_set,descripcion,ultrazonica,lv_mecanico,lv_manual,sec_mecanico,sec_manual) VALUES ";
+    $sql="INSERT INTO sisesterilizacion.detalle_ingmaterial(id_ingreso_material, tipo_ingreso, id_mat, cantidad_material, codigo_est, ubicacion, procesozr, procesoza,id_set,id_kit,descripcion,ultrazonica,lv_mecanico,lv_manual,sec_mecanico,sec_manual) VALUES ";
     for ($i=0; $i <$l ; $i++) {
       $tipo=$mat[$i][0];
       $idMatSet=$mat[$i][1];
@@ -26,22 +26,29 @@ class detalleIngMaterial {
       $tipoEste=$mat[$i][4];
       if ($i==0) {
         if($tipo=='Set'){
-          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+        }elseif($tipo=='Mat'){
+          $stringInser="('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
         }else{
-          $stringInser="('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
         }
-
       }else{
         if($tipo=='Set'){
-          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+        }elseif($tipo=='Mat'){
+          $stringInser=",('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
         }else{
-          $stringInser=",('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
         }
       }
       $sql=$sql.$stringInser;
     }
-    $rs=pg_query($sql) or die(alse);
-		return $rs;
+    $rs=pg_query($sql) or die(false);
+    if($rs=true){
+      return "true";
+    }else{
+      return "false";
+    }
   }
 
   public function retornaDetalle($id){

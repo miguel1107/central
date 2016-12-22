@@ -12,6 +12,7 @@
     }
 
     public function regIngresoMaterialServicio(){
+      $rpta = array();
       $mat=($_POST['materiales']);
       $id=$_POST['id'];
       $idrec=$_POST['idrec'];
@@ -20,11 +21,18 @@
       $m=new ingresoMaterial();
       $im=new detalleIngMaterial();
       $rs=$m->registrarServicio($id,$idrec,$totalPi,$idserv);
-      if($rs== true){
+      if($rs=="true"){
         $idRec=$m->retornaId();
         $rs2=$im->regIngresoDetalleMat($mat,$idRec);
-        echo $rs2;
+        if($rs2="true"){
+          $rpta[0]="true";
+        }else {
+          $rpta[0]="false";
+        }
+      }else{
+        $rpta[0]="false";
       }
+      echo json_encode($rpta);
     }
 
     public function regIngresoMaterialMedico(){
@@ -39,6 +47,8 @@
         $idRec=$m->retornaId();
         $rs2=$im->regIngresoDetalleMat($mat,$idRec);
         echo $rs2;
+      }else{
+        echo $rs;
       }
     }
 
@@ -56,6 +66,8 @@
         $idRec=$m->retornaId();
         $rs2=$im->regIngresoDetalleMat($mat,$idRec);
         echo $rs2;
+      }else{
+        echo $rs;
       }
     }
 
@@ -72,6 +84,8 @@
         $idRec=$m->retornaId();
         $rs2=$im->regIngresoDetalleMat($mat,$idRec);
         echo $rs2;
+      }else{
+        echo $rs;
       }
     }
 

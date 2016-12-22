@@ -17,35 +17,35 @@
 </div>
 
 <div  class="page-content">
-  <input type="hidden" name="idrecibe" id="idrecibe" value=<?php echo $id ?>>
-    <form class="form-horizontal" >
-      <div class="control-group">
-        <label class="control-label" for="form-field-1">Responsable: </label>
-        <div class="controls">
-          <input type="text" id="responsable" placeholder="Responsable">
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="form-field-1">Centro medico: </label>
-        <div class="controls">
-          <input type="text" id="centro" placeholder="Centro">
-        </div>
-      </div>
-      <?php require_once("view/html/ZR/buttonsZR.php"); ?>
-    </form>
-    <?php require_once("view/html/ZR/tablaMat.php") ?>
+  <input type="hidden" name="idrecibe" id="idrecibe" value="<?php echo $id; ?>">
+  <form class="form-horizontal" >
     <div class="control-group">
-      <label class="control-label" for="form-field-1" >Total Piezas: </label>
+      <label class="control-label" for="form-field-1">Responsable: </label>
       <div class="controls">
-        <input type="text" id="cantidadPz" disabled="true">
+        <input type="text" id="responsable" placeholder="Responsable">
       </div>
     </div>
-    <div class="form-actions">
+    <div class="control-group">
+      <label class="control-label" for="form-field-1">Centro medico: </label>
+      <div class="controls">
+        <input type="text" id="centro" placeholder="Centro">
+      </div>
+    </div>
+    <?php require_once("view/html/ZR/buttonsZR.php"); ?>
+  </form>
+  <?php require_once("view/html/ZR/tablaMat.php") ?>
+  <div class="control-group">
+    <label class="control-label" for="form-field-1" >Total Piezas: </label>
+    <div class="controls">
+      <input type="text" id="cantidadPz" disabled="true">
+    </div>
+  </div>
+  <div class="form-actions">
       <button id="material" name="material" class="btn btn-info" type="button" onclick="guardarCasaComercial()">
             <i class="icon-ok bigger-110"></i>Ingresar
       </button>
     </div>
-  </div>
+</div>
   <?php require_once ("view/html/ZR/modingresomatZR.php") ?>
 <script src="assets/js/jquery-2.0.3.min.js"></script>
 

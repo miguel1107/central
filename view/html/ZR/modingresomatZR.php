@@ -1,7 +1,7 @@
 <div id="nuevo_kit" class="modal fade" role="dialog">
   <form class="form-horizontal" onsubmit="return false;">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()">&times;</button>
       <h4 class="modal-title">Agregar Kit</h4>
     </div><br>
     <div class="control-group">
@@ -11,14 +11,51 @@
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label" for="form-field-1"> Numero de materiales: </label>
       <div class="controls">
-        <input type="text" id="cantidadKit" name="cantidad" placeholder="cantidad">
+        <button class="btn btn-info" type="button" onclick="agregaMat()">
+              <i class="icon-ok bigger-110"></i>Agregar Material
+        </button>
+      </div>
+    </div>
+    <div class="modal-body no-padding">
+      <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" style="height=300px;">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Codigo Material</th>
+            <th>Material</th>
+            <th>Cantidad</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody id="app-materialesKit">
+          <script type="text/template" id="tmpl-materialKit">
+            <tr id="material_detalle" >
+              <td class="tipoKit"></td>
+              <td><input type="text" id="codigoKit" name="codigoKit[]" value="" onkeypress="return soloNumeros(event);" ><input type="hidden" id="idKit" name="id[]" value="" ></td>
+              <td><input type="text" id="nombreKit" name="nombreKit[]" ></td>
+              <td><input type="text"id="cantidadKit" name="cantidadKit[]" onkeypress="return soloNumeros(event);"></td>
+              <td class="td-actions">
+                <div class="action-buttons">
+                  <a class="red" id="eliminarKit">
+                    <i class="icon-trash bigger-130"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </script>
+        </tbody>
+      </table>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="form-field-1"> Total de Piezas: </label>
+      <div class="controls">
+        <input type="text" id="cantidadPzKit" disabled="true">
       </div>
     </div>
     <div class="form-actions">
-      <input type="submit" class="btn btn-info" value="Guardar" id="btn-save" onclick="enviar()" />
-      <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+      <input type="submit" class="btn btn-info" value="Guardar" id="btn-save" onclick="guardarKit()"/>
+      <button type="button" class="btn btn-info" data-dismiss="modal" onclick="cerrarModal()">Cancelar</button>
     </div>
   </form>
 </div>

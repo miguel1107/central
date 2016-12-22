@@ -16,34 +16,35 @@
     </ul><!--.breadcrumb-->
 </div>
 <div  class="page-content">
-  <input type="hidden" name="idrecibe" id="idrecibe" value=<?php echo $id ?>>
+  <input type="hidden" name="idrecibe" id="idrecibe" value="<?php echo $id; ?>">
   <input type="hidden" name="propietario" id="propietario" value="m">
-    <form class="form-horizontal" >
-      <div class="control-group">
-        <label class="control-label" for="form-field-1">Pesona que entrega: </label>
-        <div class="controls">
-          <input type="text" id="empleado" placeholder="Empleado">
-        </div>
-        <div class="controls">
-          <input readonly="" type="text" id="form-input-readonly" value="Dni">
-          <input readonly="" type="hidden" id="idempleado">
-        </div>
-      </div>
-      <?php require_once("view/html/ZR/buttonsZR.php"); ?>
-    </form>
-    <?php require_once("view/html/ZR/tablaMat.php") ?>
+  <form class="form-horizontal" >
     <div class="control-group">
-      <label class="control-label" for="form-field-1" >Total Piezas: </label>
+      <label class="control-label" for="form-field-1">Pesona que entrega: </label>
       <div class="controls">
-        <input type="text" id="cantidadPz" disabled="true">
+        <input type="text" id="empleado" placeholder="Empleado">
+      </div>
+      <div class="controls">
+        <input readonly="" type="text" id="form-input-readonly" value="Dni">
+        <input readonly="" type="hidden" id="idempleado">
       </div>
     </div>
-    <div class="form-actions">
-      <button id="material" name="material" class="btn btn-info" type="button" onclick="guardarMedicos()" >
-            <i class="icon-ok bigger-110"></i>Ingresar
-      </button>
+    <?php require_once("view/html/ZR/buttonsZR.php"); ?>
+  </form>
+  <?php require_once("view/html/ZR/tablaMat.php") ?>
+  <div class="control-group">
+    <label class="control-label" for="form-field-1" >Total Piezas: </label>
+    <div class="controls">
+      <input type="text" id="cantidadPz" disabled="true">
     </div>
+  </div>
+  <div class="form-actions">
+    <button id="material" name="material" class="btn btn-info" type="button" onclick="guardarMedicos()" >
+      <i class="icon-ok bigger-110"></i>Ingresar
+    </button>
+  </div>
 </div>
+
 <?php require_once ("view/html/ZR/modingresomatZR.php") ?>
 
 <script src="assets/js/jquery-2.0.3.min.js"></script>

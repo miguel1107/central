@@ -17,7 +17,7 @@
 </div>
 
 <div  class="page-content">
-  <input type="hidden" name="idrecibe" id="idrecibe" value=<?php echo $id ?>>
+  <input type="hidden" name="idrecibe" id="idrecibe" value="<?php echo $id; ?>">
   <input type="hidden" name="propietario" id="propietario" value="t">
     <form class="form-horizontal" >
       <div class="control-group">

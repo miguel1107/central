@@ -1,8 +1,21 @@
-$(document).on('click', '#kit', function(){
+function abreModal() {
   $("#nuevo_kit").modal('show');
-});
+}
 
 function suma(a){
+  var suma = 0;
+  $("input[name='"+a+"[]']").each(function(i){
+    if(isNaN(parseInt($(this).val()))){
+      var a = 0;
+    }else{
+      var  a = parseFloat($(this).val());
+    }
+    suma += a;
+  });
+  return suma;
+}
+
+function sumaKit(a){
   var suma = 0;
   $("input[name='"+a+"[]']").each(function(i){
     if(isNaN(parseInt($(this).val()))){
@@ -23,17 +36,6 @@ function soloNumeros(evt) {
   }else{
     return true;
   }
-}
-
-function enviar(){
-  var elem={
-    tipo: $('#nombreKit').val(),
-    cantidad: parseInt($('#cantidadKit').val())
-  };
-
-  console.log(elem);
-  window.IngresoMaterial.addKit(elem);
-  $("#nuevo_kit").modal('hide');
 }
 
 function guardarServicio(){
@@ -65,9 +67,9 @@ function guardarServicio(){
   };
   $.ajax(options)
   .done(function(data) {
-    //Cuando todo es correcto
-    alert("Guadado correctamente");
-    //window.location="inicio.php";
+    //Cuando todo es correcto falta corregir
+    alert("Registro Correcto")
+    window.location="inicio.php";
     console.log(data);
   })
   .fail(function(xhr) {
@@ -110,7 +112,7 @@ function guardarMedicos(){
   .done(function(data) {
     //Cuando todo es correcto
     alert("Guardado Correctamente");
-    window.location="inicio.php";
+    //window.location="inicio.php";
     //console.log(data);
   })
   .fail(function(xhr) {
@@ -209,4 +211,58 @@ function guardarCasaComercial() {
     //Se ejecuta en ambos casos después de la respuesta
   });
 
+}
+
+function agregaMat() {
+  window.IngresoMaterial.addMaterialKit();
+}
+
+function guardarKit() {
+  var idrec=$('#idrecibe').val();
+  var nomKit=$('#nombreKit').val();
+  var totalKit=$('#cantidadPzKit').val();
+  var kit=window.IngresoMaterial.data.materialKit;
+  var k=[];
+  for (var i = 0; i < kit.length; i++) {
+    var m=[];
+    m[0]=kit[i].id;
+    m[2]=kit[i].material;
+    m[1]=kit[i].cantidad;
+    k.push(m);
+  }
+  var options={
+    type : 'post',
+    url : 'index.php?c=ctrKit&a=registroKit',
+    data: {
+      idrec: idrec,
+      nomKit: nomKit,
+      totalKit: totalKit,
+      k: k
+    },
+  };
+  console.log(options.data.nomKit);
+  $.ajax(options)
+  .done(function(data) {
+    //Cuando todo es correcto
+    alert(data);
+    cerrarModal();
+    //window.location="inicio.php";
+    console.log(data);
+  })
+  .fail(function(xhr) {
+    alert('Hubo un error al guardar :(');
+    console.log(xhr.responseText);
+  })
+  .always(function() {
+    //Se ejecuta en ambos casos después de la respuesta
+  });
+}
+
+function cerrarModal() {
+  while(window.IngresoMaterial.data.materialKit.length > 0) {
+    window.IngresoMaterial.data.materialKit.pop();
+  }
+  $('#nombreKit').val('');
+  $('#cantidadPzKit').val('');
+  $("#nuevo_kit").modal('hide');
 }
