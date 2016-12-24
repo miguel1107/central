@@ -58,6 +58,49 @@ class detalleIngMaterial {
     return $ls;
   }
 
+  public function actualizaUltrazonica($iddet){
+    $conexion=new cado();
+		$conexion->conectar();
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='ULT',ultrazonica='TRUE'  WHERE id_detalle='".$iddet."';";
+    $rs=pg_query($sql) or die(false);
+		if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
+
+  public function actualizaIngreso($idingmat){
+    $stmt = $this->objPDO->prepare("SELECT ultrazonica FROM sisesterilizacion.detalle_ingmaterial WHERE id_ingreso_material='".$idingmat."'");
+    $stmt->execute();
+    $aux=0;//todo los detalles estan en ultrazonica
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    foreach ($ls as $l) {
+      $es=$l->ultrazonica;
+      return $es;
+      if($es=='f'){
+        $aux=1;//al menos uno esta en recepcion
+      }
+    }
+    if ($aux==0) {
+      return "true";
+    }else {
+      return "false";
+    }
+  }
+
+  public function retornaNombre($idingmat){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="SELECT ultrazonica FROM sisesterilizacion.detalle_ingmaterial WHERE id_ingreso_material='".$idingmat."'";
+    $rs=pg_query($sql);
+    if(pg_num_rows($rs)==1){
+      if($row=pg_fetch_array($rs)){
+        $es=$row['ultrazonica'];
+      }
+    }
+    return $es;
+  }
 
 }
 ?>

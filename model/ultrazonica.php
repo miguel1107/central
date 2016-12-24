@@ -23,6 +23,18 @@ class ultrazonica {
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;
   }
+
+  public function actualizaEstado($idUltra,$estado){
+    $conexion=new cado();
+		$conexion->conectar();
+    $sql="UPDATE sisesterilizacion.ultrazonica SET estado='".$estado."'  WHERE id_ultrazonica='".$idUltra."';";
+    $rs=pg_query($sql) or die(false);
+		if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
 }
 
 ?>

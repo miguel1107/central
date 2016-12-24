@@ -1,5 +1,6 @@
 <?php
 require_once "cado.php";
+require_once "detalleIngMaterial.php";
 
 /**
  *
@@ -30,7 +31,11 @@ class ingresoMaterial{
     $fecha=$this->fecha();
 		$sql="INSERT INTO sisesterilizacion.ingreso_material(id_ingresa,id_recibe,total_piezas,estado,tipo_propietario,ubicacion,fecha_ingreso) VALUES ('$idIngresa','$idRecibe','$total','P','M','REC','$fecha');";
 		$rs=pg_query($sql) or die(false);
-		return $rs;
+    if ($rs==true) {
+      return "true";
+    }else{
+      return "false";
+    }
   }
 
   public function registrarTerceros($idRecibe,$total,$cen,$res){
@@ -39,7 +44,11 @@ class ingresoMaterial{
     $fecha=$this->fecha();
 		$sql="INSERT INTO sisesterilizacion.ingreso_material(id_recibe,total_piezas,estado,tipo_propietario,centro_procedencia,responsable,ubicacion,fecha_ingreso) VALUES ('$idRecibe','$total','P','T','$cen','$res','REC','$fecha');";
 		$rs=pg_query($sql) or die(false);
-	  return $rs;
+    if ($rs==true) {
+      return "true";
+    }else{
+      return "false";
+    }
   }
 
   public function registrarCasaComercial($idRecibe,$total,$res,$cen){
@@ -48,11 +57,16 @@ class ingresoMaterial{
     $fecha=$this->fecha();
 		$sql="INSERT INTO sisesterilizacion.ingreso_material(id_recibe,total_piezas,estado,tipo_propietario,responsable,centro_medico,ubicacion,fecha_ingreso) VALUES ('$idRecibe','$total','P','C','$res','$cen','REC','$fecha');";
 		$rs=pg_query($sql) or die(false);
-	  return $rs;
+    return $rs;
+    if ($rs==true) {
+      return "true";
+    }else{
+      return "false";
+    }
   }
 
   public function listaRecepcionesDisponibles(){
-    $stmt = $this->objPDO->prepare("SELECT id_ingreso,tipo_propietario FROM sisesterilizacion.ingreso_material order by fecha_ingreso");
+    $stmt = $this->objPDO->prepare("SELECT id_ingreso,tipo_propietario FROM sisesterilizacion.ingreso_material where ubicacion='REC' order by fecha_ingreso");
     $stmt->execute();
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;
@@ -113,6 +127,31 @@ class ingresoMaterial{
 
   }
 
+  public function inicioUltrazonica(){
+    $ls=$this->listaRecepcionesDisponibles();
+    $det=new detalleIngMaterial();
+    foreach ($ls as $l) {
+      $idingmat= $l->id_ingreso;
+      $rs=$det->actualizaIngreso($idingmat);
+      if($rs=="true"){
+        $rs2=$this->actualizaUbicacionUltrazonica($idingmat);
+        if($rs2=true){
+          echo $idingmat."true";
+        }else{
+          echo "false";
+        }
+      }
+    }
+  }
+
+  public function actualizaUbicacionUltrazonica($idingmat){
+    $conexion=new cado();
+		$conexion->conectar();
+    $sql="UPDATE sisesterilizacion.ingreso_material SET ubicacion='ULT' WHERE id_ingreso='".$idingmat."'";
+    $rs=pg_query($sql) or die(false);
+  }
+
+  
 
 }
 

@@ -67,17 +67,12 @@ function guardarServicio(){
   };
   $.ajax(options)
   .done(function(data) {
-    //Cuando todo es correcto falta corregir
-    alert("Registro Correcto")
-    window.location="inicio.php";
-    console.log(data);
-  })
-  .fail(function(xhr) {
-    alert('Hubo un error al guardar :(');
-    console.log(xhr.responseText);
-  })
-  .always(function() {
-    //Se ejecuta en ambos casos después de la respuesta
+    if(data==1){
+      alert("REGISTRO EXITOSO")
+      window.location="inicio.php";
+    }else{
+      alert("ERROR AL INSERTAR");
+    }
   });
 }
 
@@ -110,17 +105,12 @@ function guardarMedicos(){
   };
   $.ajax(options)
   .done(function(data) {
-    //Cuando todo es correcto
-    alert("Guardado Correctamente");
-    //window.location="inicio.php";
-    //console.log(data);
-  })
-  .fail(function(xhr) {
-    alert('Hubo un error al guardar :(');
-    console.log(xhr.responseText);
-  })
-  .always(function() {
-    //Se ejecuta en ambos casos después de la respuesta
+    if(data==1){
+      alert("REGISTRO EXITOSO")
+      window.location="inicio.php";
+    }else{
+      alert("ERROR AL INSERTAR");
+    }
   });
 }
 
@@ -154,18 +144,13 @@ function guardarTerceros(){
   };
   $.ajax(options)
   .done(function(data) {
-    //Cuando todo es correcto
-    alert("Guardado Correctamente");
-    window.location="inicio.php";
-    //console.log(data);
+    if(data==1){
+      alert("REGISTRO EXITOSO")
+      window.location="inicio.php";
+    }else{
+      alert("ERROR AL INSERTAR");
+    }
   })
-  .fail(function(xhr) {
-    alert('Hubo un error al guardar :(');
-    console.log(xhr.responseText);
-  })
-  .always(function() {
-    //Se ejecuta en ambos casos después de la respuesta
-  });
 }
 
 function guardarCasaComercial() {
@@ -198,19 +183,13 @@ function guardarCasaComercial() {
   };
   $.ajax(options)
   .done(function(data) {
-    //Cuando todo es correcto
-    alert("Guardado Correctamente");
-    window.location="inicio.php";
-    //console.log(data);
+    if(data==1){
+      alert("REGISTRO EXITOSO")
+      window.location="inicio.php";
+    }else{
+      alert("ERROR AL INSERTAR");
+    }
   })
-  .fail(function(xhr) {
-    alert('Hubo un error al guardar :(');
-    console.log(xhr.responseText);
-  })
-  .always(function() {
-    //Se ejecuta en ambos casos después de la respuesta
-  });
-
 }
 
 function agregaMat() {

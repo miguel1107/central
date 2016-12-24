@@ -24,10 +24,8 @@ window.ultrazonica={
       self.data.iding=id;
     }else{
       if(self.data.servicio =='false'){
-        console.log('servicio-vacio');
         self.data.iding=id;
       }else{
-        console.log('servicio-lleno');
         if(self.data.iding==id){
           c=1;
         }else{
@@ -133,9 +131,9 @@ window.ultrazonica={
     });
   },
 
-  restart : function(){
-		var self = this;
+  cancelar: function () {
+    var self=this;
+    self.data.iding=0;
     self.init();
   },
-
 };

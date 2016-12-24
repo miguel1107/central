@@ -25,14 +25,14 @@
         $idRec=$m->retornaId();
         $rs2=$im->regIngresoDetalleMat($mat,$idRec);
         if($rs2="true"){
-          $rpta[0]="true";
+          $rpta = array('estado' => true, );
         }else {
-          $rpta[0]="false";
+          $rpta = array();
         }
       }else{
-        $rpta[0]="false";
+        $rpta = array();
       }
-      echo json_encode($rpta);
+      echo count($rpta);
     }
 
     public function regIngresoMaterialMedico(){
@@ -43,13 +43,18 @@
       $m=new ingresoMaterial();
       $im=new detalleIngMaterial();
       $rs=$m->registrarMedico($id,$idrec,$totalPi);
-      if($rs== true){
+      if($rs== "true"){
         $idRec=$m->retornaId();
         $rs2=$im->regIngresoDetalleMat($mat,$idRec);
-        echo $rs2;
+        if($rs2="true"){
+          $rpta = array('estado' => true, );
+        }else {
+          $rpta = array();
+        }
       }else{
-        echo $rs;
+        $rpta = array();
       }
+      echo count($rpta);
     }
 
     public function regIngresoMaterialTerceros(){
@@ -62,13 +67,18 @@
       $m=new ingresoMaterial();
       $im=new detalleIngMaterial();
       $rs=$m->registrarTerceros($idrec,$totalPi,$cen,$res);
-      if($rs== true){
+      if($rs=="true"){
         $idRec=$m->retornaId();
         $rs2=$im->regIngresoDetalleMat($mat,$idRec);
-        echo $rs2;
+        if($rs2="true"){
+          $rpta = array('estado' => true, );
+        }else {
+          $rpta = array();
+        }
       }else{
-        echo $rs;
+        $rpta = array();
       }
+      echo count($rpta);
     }
 
     public function regIngresoMaterialCasaComercial(){
@@ -80,14 +90,21 @@
       $m=new ingresoMaterial();
       $im=new detalleIngMaterial();
       $rs=$m->registrarCasaComercial($idrec,$totalPi,$res,$cen);
-      if($rs== true){
+      if($rs== "true"){
         $idRec=$m->retornaId();
         $rs2=$im->regIngresoDetalleMat($mat,$idRec);
-        echo $rs2;
+        if($rs2="true"){
+          $rpta = array('estado' => true, );
+        }else {
+          $rpta = array();
+        }
       }else{
-        echo $rs;
+        $rpta = array();
       }
+      echo count($rpta);
     }
+
+    
 
   }
 
