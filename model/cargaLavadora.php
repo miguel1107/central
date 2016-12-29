@@ -5,7 +5,7 @@ require_once __DIR__.'/../model/detalleIngMaterial.php';
 /**
  *
  */
-class cargaUltrazonica{
+class cargaLavadora{
 
   private $objPDO;
 
@@ -13,21 +13,21 @@ class cargaUltrazonica{
     $this->objPDO = new cado();
   }
 
-  public function registroCarga($materiales,$idultra){
+  public function registroCargaLav($materiales,$idLav,$tipo){
     $mat=$materiales;
     $det=new detalleIngMaterial();
     $conexion=new cado();
 		$conexion->conectar();
     $fecha=$this->fecha();
     $l=count($mat);
-		$sql="INSERT INTO sisesterilizacion.carga_ultrazonica(id_detalle, fecha_carga, id_ultrazonica,estado) VALUES";
+		$sql="INSERT INTO sisesterilizacion.carga_lavadora( id_detalle, fecha_carga,id_lavadora, proceso, estado) VALUES ";
     for ($i=0; $i <$l ; $i++) {
       $iddet=$mat[$i][0];
-      $det->actualizaUltrazonica($iddet,'P');
+      $det->actualizaLavadora($iddet,$tipo,'P');
       if($i==0){
-        $stringInser="('".$iddet."','".$fecha."','".$idultra."','P')";
+        $stringInser="('".$iddet."','".$fecha."','".$idLav."','".$tipo."','P')";
       }else{
-        $stringInser=",('".$iddet."','".$fecha."','".$idultra."','P')";
+        $stringInser=",('".$iddet."','".$fecha."','".$idLav."','".$tipo."','P')";
       }
       $sql=$sql.$stringInser;
     }
@@ -52,25 +52,26 @@ class cargaUltrazonica{
     return $fecha;
   }
 
-  public function retornaDetalleDescargar($idultra){
-    $stmt = $this->objPDO->prepare("SELECT (id_detalle) as detalle FROM sisesterilizacion.carga_ultrazonica WHERE id_ultrazonica='".$idultra."' and estado='P'");
+  public function retornaDetalleDescargar($idlav){
+    $stmt = $this->objPDO->prepare("SELECT (id_detalle) as detalle FROM sisesterilizacion.carga_lavadora WHERE id_lavadora='".$idlav."' and estado='P'");
     $stmt->execute();
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;
   }
 
-  public function actulizaCarga($iddetalle){
+  public function actulizaDescargaLav($iddetalle){
     $conexion=new cado();
 		$conexion->conectar();
     $fecha=$this->fecha();
-		$sql="UPDATE sisesterilizacion.carga_ultrazonica SET fecha_descarga='".$fecha."', estado= 'T' WHERE id_detalle='".$iddetalle."';";
+		$sql="UPDATE sisesterilizacion.carga_lavadora SET fecha_descarga='".$fecha."', estado= 'T' WHERE id_detalle='".$iddetalle."';";
 		$rs=pg_query($sql) or die(false);
-		if($rs==true){
+		if($rs=true){
       return "true";
     }else{
       return "false";
     }
   }
+
 }
 
 

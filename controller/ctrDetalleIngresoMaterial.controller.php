@@ -14,6 +14,13 @@
       $rs=$dim->retornaDetalle($id);
       echo json_encode($rs);
     }
+
+    public function retornaDetalleLav(){
+      $id=$_POST['id'];
+      $dim=new detalleIngMaterial();
+      $rs=$dim->retornaDetalleLav($id);
+      echo json_encode($rs);
+    }
   }
 
 ?>

@@ -12,6 +12,7 @@ class ingresoMaterial{
     $this->objPDO = new cado();
   }
 
+  //ZR-Registro de material
   public function registrarServicio($idIngresa,$idRecibe,$total,$idServicio){
     $conexion=new cado();
 		$conexion->conectar();
@@ -65,6 +66,21 @@ class ingresoMaterial{
     }
   }
 
+//---
+  public function fecha(){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="SELECT TIMESTAMP 'now'";
+    $rs=pg_query($sql);
+    if(pg_num_rows($rs)==1){
+      if($row=pg_fetch_array($rs)){
+        $fecha=$row[0];
+      }
+    }
+    return $fecha;
+  }
+//---
+//Carga ultrazonica
   public function listaRecepcionesDisponibles(){
     $stmt = $this->objPDO->prepare("SELECT id_ingreso,tipo_propietario FROM sisesterilizacion.ingreso_material where ubicacion='REC' order by fecha_ingreso");
     $stmt->execute();
@@ -72,17 +88,11 @@ class ingresoMaterial{
     return $ls;
   }
 
-  public function fecha(){
-    $conexion=new cado();
-		$conexion->conectar();
-    $sql="SELECT TIMESTAMP 'now'";
-    $rs=pg_query($sql);
-    if(pg_num_rows($rs)==1){
-			if($row=pg_fetch_array($rs)){
-				$fecha=$row[0];
-			}
-		}
-    return $fecha;
+  public function listaRecepcionesEnProceso(){
+    $stmt = $this->objPDO->prepare("SELECT id_ingreso,tipo_propietario FROM sisesterilizacion.ingreso_material where ubicacion='ULT' and estado='P' order by fecha_ingreso");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
   }
 
   public function retornaId(){
@@ -123,35 +133,145 @@ class ingresoMaterial{
   		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
   		return $ls;
     }
+  }
 
+  public function retornaRecpcionProceso($id,$prop){
+    if ($prop=='S') {
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,nombre_servicio as descripcion FROM sisesterilizacion.ingreso_material im inner join sisesterilizacion.servicio on im.id_servicio=sisesterilizacion.servicio.id_servicio where ubicacion='ULT' and estado='P' and id_ingreso='".$id."'; ");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='M'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,(emp_appaterno||' '|| emp_apmaterno||','|| emp_nombres) as descripcion FROM sisesterilizacion.ingreso_material im inner join empleados em on em.emp_id=im.id_ingresa where ubicacion='ULT'and estado='P' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='T'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,(centro_procedencia||'->'||responsable) as descripcion FROM sisesterilizacion.ingreso_material where ubicacion='ULT'and estado='P' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='C'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha, tipo_propietario as prop,(responsable|| '->'||centro_medico) as descripcion FROM sisesterilizacion.ingreso_material where ubicacion='ULT'and estado='P' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+  }
 
+  public function entraSaleUltra($iding,$estado){
+    $conexion=new cado();
+		$conexion->conectar();
+    $sql="UPDATE sisesterilizacion.ingreso_material SET ubicacion='ULT', estado='".$estado."' WHERE id_ingreso='".$iding."'; ";
+    $rs=pg_query($sql) or die(false);
   }
 
   public function inicioUltrazonica(){
-    $ls=$this->listaRecepcionesDisponibles();
     $det=new detalleIngMaterial();
+    $ls=$this->listaRecepcionesEnProceso();
     foreach ($ls as $l) {
-      $idingmat= $l->id_ingreso;
-      $rs=$det->actualizaIngreso($idingmat);
-      if($rs=="true"){
-        $rs2=$this->actualizaUbicacionUltrazonica($idingmat);
-        if($rs2=true){
-          echo $idingmat."true";
-        }else{
-          echo "false";
-        }
+      $idIng=$l->id_ingreso;
+      $ls2=$det->retornaCantidadDetalleValor($idIng);
+      $ls3=$det->retornaCantidadDetalle($idIng);
+      if (($ls2)==($ls3)) {
+        $this->entraSaleUltra($idIng,'T');
       }
     }
   }
 
-  public function actualizaUbicacionUltrazonica($idingmat){
+//carga Lavadora
+
+  public function listaRepcionesParaLavadora()  {
+    $stmt = $this->objPDO->prepare("SELECT id_ingreso,tipo_propietario FROM sisesterilizacion.ingreso_material WHERE ubicacion='ULT' and estado='T' order by fecha_ingreso");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
+
+  public function listaRecepcionesEnProcesoLav(){
+    $stmt = $this->objPDO->prepare("SELECT id_ingreso,tipo_propietario FROM sisesterilizacion.ingreso_material WHERE ubicacion='LAV' and estado='P' order by fecha_ingreso");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
+
+  public function retornaRecpcionLavadora($id,$prop){
+    if ($prop=='S') {
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,nombre_servicio as descripcion FROM sisesterilizacion.ingreso_material im inner join sisesterilizacion.servicio on im.id_servicio=sisesterilizacion.servicio.id_servicio where ubicacion='ULT' and estado='T'  and id_ingreso='".$id."'; ");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='M'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,(emp_appaterno||' '|| emp_apmaterno||','|| emp_nombres) as descripcion FROM sisesterilizacion.ingreso_material im inner join empleados em on em.emp_id=im.id_ingresa where ubicacion='ULT' and estado='T' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='T'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,(centro_procedencia||'->'||responsable) as descripcion FROM sisesterilizacion.ingreso_material where ubicacion='ULT' and estado='T' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='C'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha, tipo_propietario as prop,(responsable|| '->'||centro_medico) as descripcion FROM sisesterilizacion.ingreso_material where ubicacion='ULT' and estado='T' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+  }
+
+  public function retornaRecpcionLavadoraProceso($id,$prop){
+    if ($prop=='S') {
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,nombre_servicio as descripcion FROM sisesterilizacion.ingreso_material im inner join sisesterilizacion.servicio on im.id_servicio=sisesterilizacion.servicio.id_servicio where ubicacion='LAV' and estado='P'  and id_ingreso='".$id."'; ");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='M'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,(emp_appaterno||' '|| emp_apmaterno||','|| emp_nombres) as descripcion FROM sisesterilizacion.ingreso_material im inner join empleados em on em.emp_id=im.id_ingresa where ubicacion='LAV' and estado='P' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='T'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha,tipo_propietario as prop,(centro_procedencia||'->'||responsable) as descripcion FROM sisesterilizacion.ingreso_material where ubicacion='LAV' and estado='P' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='C'){
+      $stmt = $this->objPDO->prepare("SELECT fecha_ingreso as fecha, tipo_propietario as prop,(responsable|| '->'||centro_medico) as descripcion FROM sisesterilizacion.ingreso_material where ubicacion='LAV' and estado='P' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+  }
+
+  public function entraSaleLav($iding,$estado){
     $conexion=new cado();
 		$conexion->conectar();
-    $sql="UPDATE sisesterilizacion.ingreso_material SET ubicacion='ULT' WHERE id_ingreso='".$idingmat."'";
+    $sql="UPDATE sisesterilizacion.ingreso_material SET ubicacion='LAV', estado='".$estado."' WHERE id_ingreso='".$iding."'; ";
     $rs=pg_query($sql) or die(false);
   }
 
-  
+  public function inicioLavadora(){
+    $ls=$this->listaRecepcionesEnProcesoLav();
+    $det=new detalleIngMaterial();
+    foreach ($ls as $l) {
+      $idIng=$l->id_ingreso;
+      $ls2=$det->retornaCantidadDetalleVarlorLav($idIng);
+      $ls3=$det->retornaCantidadDetallaLav($idIng);
+      if (($ls2)==($ls3)) {
+        $this->entraSaleLav($idIng,'T');
+      }
+    }
+  }
+
 
 }
 

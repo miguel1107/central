@@ -51,6 +51,7 @@ class detalleIngMaterial {
     }
   }
 
+//ultrazonica
   public function retornaDetalle($id){
     $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$id."' and ultrazonica='FALSE';");
     $stmt->execute();
@@ -58,28 +59,27 @@ class detalleIngMaterial {
     return $ls;
   }
 
-  public function actualizaUltrazonica($iddet){
+  public function actualizaUltrazonica($iddet,$estado){
     $conexion=new cado();
 		$conexion->conectar();
-    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='ULT',ultrazonica='TRUE'  WHERE id_detalle='".$iddet."';";
-    $rs=pg_query($sql) or die(false);
-		if($rs==true){
-      return "true";
-    }else{
-      return "false";
-    }
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET procesozr='".$estado."',ubicacion='ULT',ultrazonica='TRUE'  WHERE id_detalle='".$iddet."';";
+    $rs=pg_query($sql);
   }
 
   public function actualizaIngreso($idingmat){
-    $stmt = $this->objPDO->prepare("SELECT ultrazonica FROM sisesterilizacion.detalle_ingmaterial WHERE id_ingreso_material='".$idingmat."'");
+    $stmt = $this->objPDO->prepare("SELECT ultrazonica,procesozr FROM sisesterilizacion.detalle_ingmaterial WHERE id_ingreso_material='".$idingmat."'");
     $stmt->execute();
-    $aux=0;//todo los detalles estan en ultrazonica
+    $aux=0;//todo los detalles estan en ultrazonica y T
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     foreach ($ls as $l) {
       $es=$l->ultrazonica;
-      return $es;
+      $es2=$l->procesozr;
       if($es=='f'){
         $aux=1;//al menos uno esta en recepcion
+      }else {
+        if($es2=='P'){
+          $aux=1;
+        }
       }
     }
     if ($aux==0) {
@@ -89,18 +89,109 @@ class detalleIngMaterial {
     }
   }
 
-  public function retornaNombre($idingmat){
+  public function retornaCantidadDetalleValor($idIng){
     $conexion=new cado();
-    $conexion->conectar();
-    $sql="SELECT ultrazonica FROM sisesterilizacion.detalle_ingmaterial WHERE id_ingreso_material='".$idingmat."'";
+		$conexion->conectar();
+    $sql=("SELECT count(*) FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$idIng."' and ultrazonica=TRUE and procesozr='T' ;");
     $rs=pg_query($sql);
     if(pg_num_rows($rs)==1){
       if($row=pg_fetch_array($rs)){
-        $es=$row['ultrazonica'];
+        $can=$row[0];
       }
     }
-    return $es;
+    return $can;
   }
 
+  public function retornaCantidadDetalle($idIng){
+    $conexion=new cado();
+		$conexion->conectar();
+    $sql=("SELECT count(*) FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$idIng."' ;");
+    $rs=pg_query($sql);
+    if(pg_num_rows($rs)==1){
+      if($row=pg_fetch_array($rs)){
+        $can=$row[0];
+      }
+    }
+    return $can;
+  }
+
+//lavadoras
+  public function retornaDetalleLav($id){
+    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle FROM sisesterilizacion.detalle_ingmaterial where ultrazonica='TRUE' and lv_mecanico='FALSE' and lv_manual='FALSE' and id_ingreso_material='".$id."' ;");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
+
+  public function actualizaLavadora($iddet,$tipo,$estado){
+    $conexion=new cado();
+    $conexion->conectar();
+    if($tipo=="LA"){
+        $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='LAM',lv_mecanico='TRUE',procesozr='".$estado."'  WHERE id_detalle='".$iddet."';";
+    }else{
+      $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='LAM',lv_mecanico='TRUE',sec_mecanico='TRUE',procesozr='".$estado."'  WHERE id_detalle='".$iddet."';";
+    }
+    $rs=pg_query($sql) or die(false);
+    if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
+
+  public function actualizaDescarga($iddet){
+    $conexion=new cado();
+		$conexion->conectar();
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET procesozr='T'  WHERE id_detalle='".$iddet."';";
+    $rs=pg_query($sql);
+
+  }
+
+  public function actualizaIngresoLav($idingmat){
+    $stmt = $this->objPDO->prepare("SELECT lv_mecanico,lv_manual FROM sisesterilizacion.detalle_ingmaterial WHERE id_ingreso_material='".$idingmat."'");
+    $stmt->execute();
+    $aux=0;//todo los detalles estan en ultrazonica
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    foreach ($ls as $l) {
+      $es=$l->lv_mecanico;
+      $es2=$l->lv_manual;
+      if($es=='f'){
+        if($es2=='f'){
+          $aux=1;//al menos uno no entra al lav mec
+        }
+      }
+    }
+    if ($aux==0) {
+      return "true";
+    }else {
+      return "false";
+    }
+  }
+
+  public function retornaCantidadDetalleVarlorLav($idIng){
+    $conexion=new cado();
+		$conexion->conectar();
+    $sql=("SELECT count(*) FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$idIng."' and lv_mecanico=TRUE and procesozr='T' ;");
+    $rs=pg_query($sql);
+    if(pg_num_rows($rs)==1){
+      if($row=pg_fetch_array($rs)){
+        $can=$row[0];
+      }
+    }
+    return $can;
+  }
+
+  public function retornaCantidadDetallaLav($idIng){
+    $conexion=new cado();
+		$conexion->conectar();
+    $sql=("SELECT count(*) FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$idIng."';");
+    $rs=pg_query($sql);
+    if(pg_num_rows($rs)==1){
+      if($row=pg_fetch_array($rs)){
+        $can=$row[0];
+      }
+    }
+    return $can;
+  }
 }
 ?>

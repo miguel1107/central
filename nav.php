@@ -72,19 +72,19 @@ $zona=$_SESSION["zona"];
 					 			<a href="?menu=medicoZR">
 									<i class='icon-plus'></i>
 									Medico
-									</a>
+								</a>
 							</li>
 					 		<li>
 					 			<a href='?menu=tercerosZR'>
 									<i class='icon-plus'></i>
 									Terceros
-									</a>
+								</a>
 							</li>
 					 		<li>
 					 			<a href='?menu=casacomercialZR'>
 									<i class='icon-plus'></i>
 									Casa Comercial
-									</a>
+								</a>
 							</li>
 					 	</ul>
 				 </li>
@@ -94,13 +94,12 @@ $zona=$_SESSION["zona"];
 						 <span class='menu-text'> Carga Ultrazonica </span>
 					 </a>
 				</li>
+				<li>
+					<a href='?menu=cargaLavadora'>
+						<span class='menu-text'> Carga Lavadora </span>
+					</a>
+				</li>
 <?php
-				echo "<li>";
-				echo 	"<a href='typography.html'>";
-				echo 		"<span class='menu-text'> Carga Lavadora </span>";
-				echo 	"</a>";
-				echo "</li>";
-
 				echo "<li>";
 				echo 	"<a href='typography.html'>";
 				echo 		"<span class='menu-text'> Lavado Manual </span>";

@@ -123,8 +123,7 @@ class clsAccesoDatos{
 		return $this->gTipoBD;
 	}
 
-	function obtenerDataSP($sql)
- 	{
+	function obtenerDataSP($sql){
 		if($this->gTipoBD>1){
 			$sql = substr($sql,8,strlen($sql)-8);
 			$valor = strpos($sql,' ');

@@ -1,18 +1,19 @@
 function ver(id){
   $("#modal-table").modal('show');
-  window.ultrazonica.llenatabla(id);
+  window.lavadora.llenatabla(id);
 }
 
-function llenaCargaUl(){
-  window.ultrazonica.llenaCarga();
+function llenaCargaLav(){
+  window.lavadora.llenaCarga();
   $("#modal-table").modal('hide');
 }
 
-function registroCarga() {
-  var materiales=(window.ultrazonica.data.materiales);
-  var iding=(window.ultrazonica.data.iding);
+function registroCarga(){
+  var materiales=(window.lavadora.data.materiales);
+  var iding=(window.lavadora.data.iding);
   var mat=[];
-  var ultra=$('#ultrazonica').val();
+  var lavadora=$('#lavadora').val();
+  var tipo=$('#lavadoraTipo').val();
   for (var i = 0; i < materiales.length; i++) {
     if(materiales[i].estado=="TRUE"){
       var m=[];
@@ -22,18 +23,18 @@ function registroCarga() {
   }
   var options={
     type : 'post',
-    url : 'index.php?c=ctrCargaUltrazonica&a=registraCarga',
+    url : 'index.php?c=ctrCargaLavadora&a=registraCargaLav',
     data: {
-      'ultra' : ultra,
+      'tipo' : tipo,
       'iding' : iding,
+      'lavadora' : lavadora,
       'materiales' : mat
     },
   };
   $.ajax(options).done(function(data){
-    console.log(data);
     if(data==1){
       alert("REGISTRO CORRECTO");
-      window.location="inicio.php?menu=cargaultrazonica2";
+      window.location="inicio.php?menu=cargaLavadora";
     }else{
       alert("ERROR AL INSERTAR");
     }
@@ -41,19 +42,18 @@ function registroCarga() {
 
 }
 
-function desocupaUltrazonica(id) {
+function desocupaLavadora(id) {
   var options={
     type : 'post',
-    url : 'index.php?c=ctrCargaUltrazonica&a=descargarUltrazonica',
+    url : 'index.php?c=ctrCargaLavadora&a=descargarLavadora',
     data: {
-      'idultra' : id
+      'idlav' : id
     },
   };
   $.ajax(options).done(function (data) {
-    console.log(data);
     if(data==1){
       alert("DECARGA EXITOSA");
-      window.location="inicio.php?menu=cargaultrazonica2";
+      window.location="inicio.php?menu=cargaLavadora";
     }else{
       alert("ERROR AL DESARGAR");
     }
