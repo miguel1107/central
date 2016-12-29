@@ -1,10 +1,8 @@
-<script src="js/usuario.js"></script>
-
-	<?php
-		require_once 'model/usuario.php';
-		$ctr=new usuario();
-		$ls=$ctr->listadousarios();
-	?>
+<?php
+	require_once 'model/usuario.php';
+	$ctr=new usuario();
+	$ls=$ctr->listadousarios();
+?>
 
 <div class="breadcrumbs" id="breadcrumbs">
    	<ul class="breadcrumb">
@@ -180,3 +178,5 @@
           </div>
 	</form>
 </div>
+<script src="assets/js/jquery-2.0.3.min.js"></script>
+<script src="js/usuario.js"></script>

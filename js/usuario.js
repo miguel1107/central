@@ -1,12 +1,12 @@
 $().ready(function() {
-    $("#nomusuario").autocomplete({
-      source: 'index.php?c=ctrempleado&a=autocomplete',
-      select: function(event, ui) {
-        event.preventDefault();
-        $('#nomusuario').val(ui.item.nombres);
-        $('#dni').val(ui.item.emp_dni);
-      },
-    });
+  $("#nomusuario").autocomplete({
+    source: 'index.php?c=ctrempleado&a=autocomplete',
+    select: function(event, ui) {
+      event.preventDefault();
+      $('#nomusuario').val(ui.item.nombres);
+      $('#dni').val(ui.item.emp_dni);
+    },
+  });
 });
 
 $(document).on('click', '#config',function() {

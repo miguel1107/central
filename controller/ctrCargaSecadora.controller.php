@@ -1,29 +1,25 @@
 <?php
-require_once __DIR__.'/../model/cargaLavadora.php';
-require_once __DIR__.'/../model/lavadora.php';
+require_once __DIR__.'/../model/cargaSecadora.php';
+require_once __DIR__.'/../model/secadora.php';
 require_once __DIR__.'/../model/ingresoMaterial.php';
-require_once __DIR__.'/../model/detalleIngMaterial.php';//lav manual
+require_once __DIR__.'/../model/detalleIngMaterial.php';//sec manual
 
-/**
- *
- */
-class ctrCargaLavadora{
+class ctrCargaSecadora{
 
   function __construct(){
   }
 
-  public function registraCargaLav(){
+  public function registraCargaSec(){
     $mat=$_POST['materiales'];
-    $tipo=$_POST['tipo'];
-    $idLav=$_POST['lavadora'];
+    $idsec=$_POST['secadora'];
     $iding=$_POST['iding'];
-    $cla=new cargaLavadora();
-    $lav=new lavadora();
+    $csec=new cargaSecadora();
+    $sec=new secadora();
     $ingmat=new ingresoMaterial();
-    $rs=$cla->registroCargaLav($mat,$idLav,$tipo);
+    $rs=$csec->registroCargaSec($mat,$idsec);
     if($rs=="true"){
-      $rs2=$lav->actualizaEstado($idLav,'O');
-      $ingmat->entraSaleLav($iding,'P');
+      $rs2=$sec->actualizaEstadoSec($idsec,'O');
+      $ingmat->entraSaleSec($iding,'P');
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();
@@ -31,19 +27,19 @@ class ctrCargaLavadora{
     echo count($rpta);
   }
 
-  public function descargarLavadora(){
-    $idlav=$_POST['idlav'];
-    $lav=new lavadora();
-    $ca=new cargaLavadora();
+  public function descargarSecadora(){
+    $idsec=$_POST['idsec'];
+    $sec=new secadora();
+    $csec=new cargaSecadora();
     $ingmat=new ingresoMaterial();
     $det= new detalleIngMaterial();
-    $ls=$ca->retornaDetalleDescargar($idlav);
+    $ls=$csec->retornaDetalleDescargarSec($idsec);
     foreach ($ls as $l) {
       $iddetalle=$l->detalle;
-      $rs=$ca->actulizaDescargaLav($iddetalle);
-      $rs2=$det->actualizaDescarga($iddetalle);
+      $rs=$csec->actulizaDescargaSec($iddetalle);
+      $rs2=$det->actualizaDescargaSec($iddetalle);
     }
-    $rs3=$lav->actualizaEstado($idlav,'D');
+    $rs3=$sec->actualizaEstadoSec($idsec,'D');
     if($rs3="true"){
       $rpta = array('estado' => "true", );
     }else{
@@ -52,7 +48,7 @@ class ctrCargaLavadora{
     echo count($rpta);
   }
 
-  public function registroCargaLavMan(){
+  public function registroCargaSecMan(){
     $mat=$_POST['materiales'];
     $det=new detalleIngMaterial();
     $ingmat=new ingresoMaterial();
@@ -61,13 +57,13 @@ class ctrCargaLavadora{
     $aux=0;
     for ($i=0; $i < $l ; $i++) {
       $iddet=$mat[$i][0];
-      $rs=$det->actualizaLavadoraManual($iddet,'T');
+      $rs=$det->actualizaSecadoManual($iddet,'T');
       if($rs=="false"){
         $aux=1;
       }
     }
     if($aux==0){
-      $ingmat->entraSaleLav($iding,'P');
+      $ingmat->entraSaleSec($iding,'P');
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();
@@ -76,4 +72,5 @@ class ctrCargaLavadora{
   }
 
 }
+
 ?>

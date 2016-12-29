@@ -105,21 +105,20 @@ $zona=$_SESSION["zona"];
 						<span class='menu-text'> Lavado Manual </span>
 					</a>
 				</li>
-<?php
-				echo "<li>";
-				echo 	"<a href='typography.html'>";
-				echo 		"<span class='menu-text'> Carga Secadora </span>";
-				echo 	"</a>";
-				echo "</li>";
 
-				echo "<li>";
-				echo 	"<a href='typography.html'>";
-				echo 		"<span class='menu-text'> Secado Manual </span>";
-				echo 	"</a>";
-				echo "</li>";
-				break;
-							/*
-			case 'Zona Azul':
+				<li>
+				<a href='?menu=cargaSecadora'>
+					<span class='menu-text'> Carga Secadora </span>
+				</a>
+				</li>
+
+				<li>
+				<a href='?menu=secadoManual'>
+					<span class='menu-text'> Secado Manual </span>
+				</a>
+				</li>
+		<?php
+			/*case 'Zona Azul':
 				echo "<li>";
 				echo 	"<a href='typography.html'>";
 				echo 		"<span class='menu-text'> Ingreso de ropa </span>";

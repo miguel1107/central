@@ -1,5 +1,6 @@
-window.lavadora={
-  init: function(){
+window.secadora={
+  init: function() {
+    var self=this;
     var self=this;
     if(!self.tmpl){
       self.tmpl = $("#tmpl-detalle").text();
@@ -36,7 +37,7 @@ window.lavadora={
     }
     var options={
       type : 'post',
-      url : 'index.php?c=ctrDetalleIngresoMaterial&a=retornaDetalleLav',
+      url : 'index.php?c=ctrDetalleIngresoMaterial&a=retornaDetalleSec',
       data: {
         'id' : id
       },
@@ -72,9 +73,9 @@ window.lavadora={
 
   render: function(){
     var self = this;
-    $('#detalleIngMaterial').empty();
+    $('#detalleIngMaterialSec').empty();
     self.data.materiales.forEach(function(el, i){
-      self.renderDetalle(i, el).appendTo('#detalleIngMaterial');
+      self.renderDetalle(i, el).appendTo('#detalleIngMaterialSec');
     });
   },
 
@@ -104,6 +105,16 @@ window.lavadora={
     });
   },
 
+  llenaCarga: function () {
+    var self = this;
+    $('#carSecadora').empty();
+    self.data.materiales.forEach(function(el, i){
+      if(self.data.materiales[i].estado=='TRUE'){
+          self.renderCarga(i, el).appendTo('#carSecadora');
+      }
+    });
+  },
+
   renderCarga: function (index, elemento) {
     var self=this;
     var $m=$(self.tmpl2);
@@ -112,16 +123,6 @@ window.lavadora={
       $m.find('.descripcionCarga').text(self.data.materiales[index].descripcion);
       $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
       return $m;
-  },
-
-  llenaCarga: function () {
-    var self = this;
-    $('#carUltrazonica').empty();
-    self.data.materiales.forEach(function(el, i){
-      if(self.data.materiales[i].estado=='TRUE'){
-          self.renderCarga(i, el).appendTo('#carUltrazonica');
-      }
-    });
   },
 
   cancelar: function () {

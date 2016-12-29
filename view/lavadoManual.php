@@ -6,15 +6,15 @@
   $lsn=$ctr->listaRecepcionesEnProcesoLav();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
-    <ul class="breadcrumb">
-        <li>
-            <a href="#">Ingreso de material</a>
-            <span class="divider">
-                <i class="icon-angle-right arrow-icon"></i>
-            </span>
-        </li>
-        <li class="active">Lavado Manual</li>
-    </ul><!--.breadcrumb-->
+  <ul class="breadcrumb">
+      <li>
+          <a href="#">Ingreso de material</a>
+          <span class="divider">
+              <i class="icon-angle-right arrow-icon"></i>
+          </span>
+      </li>
+      <li class="active">Lavado Manual</li>
+  </ul><!--.breadcrumb-->
 </div>
 <div class="page-content">
   <div class="table-responsive">
