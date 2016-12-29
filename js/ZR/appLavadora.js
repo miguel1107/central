@@ -14,7 +14,7 @@ window.lavadora={
     };
 
     self.render();
-    //self.llenaCarga();
+    self.llenaCarga();
   },
 
   llenatabla: function (id) {
@@ -125,6 +125,7 @@ window.lavadora={
   },
 
   cancelar: function () {
+    console.log("canc");
     var self=this;
     self.data.iding=0;
     self.init();

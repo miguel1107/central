@@ -272,6 +272,9 @@ class ingresoMaterial{
     }
   }
 
+//lavado manual
+
+
 
 }
 

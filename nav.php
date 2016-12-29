@@ -99,13 +99,13 @@ $zona=$_SESSION["zona"];
 						<span class='menu-text'> Carga Lavadora </span>
 					</a>
 				</li>
-<?php
-				echo "<li>";
-				echo 	"<a href='typography.html'>";
-				echo 		"<span class='menu-text'> Lavado Manual </span>";
-				echo 	"</a>";
-				echo "</li>";
 
+				<li>
+					<a href='?menu=lavadoManual'>
+						<span class='menu-text'> Lavado Manual </span>
+					</a>
+				</li>
+<?php
 				echo "<li>";
 				echo 	"<a href='typography.html'>";
 				echo 		"<span class='menu-text'> Carga Secadora </span>";

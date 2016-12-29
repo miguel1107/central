@@ -2,6 +2,7 @@
 require_once __DIR__.'/../model/cargaLavadora.php';
 require_once __DIR__.'/../model/lavadora.php';
 require_once __DIR__.'/../model/ingresoMaterial.php';
+require_once __DIR__.'/../model/detalleIngMaterial.php';//lav manual
 
 /**
  *
@@ -16,7 +17,6 @@ class ctrCargaLavadora{
     $tipo=$_POST['tipo'];
     $idLav=$_POST['lavadora'];
     $iding=$_POST['iding'];
-    $l=count($mat);
     $cla=new cargaLavadora();
     $lav=new lavadora();
     $ingmat=new ingresoMaterial();
@@ -46,6 +46,29 @@ class ctrCargaLavadora{
     }
     $rs3=$lav->actualizaEstado($idlav,'D');
     if($rs3="true"){
+      $rpta = array('estado' => "true", );
+    }else{
+      $rpta = array();
+    }
+    echo count($rpta);
+  }
+
+  public function registroCargaLavMan(){
+    $mat=$_POST['materiales'];
+    $det=new detalleIngMaterial();
+    $ingmat=new ingresoMaterial();
+    $iding=$_POST['iding'];
+    $l=count($mat);
+    $aux=0;
+    for ($i=0; $i < $l ; $i++) {
+      $iddet=$mat[$i][0];
+      $rs=$det->actualizaLavadoraManual($iddet,'T');
+      if($rs=="false"){
+        $aux=1;
+      }
+    }
+    if($aux==0){
+      $ingmat->entraSaleLav($iding,'P');
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();

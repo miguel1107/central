@@ -8,6 +8,10 @@ function llenaCargaLav(){
   $("#modal-table").modal('hide');
 }
 
+function cancelar() {
+  window.lavadora.cancelar();
+}
+
 function registroCarga(){
   var materiales=(window.lavadora.data.materiales);
   var iding=(window.lavadora.data.iding);
@@ -58,4 +62,34 @@ function desocupaLavadora(id) {
       alert("ERROR AL DESARGAR");
     }
   });
+}
+
+function registroLavManual(){
+  var materiales=(window.lavadora.data.materiales);
+  var iding=(window.lavadora.data.iding);
+  var mat=[];
+  for (var i = 0; i < materiales.length; i++) {
+    if(materiales[i].estado=="TRUE"){
+      var m=[];
+      m[0]=materiales[i].idDetalle;
+      mat.push(m);
+    }
+  }
+  var options={
+    type : 'post',
+    url : 'index.php?c=ctrCargaLavadora&a=registroCargaLavMan',
+    data: {
+      'iding' : iding,
+      'materiales' : mat
+    },
+  };
+  $.ajax(options).done(function(data){
+    if(data==1){
+      alert("REGISTRO CORRECTO");
+      window.location="inicio.php?menu=lavadoManual";
+    }else{
+      alert("ERROR AL INSERTAR");
+    }
+  })
+
 }

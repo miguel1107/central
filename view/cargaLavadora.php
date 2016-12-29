@@ -116,7 +116,7 @@
           <td><?php echo $lsr3n->descripcion; ?></td>
           <td class="td-actions">
             <div class="action-buttons">
-              <a href="javascript" onclick="ver(<?php echo $id ?>)" role="button" class="green" data-toggle="modal">
+              <a href="javascript" onclick="ver(<?php echo $idn ?>)" role="button" class="green" data-toggle="modal">
                 <i class="icon-hand-right icon-animated-hand-pointer blue"></i>
               </a>
             </div>
@@ -208,7 +208,7 @@
     <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCarga()">
       <i class="icon-ok bigger-110"></i>Agregar Material
     </button>
-    <button id="set" class="btn btn-info" type="button" onclick="lavadora.cancelar();return false">
+    <button id="set" class="btn btn-info" type="button" onclick="cancelar()">
       <i class="icon-ok bigger-110"></i>Cancelar
     </button>
   </div>

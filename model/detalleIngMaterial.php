@@ -171,7 +171,7 @@ class detalleIngMaterial {
   public function retornaCantidadDetalleVarlorLav($idIng){
     $conexion=new cado();
 		$conexion->conectar();
-    $sql=("SELECT count(*) FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$idIng."' and lv_mecanico=TRUE and procesozr='T' ;");
+    $sql=("SELECT count(*) FROM sisesterilizacion.detalle_ingmaterial where (id_ingreso_material='48' and lv_mecanico=TRUE and procesozr='T') or (id_ingreso_material='48' and lv_manual=TRUE and procesozr='T');");
     $rs=pg_query($sql);
     if(pg_num_rows($rs)==1){
       if($row=pg_fetch_array($rs)){
@@ -193,5 +193,19 @@ class detalleIngMaterial {
     }
     return $can;
   }
+
+  public function actualizaLavadoraManual($iddet,$estado){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='LAM',lv_mecanico='FALSE',lv_manual='TRUE',procesozr='".$estado."'  WHERE id_detalle='".$iddet."';";
+    $rs=pg_query($sql) or die(false);
+    if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
+
+
 }
 ?>
