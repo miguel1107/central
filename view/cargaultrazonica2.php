@@ -13,15 +13,18 @@
 ?>
 
 <div class="breadcrumbs" id="breadcrumbs">
-    <ul class="breadcrumb">
-        <li>
-            <a href="#">Ingreso de material</a>
-            <span class="divider">
-                <i class="icon-angle-right arrow-icon"></i>
-            </span>
-        </li>
-        <li class="active">Carga Ultrazonica</li>
-    </ul><!--.breadcrumb-->
+  <div class="progress progress-pink progress-striped active">
+    <div class="bar" style="width: 100%"></div>
+  </div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="#">Ingreso de material</a>
+      <span class="divider">
+          <i class="icon-angle-right arrow-icon"></i>
+      </span>
+    </li>
+    <li class="active">Carga Ultrazonica</li>
+  </ul><!--.breadcrumb-->
 </div>
 <div class="page-content">
   <div class="table-responsive">
@@ -101,9 +104,11 @@
         ?>
         <tr>
           <td><?php echo $idn; ?></td>
-          <td><?php
-            $fen=date_create($lsr3n->fecha);
-            echo date_format($fen, 'd-m-Y (H:i:s)'); ?>
+          <td>
+            <?php
+              $fen=date_create($lsr3n->fecha);
+              echo date_format($fen, 'd-m-Y (H:i:s)');
+            ?>
           </td>
           <td><?php
             $sn=$lsr3->prop;
@@ -181,6 +186,7 @@
               <label class="control-label" for="form-field-1">ultrazonicas disponibles: </label>
               <div class="controls">
                 <select class="redondear" id="ultrazonica" name="ultrazonica">
+                  <option value="0">---Seleccione Ultrazonica</option>
                   <?php foreach ($lsu as $ultra) { ?>
                     <option value="<?php echo $ultra->id_ultrazonica ?>"> <?php echo $ultra->nombre_ultrazonica; ?></option>
                   <?php } ?>
@@ -193,10 +199,14 @@
                 <div class="tags">
                   <?php foreach ($lsocu as $ocupa) { ?>
                     <span class="tag"><?php echo $ocupa->nombre_ultrazonica ?>
-                      <button type="button" class="close" onclick="desocupaUltrazonica(<?php echo $ocupa->id_ultrazonica ?>)">×</button>
+                      <button type="button" title="Descargar" class="close" onclick="desocupaUltrazonica(<?php echo $ocupa->id_ultrazonica ?>)">×</button>
                     </span>
+                      <a href="javascript" title="Ver carga" onclick="verCarga(<?php echo $ocupa->id_ultrazonica ?>)" role="button" class="green" data-toggle="modal">
+                        <i class="icon-eye-open"></i>
+                      </a>
                   <?php } ?>
                 </div>
+
               </div>
             </div>
           </div>
@@ -206,13 +216,15 @@
   </div>
   <div class="form-actions">
     <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCarga()">
-      <i class="icon-ok bigger-110"></i>Agregar Material
+      <i class="icon-ok bigger-110"></i>Agregar Carga ultrazonica
     </button>
-    <button id="set" class="btn btn-info" type="button" onclick="ultrazonica.cancelar();return false">
+    <button id="set" class="btn btn-danger" type="button" onclick="ultrazonica.cancelar();return false">
           <i class="icon-ok bigger-110"></i>Cancelar
     </button>
   </div>
 </div>
+<?php require_once ("view/alerts.php") ?>
+<?php require_once ("view/html/ZR/vercarga.php") ?>
 
 <div id="modal-table" class="modal hide fade" tabindex="-1">
     <div class="modal-header no-padding">

@@ -37,6 +37,13 @@ class lavadora{
     }
   }
 
+  public function verCarga($lav){
+    $stmt = $this->objPDO->prepare("SELECT * FROM sisesterilizacion.carga_lavadora c INNER JOIN sisesterilizacion.detalle_ingmaterial ing on ing.id_detalle=c.id_detalle WHERE id_lavadora='".$lav."' and estado='P'");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
+
 
 }
 

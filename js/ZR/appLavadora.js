@@ -7,10 +7,14 @@ window.lavadora={
     if(!self.tmpl2){
       self.tmpl2 = $("#tmpl-carga").text();
     }
+    if(!self.tmpl3){
+      self.tmpl3 = $("#tmpl-vercarga").text();
+    }
     self.data={
       iding :0,
       servicio:'false',
-      materiales :[]
+      materiales :[],
+      carga: []
     };
 
     self.render();
@@ -19,7 +23,7 @@ window.lavadora={
 
   llenatabla: function (id) {
     var self=this;
-    var c=0; //0->llena denuevo 1->esta lleno y id iguales 2->esta lleno id dif
+    var c=0; //0->llena denuevo 1->esta lleno e id iguales 2->esta lleno id dif
     if (self.data.iding == 0) {
       self.data.iding=id;
     }else{
@@ -30,7 +34,8 @@ window.lavadora={
           c=1;
         }else{
           c=2;
-          alert('SERIVICO EN USO');
+          $('#contenidoWarning').text('Servicio en uso');
+          $("#alertWarning").modal('show');
         }
       }
     }
@@ -42,7 +47,7 @@ window.lavadora={
       },
     };
     if(c==1){
-      self.render();
+      $("#modal-table").modal('show');
     }
     if(c==0){
       console.log('llena denuevo');
@@ -54,19 +59,27 @@ window.lavadora={
         for(var x in parsed){
           arr.push(parsed[x]);
         }
-        for (var i = 0; i < arr.length; i++) {
-          var m={
-            idDetalle : arr[i].id_detalle,
-            estado :'FALSE',
-            tipo : arr[i].tipo_ingreso,
-            descripcion : arr[i].descripcion,
-            cantidad : arr[i].cantidad_material
-          };
-          self.data.materiales.push(m);
+        if (arr.length==0) {
+          $('#contenidoWarning').text('Esperando descarga');
+          $("#alertWarning").modal('show');
+        }else{
+          for (var i = 0; i < arr.length; i++) {
+            var m={
+              idDetalle : arr[i].id_detalle,
+              estado :'FALSE',
+              tipo : arr[i].tipo_ingreso,
+              descripcion : arr[i].descripcion,
+              cantidad : arr[i].cantidad_material
+            };
+            self.data.materiales.push(m);
+          }
+
+          self.data.servicio='true';
+          self.render();
+          $("#modal-table").modal('show');
         }
-        self.data.servicio='true';
-        self.render();
       });
+
     }
   },
 
@@ -116,10 +129,10 @@ window.lavadora={
 
   llenaCarga: function () {
     var self = this;
-    $('#carUltrazonica').empty();
+    $('#carLavadora').empty();
     self.data.materiales.forEach(function(el, i){
       if(self.data.materiales[i].estado=='TRUE'){
-          self.renderCarga(i, el).appendTo('#carUltrazonica');
+          self.renderCarga(i, el).appendTo('#carLavadora');
       }
     });
   },
@@ -129,4 +142,55 @@ window.lavadora={
     self.data.iding=0;
     self.init();
   },
+
+  llenavercarga: function (id) {
+    var self=this;
+    var a = [];
+    self.data.carga= a;
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrCargaLavadora&a=verCarga',
+      data: {
+        'id' : id
+      },
+    };
+    $.ajax(options)
+    .done(function(data) {
+      var json=data;
+      var parsed = JSON.parse(json);
+      var arr = [];
+      for(var x in parsed){
+        arr.push(parsed[x]);
+      }
+      for (var i = 0; i < arr.length; i++) {
+        var m={
+          idDetalle : arr[i].id_detalle,
+          tipo : arr[i].tipo_ingreso,
+          descripcion : arr[i].descripcion,
+          cantidad : arr[i].cantidad_material
+        };
+        self.data.carga.push(m);
+      }
+      self.rendervercargaini();
+    })
+  },
+
+  rendervercargaini: function () {
+    var self = this;
+    $('#detalleCarga').empty();
+    self.data.carga.forEach(function(el, i){
+      self.rendervercarga(i, el).appendTo('#detalleCarga');
+    });
+  },
+
+  rendervercarga: function(index, elemento) {
+    var self=this;
+    var $m=$(self.tmpl3);
+    $m.find('.tipo').text(self.data.carga[index].tipo);
+    $m.find('.descripcion').text(self.data.carga[index].descripcion);
+    $m.find('.cantidad').text(self.data.carga[index].cantidad);
+    console.log('llena');
+    return $m;
+  }
+
 };

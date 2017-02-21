@@ -187,12 +187,12 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
               </div>
             </div>
             <div class="control-gropup">
-              <label class="control-label" for="form-field-1">ultrazonicas Ocupadas: </label>
+              <label class="control-label" for="form-field-1">Secadoras Ocupadas: </label>
               <div class="controls">
                 <div class="tags">
                   <?php foreach ($lsocu as $ocupa) { ?>
                     <span class="tag"><?php echo $ocupa->nombre_secadora ?>
-                      <button type="button" class="close" onclick="desocupaSecadora(<?php echo $ocupa->id_secadora ?>)">×</button>
+                      <button title="desocupar secadora" type="button" class="close" onclick="desocupaSecadora(<?php echo $ocupa->id_secadora ?>)">×</button>
                     </span>
                   <?php } ?>
                 </div>
@@ -205,7 +205,7 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
   </div>
   <div class="form-actions">
     <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCargaSec()">
-      <i class="icon-ok bigger-110"></i>Agregar Material
+      <i class="icon-ok bigger-110"></i>Agregar Carga Secadora
     </button>
     <button id="set" class="btn btn-info" type="button" onclick="cancelar()">
       <i class="icon-ok bigger-110"></i>Cancelar

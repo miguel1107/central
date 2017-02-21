@@ -21,15 +21,15 @@
         <link rel="stylesheet" href="assets/css/ace-responsive.min.css" />
         <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
 
-        <!--DATATABLES-->  
-        <link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css" /> 
-        <link rel="stylesheet" href="assets/plugins/datatables/dataTables.responsive.css" /> 
+        <!--DATATABLES-->
+        <link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css" />
+        <link rel="stylesheet" href="assets/plugins/datatables/dataTables.responsive.css" />
 
 
 
-        <script src="assets/js/jquery-1.10.2.min.js"></script> 
+        <script src="assets/js/jquery-1.10.2.min.js"></script>
 
-<?php 
+<?php
 $navegacion=$_SESSION['navegacion'];
 $zona=$_SESSION['zona'];
 ?>
@@ -41,7 +41,7 @@ $zona=$_SESSION['zona'];
             <span class="divider">
                 <i class="icon-angle-right arrow-icon"></i>
             </span>
-        </li>                
+        </li>
         <li class="active"><?php echo $zona ?></li>
     </ul><!--.breadcrumb-->
  </div>

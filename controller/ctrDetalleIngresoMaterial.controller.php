@@ -8,6 +8,7 @@
     function __construct(){
     }
 
+    //ZR
     public function retornaDetalleRecion(){
       $id=$_POST['id'];
       $dim=new detalleIngMaterial();
@@ -26,6 +27,14 @@
       $id=$_POST['id'];
       $dim=new detalleIngMaterial();
       $rs=$dim->retornaDetalleSec($id);
+      echo json_encode($rs);
+    }
+
+    //ZA
+    public function retornaDetalleEmpaquetado(){
+      $id=$_POST['id'];
+      $dim=new detalleIngMaterial();
+      $rs=$dim->retornaDetalleEmp($id);
       echo json_encode($rs);
     }
   }

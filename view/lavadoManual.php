@@ -136,7 +136,7 @@
               <th>cantidad</th>
             </tr>
           </thead>
-          <tbody id="carUltrazonica">
+          <tbody id="carLavadora">
             <script type="text/template" id="tmpl-carga">
               <tr>
                 <th class="idCarga"></th>
@@ -152,13 +152,15 @@
   </div>
   <div class="form-actions">
     <button id="material" name="material" class="btn btn-info" type="button" onclick="registroLavManual()">
-      <i class="icon-ok bigger-110"></i>Agregar Material
+      <i class="icon-ok bigger-110"></i>Lavar
     </button>
-    <button id="set" class="btn btn-info" type="button" onclick="cancelar()">
+    <button id="set" class="btn btn-danger" type="button" onclick="cancelar()">
       <i class="icon-ok bigger-110"></i>Cancelar
     </button>
   </div>
 </div>
+<?php require_once ("view/alerts.php") ?>
+
 <div id="modal-table" class="modal hide fade" tabindex="-1">
   <div class="modal-header no-padding">
     <div class="table-header">

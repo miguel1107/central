@@ -1,5 +1,4 @@
 $().ready(function(){
-
   llenaCombo();
     function llenaCombo(){
       var data={

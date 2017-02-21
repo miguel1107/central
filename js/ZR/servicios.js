@@ -54,35 +54,46 @@ function guardarServicio(){
     m[4]=materiales[i].combo;
     mat.push(m);
   }
-  var options={
-    type : 'post',
-    url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialServicio',
-    data: {
-      'id' : id,
-      'idrec' : idrec,
-      'idserv' : idserv,
-      'total' : total,
-      'materiales' : mat
-    },
-  };
-  $.ajax(options)
-  .done(function(data) {
-    if(data==1){
-      alert("REGISTRO EXITOSO")
-      window.location="inicio.php";
-    }else{
-      alert("ERROR AL INSERTAR");
-    }
-  });
+  if (id=='') {
+    $('#contenidoWarning').text('Ingrese Empleado');
+    $("#alertWarning").modal('show');
+  }else if(idserv=='') {
+    $('#contenidoWarning').text('Ingrese Servicio');
+    $("#alertWarning").modal('show');
+  }else if (total=='0') {
+    console.log('cantidad');
+    $('#contenidoWarning').text('Ingrese materiales');
+    $("#alertWarning").modal('show');
+  } else{
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialServicio',
+      data: {
+        'id' : id,
+        'idrec' : idrec,
+        'idserv' : idserv,
+        'total' : total,
+        'materiales' : mat
+      },
+    };
+    $.ajax(options)
+    .done(function(data) {
+      if(data==1){
+        $('#contenidoExito').text('Registro Existoso!!');
+        $("#alertExito").modal('show');
+      }else{
+        $('#contenidoError').text('Error al insertar!!');
+        $("#alertError").modal('show');
+      }
+    });
+  }
 }
 
 function guardarMedicos(){
   var id=$('#idempleado').val();
   var idrec=$('#idrecibe').val();
   var total=$('#cantidadPz').val();
-
   var materiales=(window.IngresoMaterial.data.materiales);
-  //alert(total);
   var mat=[];
   for (var i = 0; i < materiales.length; i++) {
     var m=[];
@@ -93,25 +104,35 @@ function guardarMedicos(){
     m[4]=materiales[i].combo;
     mat.push(m);
   }
-  var options={
-    type : 'post',
-    url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialMedico',
-    data: {
-      'id' : id,
-      'idrec' : idrec,
-      'total' : total,
-      'materiales' : mat
-    },
-  };
-  $.ajax(options)
-  .done(function(data) {
-    if(data==1){
-      alert("REGISTRO EXITOSO")
-      window.location="inicio.php";
-    }else{
-      alert("ERROR AL INSERTAR");
-    }
-  });
+  if (id=='') {
+    $('#contenidoWarning').text('Ingrese Empleado');
+    $("#alertWarning").modal('show');
+  }else if (total=='0') {
+    console.log('cantidad');
+    $('#contenidoWarning').text('Ingrese materiales');
+    $("#alertWarning").modal('show');
+  }else{
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialMedico',
+      data: {
+        'id' : id,
+        'idrec' : idrec,
+        'total' : total,
+        'materiales' : mat
+      },
+    };
+    $.ajax(options)
+    .done(function(data) {
+      if(data==1){
+        $('#contenidoExito').text('Registro Existoso!!');
+        $("#alertExito").modal('show');
+      }else{
+        $('#contenidoError').text('Error al insertar!!');
+        $("#alertError").modal('show');
+      }
+    });
+  }
 }
 
 function guardarTerceros(){
@@ -120,7 +141,6 @@ function guardarTerceros(){
   var idrec=$('#idrecibe').val();
   var total=$('#cantidadPz').val();
   var materiales=(window.IngresoMaterial.data.materiales);
-  //alert(total);
   var mat=[];
   for (var i = 0; i < materiales.length; i++) {
     var m=[];
@@ -131,26 +151,39 @@ function guardarTerceros(){
     m[4]=materiales[i].combo;
     mat.push(m);
   }
-  var options={
-    type : 'post',
-    url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialTerceros',
-    data: {
-      'centro' : centro,
-      'res' : res,
-      'idrec' : idrec,
-      'total' : total,
-      'materiales' : mat
-    },
-  };
-  $.ajax(options)
-  .done(function(data) {
-    if(data==1){
-      alert("REGISTRO EXITOSO")
-      window.location="inicio.php";
-    }else{
-      alert("ERROR AL INSERTAR");
-    }
-  })
+  if (centro=='') {
+    $('#contenidoWarning').text('Ingrese Centro de Procedencia');
+    $("#alertWarning").modal('show');
+  }else if (res=='') {
+    $('#contenidoWarning').text('Ingrese Responsable');
+    $("#alertWarning").modal('show');
+  }else if (total=='0') {
+    console.log('cantidad');
+    $('#contenidoWarning').text('Ingrese materiales');
+    $("#alertWarning").modal('show');
+  }else{
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialTerceros',
+      data: {
+        'centro' : centro,
+        'res' : res,
+        'idrec' : idrec,
+        'total' : total,
+        'materiales' : mat
+      },
+    };
+    $.ajax(options)
+    .done(function(data) {
+      if(data==1){
+        $('#contenidoExito').text('Registro Existoso!!');
+        $("#alertExito").modal('show');
+      }else{
+        $('#contenidoError').text('Error al insertar!!');
+        $("#alertError").modal('show');
+      }
+    });
+  }
 }
 
 function guardarCasaComercial() {
@@ -170,26 +203,39 @@ function guardarCasaComercial() {
     m[4]=materiales[i].combo;
     mat.push(m);
   }
-  var options={
-    type : 'post',
-    url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialCasaComercial',
-    data: {
-      'centro' : centro,
-      'res' : res,
-      'idrec' : idrec,
-      'total' : total,
-      'materiales' : mat
-    },
-  };
-  $.ajax(options)
-  .done(function(data) {
-    if(data==1){
-      alert("REGISTRO EXITOSO")
-      window.location="inicio.php";
-    }else{
-      alert("ERROR AL INSERTAR");
-    }
-  })
+  if (res=='') {
+    $('#contenidoWarning').text('Ingrese Responsable');
+    $("#alertWarning").modal('show');
+  }else if (centro=='') {
+    $('#contenidoWarning').text('Ingrese Centro de Medico');
+    $("#alertWarning").modal('show');
+  }else if (total=='0') {
+    console.log('cantidad');
+    $('#contenidoWarning').text('Ingrese materiales');
+    $("#alertWarning").modal('show');
+  }else{
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrIngresoMaterial&a=regIngresoMaterialCasaComercial',
+      data: {
+        'centro' : centro,
+        'res' : res,
+        'idrec' : idrec,
+        'total' : total,
+        'materiales' : mat
+      },
+    };
+    $.ajax(options)
+    .done(function(data) {
+      if(data==1){
+        $('#contenidoExito').text('Registro Existoso!!');
+        $("#alertExito").modal('show');
+      }else{
+        $('#contenidoError').text('Error al insertar!!');
+        $("#alertError").modal('show');
+      }
+    });
+  }
 }
 
 function agregaMat() {
@@ -237,6 +283,14 @@ function guardarKit() {
   });
 }
 
+function cancelar() {
+  IngresoMaterial.cancelar();
+}
+
+function redireccionar() {
+  location.reload(true);
+}
+
 function cerrarModal() {
   while(window.IngresoMaterial.data.materialKit.length > 0) {
     window.IngresoMaterial.data.materialKit.pop();
@@ -244,4 +298,24 @@ function cerrarModal() {
   $('#nombreKit').val('');
   $('#cantidadPzKit').val('');
   $("#nuevo_kit").modal('hide');
+}
+
+function eliminarFila(id) {
+  window.IngresoMaterial.eliminarFila(id);
+}
+
+function ver(id) {
+  var materiales=(IngresoMaterial.data.materiales);
+  for (var i = 0; i <materiales.length; i++) {
+    if(id==i){
+      if (materiales[i].tipo=='Mat') {
+        $('#contenidoWarning').text('No se puede ver detalle');
+        $("#alertWarning").modal('show');
+      }else{
+        console.log(materiales[i].id);
+        $("#modal-table").modal('show');
+        window.IngresoMaterial.llenatabla(materiales[i].id,materiales[i].tipo);
+      }
+    }
+  }
 }

@@ -23,7 +23,7 @@ class ctrCargaLavadora{
     $rs=$cla->registroCargaLav($mat,$idLav,$tipo);
     if($rs=="true"){
       $rs2=$lav->actualizaEstado($idLav,'O');
-      $ingmat->entraSaleLav($iding,'P');
+      $ingmat->entraSaleLav($iding,'P',$tipo);
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();
@@ -73,6 +73,13 @@ class ctrCargaLavadora{
       $rpta = array();
     }
     echo count($rpta);
+  }
+
+  public function verCarga(){
+    $lav=$_POST['id'];
+    $la=new lavadora();
+    $rs=$la->verCarga($lav);
+    echo json_encode($rs);
   }
 
 }

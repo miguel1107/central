@@ -17,7 +17,7 @@ class detalleKit {
     $conexion=new cado();
 		$conexion->conectar();
     $l=count($mat);
-    $sql="INSERT INTO sisesterilizacion.detalle_kit(id_kit, id_material, cantidad, nombre_material) VALUES ";
+    $sql="INSERT INTO sisesterilizacion.detalle_kit(id_kit, id_material, piezas_material, nombre_mat) VALUES ";
     for ($i=0; $i <$l ; $i++) {
       $idMat=$mat[$i][0];
       $nombre=$mat[$i][2];
@@ -33,5 +33,11 @@ class detalleKit {
 		echo $rs;
   }
 
+  public function listadoDetallekit($id){
+    $stmt = $this->objPDO->prepare("SELECT * FROM sisesterilizacion.detalle_kit where id_kit='$id' order by nombre_mat asc");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
 }
 ?>

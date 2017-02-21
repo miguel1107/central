@@ -50,6 +50,13 @@ class ctrCargaUltrazonica{
     }
     echo count($rpta);
   }
+
+  public function verCarga(){
+    $ultra=$_POST['id'];
+    $ul=new ultrazonica();
+    $rs=$ul->verCarga($ultra);
+    echo json_encode($rs);
+  }
 }
 
 ?>

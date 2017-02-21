@@ -1,4 +1,4 @@
-<div id="nuevo_kit" class="modal fade" role="dialog">
+<div id="nuevo_kit" class="modal fade" role="dialog" >
   <form class="form-horizontal" onsubmit="return false;">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()">&times;</button>
@@ -18,10 +18,9 @@
       </div>
     </div>
     <div class="modal-body no-padding">
-      <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" style="height=300px;">
+      <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
         <thead>
           <tr>
-            <th>Tipo</th>
             <th>Codigo Material</th>
             <th>Material</th>
             <th>Cantidad</th>
@@ -31,10 +30,9 @@
         <tbody id="app-materialesKit">
           <script type="text/template" id="tmpl-materialKit">
             <tr id="material_detalle" >
-              <td class="tipoKit"></td>
-              <td><input type="text" id="codigoKit" name="codigoKit[]" value="" onkeypress="return soloNumeros(event);" ><input type="hidden" id="idKit" name="id[]" value="" ></td>
+              <td><input type="text" id="codigoKit" name="codigoKit[]"  style="width:50px;" value="" onkeypress="return soloNumeros(event);" ><input type="hidden" id="idKit" name="id[]" value="" ></td>
               <td><input type="text" id="nombreKit" name="nombreKit[]" ></td>
-              <td><input type="text"id="cantidadKit" name="cantidadKit[]" onkeypress="return soloNumeros(event);"></td>
+              <td><input type="text"id="cantidadKit" name="cantidadKit[]" onkeypress="return soloNumeros(event);" style="width:10px;"></td>
               <td class="td-actions">
                 <div class="action-buttons">
                   <a class="red" id="eliminarKit">

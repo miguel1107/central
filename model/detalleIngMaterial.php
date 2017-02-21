@@ -51,7 +51,7 @@ class detalleIngMaterial {
     }
   }
 
-//ultrazonica
+//ZR-ultrazonica
   public function retornaDetalle($id){
     $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$id."' and ultrazonica='FALSE';");
     $stmt->execute();
@@ -115,7 +115,7 @@ class detalleIngMaterial {
     return $can;
   }
 
-//lavadoras
+//ZR-lavadoras
   public function retornaDetalleLav($id){
     $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle FROM sisesterilizacion.detalle_ingmaterial where ultrazonica='TRUE' and lv_mecanico='FALSE' and lv_manual='FALSE' and id_ingreso_material='".$id."' ;");
     $stmt->execute();
@@ -129,7 +129,7 @@ class detalleIngMaterial {
     if($tipo=="LA"){
         $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='LAM',lv_mecanico='TRUE',procesozr='".$estado."'  WHERE id_detalle='".$iddet."';";
     }else{
-      $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='LAM',lv_mecanico='TRUE',sec_mecanico='TRUE',procesozr='".$estado."'  WHERE id_detalle='".$iddet."';";
+      $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='SEC',lv_mecanico='TRUE',sec_mecanico='TRUE',procesozr='".$estado."'  WHERE id_detalle='".$iddet."';";
     }
     $rs=pg_query($sql) or die(false);
     if($rs==true){
@@ -196,7 +196,7 @@ class detalleIngMaterial {
   public function actualizaLavadoraManual($iddet,$estado){
     $conexion=new cado();
     $conexion->conectar();
-    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='LAM',lv_mecanico='FALSE',lv_manual='TRUE',procesozr='".$estado."'  WHERE id_detalle='".$iddet."';";
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='LAM',lv_mecanico='FALSE',lv_manual='TRUE',procesozr='T'  WHERE id_detalle='".$iddet."';";
     $rs=pg_query($sql) or die(false);
     if($rs==true){
       return "true";
@@ -205,7 +205,7 @@ class detalleIngMaterial {
     }
   }
 
-//secadora
+//ZR-secadora
   public function retornaDetalleSec($id){
     $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle FROM sisesterilizacion.detalle_ingmaterial where sec_mecanico='FALSE' and sec_manual='FALSE' and id_ingreso_material='".$id."' ;");
     $stmt->execute();
@@ -284,6 +284,14 @@ class detalleIngMaterial {
     }else{
       return "false";
     }
+  }
+
+  //ZA-empaquetado
+  public function retornaDetalleEmp($id){
+    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle,codigo_est FROM sisesterilizacion.detalle_ingmaterial where ubicacion='SEC' and procesozr='T' and id_ingreso_material='".$id."' ;");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
   }
 }
 ?>

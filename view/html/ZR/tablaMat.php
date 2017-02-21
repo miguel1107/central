@@ -19,7 +19,7 @@
                 <td class="tipo"></td>
                 <td><input type="text" id="codigo" name="codigo[]" value="" onkeypress="return soloNumeros(event);" ><input type="hidden" id="id" name="id[]" value="" ></td>
                 <td><input type="text" id="nombre" name="nombre[]" ></td>
-                <td><input type="text" id="cantidad" name="cantidad[]" onkeypress="return soloNumeros(event);"></td>
+                <td><input type="text" id="cantidad" name="cantidad[]" onkeypress="return soloNumeros(event);"><input type="hidden" id="cantidadMat" name="cantidadMat[]" ></td>
                 <td>
                   <select name="SelectTipo" id="form-field-select-1">
 
@@ -27,8 +27,11 @@
                 </td>
                 <td class="td-actions">
                   <div class="action-buttons">
-                    <a class="red" id="eliminar">
+                    <a class="red" id="eliminar" onclick="eliminarFila(id);" role="button" title="Eliminar">
                       <i class="icon-trash bigger-130"></i>
+                    </a>
+                    <a class="green" id="ver" title="Ver Detalle" onclick="ver(id)" role="button" >
+                      <i class="icon-eye-open"></i>
                     </a>
                   </div>
                 </td>

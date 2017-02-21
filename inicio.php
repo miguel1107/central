@@ -38,8 +38,6 @@
 			<?php
 				require_once("nav.php");
 			?>
-
-
 			<div class="main-content">
 				<?php
 				$menu = $_GET['menu'];
@@ -55,20 +53,7 @@
 		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
 			<i class="icon-double-angle-up icon-only bigger-110"></i>
 		</a>
-
-		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
 		<script src="assets/js/jquery.min.js"></script>
-		<!--<![endif]-->
-
-		<!--[if IE]>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<![endif]-->
-
-		<!--[if !IE]>-->
-
-		<!--<script type="text/javascript">
-			window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
-		</script>-->
 		<script src="assets/js/jquery-2.0.3.min.js"></script>
 		<script type="text/javascript">
 			window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");

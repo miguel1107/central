@@ -1,28 +1,25 @@
 <?php
-  require_once 'model/detalleIngMaterial.php';
-  require_once 'model/ingresoMaterial.php';
-  require_once 'model/lavadora.php';
-  $ctr=new ingresoMaterial();
-  $ctr2=new detalleIngMaterial();
-  $ctr3=new lavadora();
-  $ls=$ctr->listaRepcionesParaLavadora();
-  $lsn=$ctr->listaRecepcionesEnProcesoLav();
-  $d=$ctr->inicioLavadora();
-  $lsl=$ctr3->retornaLavadoras();
-  $lsocu=$ctr3->retornaLavadorasOcupadas();
+require_once 'model/detalleIngMaterial.php';
+require_once 'model/ingresoMaterial.php';
+require_once 'model/secadora.php';
+$ctr=new ingresoMaterial();
+$ctr2=new detalleIngMaterial();
+$ctr3=new secadora();
+$ls=$ctr->listaRecepcionesEmpaquetado();
+$lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
+//$d=$ctr->inicioSecadora();
+//$lsl=$ctr3->retornaSecadoras();
+//$lsocu=$ctr3->retornaSecadorasOcupadas();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
-  <div class="progress progress-pink progress-striped active">
-    <div class="bar" style="width: 100%"></div>
-  </div>
   <ul class="breadcrumb">
-      <li>
-          <a href="#">Ingreso de material</a>
-          <span class="divider">
-              <i class="icon-angle-right arrow-icon"></i>
-          </span>
-      </li>
-      <li class="active">Carga Lavadora</li>
+    <li>
+        <a href="#">Zona Azul</a>
+        <span class="divider">
+            <i class="icon-angle-right arrow-icon"></i>
+        </span>
+    </li>
+    <li class="active">Empaquetado</li>
   </ul><!--.breadcrumb-->
 </div>
 <div class="page-content">
@@ -43,14 +40,15 @@
       <tbody>
         <tr>
           <th colspan="5">
-            Recepciones Libres
+            Libres
           </th>
         </tr>
         <?php
+        if (count($ls)>0) {
         foreach ($ls as $lsr2){
           $id=$lsr2->id_ingreso;
           $pro=$lsr2->tipo_propietario;
-          $ls2=$ctr->retornaRecpcionLavadora($id,$pro);
+          $ls2=$ctr->retornaRecpcionEmpaquetado($id,$pro);
           foreach ($ls2 as $lsr3) {
         ?>
         <tr>
@@ -75,8 +73,8 @@
           <td><?php echo $lsr3->descripcion; ?></td>
           <td class="td-actions">
             <div class="action-buttons">
-              <a href="javascript" onclick="ver(<?php echo $id ?>)" role="button" class="green" data-toggle="modal">
-                <i class="icon-hand-right icon-animated-hand-pointer blue"></i>
+              <a href="javascript" title="Ver Detalle" onclick="ver(<?php echo $id ?>)" role="button" class="green" data-toggle="modal">
+                <i class="icon-eye-open"></i>
               </a>
             </div>
           </td>
@@ -84,18 +82,21 @@
         <?php
           }
         }
+      }
         ?>
         <tr>
           <th colspan="5">
-            Recepciones en proceso
+            Recepciones en Proceso
           </th>
         </tr>
         <?php
+        if(count($lsn)>0){
         foreach ($lsn as $lsr2n){
           $idn=$lsr2n->id_ingreso;
           $pron=$lsr2n->tipo_propietario;
-          $ls2n=$ctr->retornaRecpcionLavadoraProceso($idn,$pron);
-          foreach ($ls2n as $lsr3n) {
+          $lsm=$ctr->retornaRecpcionEmpaquetadoProceso($idn,$pron);
+          if (count($lsm)>0) {
+          foreach ($lsm as $lsr3n) {
         ?>
         <tr>
           <td><?php echo $idn; ?></td>
@@ -104,7 +105,7 @@
             echo date_format($fen, 'd-m-Y (H:i:s)'); ?>
           </td>
           <td><?php
-            $sn=$lsr3n->prop;
+            $sn=$lsr3->prop;
             if($sn=='S'){
               echo "Servicio";
             }elseif ($sn=='M') {
@@ -119,15 +120,20 @@
           <td><?php echo $lsr3n->descripcion; ?></td>
           <td class="td-actions">
             <div class="action-buttons">
-              <a href="javascript" onclick="ver(<?php echo $idn ?>)" role="button" class="green" data-toggle="modal">
-                <i class="icon-hand-right icon-animated-hand-pointer blue"></i>
+              <a href="javascript" title="Ver Detalle" onclick="ver(<?php echo $id ?>)" role="button" class="green" data-toggle="modal">
+                <i class="icon-eye-open"></i>
               </a>
+              <!-- <a href="javascript" onclick="ver(<?php echo $id ?>)" role="button" class="green" data-toggle="modal">
+                <i class="icon-hand-right icon-animated-hand-pointer blue"></i>
+              </a> -->
             </div>
           </td>
         </tr>
         <?php
           }
         }
+      }
+      }
         ?>
       </tbody>
     </table>
@@ -137,93 +143,77 @@
     <div class="span6">
       <div class="widget-box">
         <div class="widget-header">
-          <h4 class="smaller">Carga Lavadora</h4>
+          <h4 class="smaller">MATERIAL PARA VPRO</h4>
         </div>
         <div class="widget-body">
           <div class="widget-main">
             <table class="table table-striped table-bordered table-hover dataTable dt-responsive">
               <thead>
                 <tr>
+                  <th>Empacar</th>
                   <th>Id</th>
                   <th>Tipo</th>
                   <th>Descripcion</th>
-                  <th>cantidad</th>
+                  <th>Cantidad de materiales</th>
+                  <th>Cantidad a empacar</th>
                 </tr>
               </thead>
-              <tbody id="carLavadora">
-                <script type="text/template" id="tmpl-carga">
+              <tbody id="carVpro">
+                <script type="text/template" id="tmpl-empaca">
+                  <tr><th colspan="6"class="paquete"></th></tr>
                   <tr>
+                    <th class="check"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th>
                     <th class="idCarga"></th>
                     <th class="tipoCarga"></th>
                     <th class="descripcionCarga"></th>
                     <th class="cantidadCarga"></th>
+                    <th><input type="text" id="cantEmpacar" value="" disabled="true"  style="width: 20px;"></th>
                   </tr>
                 </script>
               </tbody>
             </table>
             <hr>
-            <div class="controls">
-              <label class="control-label" for="form-field-1">Seleccion un tipo: </label>
-              <select class="redondear" id="lavadoraTipo" name="lavadoraTipo">
-                <option value="0"> --Escoja Proceso-- </option>
-                <option value="LA"> Lavado </option>
-                <option value="LS"> Lavado y secado </option>
-              </select>
-						</div>
           </div>
         </div>
       </div>
-    </div><!--/span-->
+    </div>
     <div class="span6">
       <div class="widget-box">
         <div class="widget-header">
-          <h4 class="smaller">Lavadoras</h4>
+          <h4 class="smaller">MATERIAL PARA AUTOCLAVE</h4>
         </div>
         <div class="widget-body">
           <div class="widget-main">
-            <div class="control-gropup">
-              <label class="control-label" for="form-field-1">Lavadoras Disponibles: </label>
-              <div class="controls">
-                <select class="redondear" id="lavadora" name="lavadora">
-                  <option value="0">--Escoja Lavadora--</option>
-                  <?php foreach ($lsl as $lav) { ?>
-                    <option value="<?php echo $lav->id_lavadora ?>"> <?php echo $lav->nombre_lavadora; ?></option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-            <div class="control-gropup">
-              <label class="control-label" for="form-field-1">ultrazonicas Ocupadas: </label>
-              <div class="controls">
-                <div class="tags">
-                  <?php foreach ($lsocu as $ocupa) { ?>
-                    <span class="tag"><?php echo $ocupa->nombre_lavadora ?>
-                      <button type="button" class="close" onclick="desocupaLavadora(<?php echo $ocupa->id_lavadora ?>)">×</button>
-                    </span>
-                    <a href="javascript" title="Ver carga" onclick="verCarga(<?php echo $ocupa->id_lavadora ?>)" role="button" class="green" data-toggle="modal">
-                      <i class="icon-eye-open"></i>
-                    </a>
-                  <?php } ?>
-                </div>
-              </div>
-            </div>
+            <table class="table table-striped table-bordered table-hover dataTable dt-responsive">
+              <thead>
+                <tr>
+                  <th>Empacar</th>
+                  <th>Id</th>
+                  <th>Tipo</th>
+                  <th>Descripcion</th>
+                  <th>Cantidad de materiales</th>
+                  <th>Cantidad a empacar</th>
+                </tr>
+              </thead>
+              <tbody id="carAu">
+              </tbody>
+            </table>
+            <hr>
           </div>
         </div>
-      </div><!--/span-->
+      </div>
     </div>
   </div>
   <div class="form-actions">
-    <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCarga()">
-      <i class="icon-ok bigger-110"></i>Agregar Carga Lavadora
+    <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCargaSec()">
+      <i class="icon-ok bigger-110"></i>Empacar
     </button>
-    <button id="set" class="btn btn-danger" type="button" onclick="cancelar()">
+    <button id="set" class="btn btn-info" type="button" onclick="cancelar()">
       <i class="icon-ok bigger-110"></i>Cancelar
     </button>
   </div>
 </div>
 
-<?php require_once ("view/alerts.php") ?>
-<?php require_once ("view/html/ZR/vercarga.php") ?>
 <div id="modal-table" class="modal hide fade" tabindex="-1">
   <div class="modal-header no-padding">
     <div class="table-header">
@@ -236,16 +226,14 @@
       <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
         <thead>
           <tr>
-            <th>Estado</th>
             <th>Tipo</th>
             <th>Descripcion</th>
             <th>Cantidad</th>
           </tr>
         </thead>
-        <tbody id="detalleIngMaterial">
-          <script type="text/template" id="tmpl-detalle">
+        <tbody id="detalleEmpaque">
+          <script type="text/template" id="tmpl-empaque">
             <tr>
-              <th class="check"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th>
               <th class="tipo"></th>
               <th class="descripcion"></th>
               <th class="cantidad"></th>
@@ -256,22 +244,23 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-small pull-left" id="enviar" type="button" onclick="llenaCargaLav()">
+    <button class="btn btn-small pull-left" id="enviar" type="button" onclick="llenaCargaEmp()">
       <i class="icon-ok bigger-110"></i>
-      Guardar
+      Empacar
     </button>
-    <button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="lavadora.cancelar();return false">
+    <button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="empaque.cancelar();return false">
       <i class="icon-remove"></i>
       Close
     </button>
   </div>
 </div>
 
+
 <script src="assets/js/jquery-2.0.3.min.js"></script>
-<script src="js/ZR/lavadora.js"></script>
-<script src="js/ZR/appLavadora.js"></script>
+<script src="js/ZA/empaquetado.js"></script>
+<script src="js/ZA/appEmpaquetado.js"></script>
 <script>
   $(document).ready(function(){
-    window.lavadora.init();
+    window.empaque.init();
   });
 </script>

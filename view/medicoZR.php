@@ -5,15 +5,18 @@
   $id=$_SESSION["idusuario"];
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
-    <ul class="breadcrumb">
-        <li>
-            <a href="#">Ingreso de material</a>
-            <span class="divider">
-                <i class="icon-angle-right arrow-icon"></i>
-            </span>
-        </li>
-        <li class="active">Medico</li>
-    </ul><!--.breadcrumb-->
+  <div class="progress progress-pink progress-striped active">
+    <div class="bar" style="width: 100%"></div>
+  </div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="#">Ingreso de material</a>
+      <span class="divider">
+        <i class="icon-angle-right arrow-icon"></i>
+      </span>
+    </li>
+    <li class="active">Medico</li>
+  </ul><!--.breadcrumb-->
 </div>
 <div  class="page-content">
   <input type="hidden" name="idrecibe" id="idrecibe" value="<?php echo $id; ?>">
@@ -35,17 +38,22 @@
   <div class="control-group">
     <label class="control-label" for="form-field-1" >Total Piezas: </label>
     <div class="controls">
-      <input type="text" id="cantidadPz" disabled="true">
+      <input type="text" id="cantidadPz" disabled="true" value="0">
     </div>
   </div>
   <div class="form-actions">
     <button id="material" name="material" class="btn btn-info" type="button" onclick="guardarMedicos()" >
       <i class="icon-ok bigger-110"></i>Ingresar
     </button>
+    <button name="material" class="btn btn-danger" type="button" onclick="cancelar()">
+      <i class="icon-ok bigger-110"></i>Cancelar
+    </button>
   </div>
 </div>
 
+<?php require_once ("view/html/ZR/modDetalleSetKit.php") ?>
 <?php require_once ("view/html/ZR/modingresomatZR.php") ?>
+<?php require_once ("view/alerts.php") ?>
 
 <script src="assets/js/jquery-2.0.3.min.js"></script>
 

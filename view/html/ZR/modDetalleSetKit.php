@@ -10,19 +10,17 @@
       <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
         <thead>
           <tr>
-            <th></th>
-            <th>Codigo/Id</th>
+            <th>Tipo</th>
             <th>Descripcion</th>
-            <th>Cantidad</th>
+            <th >Cantidad</th>
           </tr>
         </thead>
-        <tbody id="detalleIngMaterial">
+        <tbody id="detalle">
           <script type="text/template" id="tmpl-detalle">
             <tr>
-              <th><input name="form-field-checkbox" type="checkbox" style="opacity:1;"></th>
-              <th>33</th>
-              <th>33</th>
-              <th>33</th>
+              <th class="tipo"></th>
+              <th class="descripcion"></th>
+              <th class="cantidad"></th>
             </tr>
           </script>
         </tbody>
@@ -30,7 +28,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-small btn-danger pull-left" data-dismiss="modal">
+    <button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="">
       <i class="icon-remove"></i>
       Close
     </button>
