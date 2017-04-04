@@ -8,6 +8,7 @@
                 <th>Tipo</th>
                 <th>Codigo Material</th>
                 <th>Material</th>
+                <th>Cantidad de materiales</th>
                 <th>Cantidad</th>
                 <th>Tipo Este.</th>
                 <th>Accion</th>
@@ -19,7 +20,8 @@
                 <td class="tipo"></td>
                 <td><input type="text" id="codigo" name="codigo[]" value="" onkeypress="return soloNumeros(event);" ><input type="hidden" id="id" name="id[]" value="" ></td>
                 <td><input type="text" id="nombre" name="nombre[]" ></td>
-                <td><input type="text" id="cantidad" name="cantidad[]" onkeypress="return soloNumeros(event);"><input type="hidden" id="cantidadMat" name="cantidadMat[]" ></td>
+                <td><input type="text" id="cantidadMat" style="width:25px" name="cantidadMat[]" readonly></td>
+                <td><input type="text" id="cantidad" name="cantidad[]"  style="width:25px" onkeypress="return soloNumeros(event);"></td>
                 <td>
                   <select name="SelectTipo" id="form-field-select-1">
 

@@ -79,7 +79,6 @@ window.lavadora={
           $("#modal-table").modal('show');
         }
       });
-
     }
   },
 

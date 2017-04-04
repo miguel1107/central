@@ -12,6 +12,9 @@ $lsl=$ctr3->retornaSecadoras();
 $lsocu=$ctr3->retornaSecadorasOcupadas();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
+  <div class="progress progress-pink progress-striped active">
+    <div class="bar" style="width: 100%"></div>
+  </div>
   <ul class="breadcrumb">
       <li>
           <a href="#">Ingreso de material</a>
@@ -180,6 +183,7 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
               <label class="control-label" for="form-field-1">Secadoras Disponibles: </label>
               <div class="controls">
                 <select class="redondear" id="secadora" name="secadora">
+                  <option value="0">--Seleccione Secadora--</option>
                   <?php foreach ($lsl as $sec) { ?>
                     <option value="<?php echo $sec->id_secadora ?>"> <?php echo $sec->nombre_secadora; ?></option>
                   <?php } ?>
@@ -207,11 +211,13 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
     <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCargaSec()">
       <i class="icon-ok bigger-110"></i>Agregar Carga Secadora
     </button>
-    <button id="set" class="btn btn-info" type="button" onclick="cancelar()">
+    <button id="set" class="btn btn-danger" type="button" onclick="cancelar()">
       <i class="icon-ok bigger-110"></i>Cancelar
     </button>
   </div>
 </div>
+<?php require_once ("view/alerts.php") ?>
+<?php require_once ("view/html/ZR/vercarga.php") ?>
 <div id="modal-table" class="modal hide fade" tabindex="-1">
   <div class="modal-header no-padding">
     <div class="table-header">

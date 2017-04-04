@@ -110,10 +110,10 @@ function registroLavManual(){
     };
     $.ajax(options).done(function(data){
       if(data==1){
-        $('#contenidoExito').text('Descarga Existosa!!');
+        $('#contenidoExito').text('Registro Correcto!!');
         $("#alertExito").modal('show');
       }else{
-        $('#contenidoError').text('Error al Descargar!!');
+        $('#contenidoError').text('Error al Insertar!!');
         $("#alertError").modal('show');
       }
     })

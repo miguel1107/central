@@ -1,5 +1,4 @@
 function ver(id){
-  $("#modal-table").modal('show');
   window.secadora.llenatabla(id);
 }
 
@@ -16,32 +15,42 @@ function registroCargaSec(){
   var materiales=(window.secadora.data.materiales);
   var iding=(window.secadora.data.iding);
   var mat=[];
+  var aux=0;
   var secadora=$('#secadora').val();
   for (var i = 0; i < materiales.length; i++) {
     if(materiales[i].estado=="TRUE"){
+      aux=1;
       var m=[];
       m[0]=materiales[i].idDetalle;
       mat.push(m);
     }
   }
-  var options={
-    type : 'post',
-    url : 'index.php?c=ctrCargaSecadora&a=registraCargaSec',
-    data: {
-      'iding' : iding,
-      'secadora' : secadora,
-      'materiales' : mat
-    },
-  };
-  $.ajax(options).done(function(data){
-    if(data==1){
-      alert("REGISTRO CORRECTO");
-      window.location="inicio.php?menu=cargaSecadora";
-    }else{
-      alert("ERROR AL INSERTAR");
-    }
-  })
-
+  if (aux==0) {
+    $('#contenidoWarning').text('No seleccionó ningun material para la carga');
+    $("#alertWarning").modal('show');
+  }else if (secadora=='0') {
+    $('#contenidoWarning').text('Escoja Secadora');
+    $("#alertWarning").modal('show');
+  }else{
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrCargaSecadora&a=registraCargaSec',
+      data: {
+        'iding' : iding,
+        'secadora' : secadora,
+        'materiales' : mat
+      },
+    };
+    $.ajax(options).done(function(data){
+      if(data==1){
+        $('#contenidoExito').text('Registro Correcto!!');
+        $("#alertExito").modal('show');
+      }else{
+        $('#contenidoError').text('Error al Insertar!!');
+        $("#alertError").modal('show');
+      }
+    })
+  }
 }
 
 function desocupaSecadora(id) {
@@ -54,40 +63,53 @@ function desocupaSecadora(id) {
   };
   $.ajax(options).done(function (data) {
     if(data==1){
-      alert("DECARGA EXITOSA");
-      window.location="inicio.php?menu=cargaSecadora";
+      $('#contenidoExito').text('Descarga Existosa!!');
+      $("#alertExito").modal('show');
     }else{
-      alert("ERROR AL DESARGAR");
+      $('#contenidoError').text('Error al Descargar!!');
+      $("#alertError").modal('show');
     }
-  });
+  })
 }
 
 function registroSecManual(){
   var materiales=(window.secadora.data.materiales);
   var iding=(window.secadora.data.iding);
   var mat=[];
+  var aux=0;
   for (var i = 0; i < materiales.length; i++) {
     if(materiales[i].estado=="TRUE"){
+      aux=1;
       var m=[];
       m[0]=materiales[i].idDetalle;
       mat.push(m);
     }
   }
-  var options={
-    type : 'post',
-    url : 'index.php?c=ctrCargaSecadora&a=registroCargaSecMan',
-    data: {
-      'iding' : iding,
-      'materiales' : mat
-    },
-  };
-  $.ajax(options).done(function(data){
-    if(data==1){
-      alert("REGISTRO CORRECTO");
-      window.location="inicio.php?menu=secadoManual";
-    }else{
-      alert("ERROR AL INSERTAR");
-    }
-  })
+  if (aux=='0') {
+    $('#contenidoWarning').text('No seleccionó ningun material para la carga');
+    $("#alertWarning").modal('show');
+  }else{
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrCargaSecadora&a=registroCargaSecMan',
+      data: {
+        'iding' : iding,
+        'materiales' : mat
+      },
+    };
+    $.ajax(options).done(function(data){
+      if(data==1){
+        $('#contenidoExito').text('Registro Correcto!!');
+        $("#alertExito").modal('show');
+      }else{
+        $('#contenidoError').text('Error al Insertar!!');
+        $("#alertError").modal('show');
+      }
+    })
+  }
 
+}
+
+function redireccionar() {
+  location.reload(true);
 }

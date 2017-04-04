@@ -3,15 +3,35 @@ function abreModal() {
 }
 
 function suma(a){
-  var suma = 0;
+  var suma = 0
+  var mat=[];
+  var canmat=[]
   $("input[name='"+a+"[]']").each(function(i){
     if(isNaN(parseInt($(this).val()))){
       var a = 0;
     }else{
       var  a = parseFloat($(this).val());
     }
-    suma += a;
+    mat.push(a);
   });
+  $("input[name='cantidadMat[]']").each(function(i){
+    if(isNaN(parseInt($(this).val()))){
+      var b = 0;
+    }else{
+      var  b = parseFloat($(this).val());
+    }
+    canmat.push(b);
+  });
+  var mult=[];
+  for (var i = 0; i < mat.length; i++) {
+    var s=mat[i];
+    var s1=canmat[i];
+    var mul=parseInt(s)*parseInt(s1);
+    mult.push(mul);
+  }
+  for (var i = 0; i < mult.length; i++) {
+    suma += mult[i];
+  }
   return suma;
 }
 
@@ -50,8 +70,9 @@ function guardarServicio(){
     m[0]=materiales[i].tipo;
     m[1]=materiales[i].id;
     m[2]=materiales[i].material;
-    m[3]=materiales[i].cantidad;
+    m[3]=materiales[i].cantidadMat;
     m[4]=materiales[i].combo;
+    m[5]=materiales[i].cantidad;
     mat.push(m);
   }
   if (id=='') {
@@ -100,8 +121,9 @@ function guardarMedicos(){
     m[0]=materiales[i].tipo;
     m[1]=materiales[i].id;
     m[2]=materiales[i].material;
-    m[3]=materiales[i].cantidad;
+    m[3]=materiales[i].cantidadMat;
     m[4]=materiales[i].combo;
+    m[5]=materiales[i].cantidad;
     mat.push(m);
   }
   if (id=='') {
@@ -147,8 +169,9 @@ function guardarTerceros(){
     m[0]=materiales[i].tipo;
     m[1]=materiales[i].id;
     m[2]=materiales[i].material;
-    m[3]=materiales[i].cantidad;
+    m[3]=materiales[i].cantidadMat;
     m[4]=materiales[i].combo;
+    m[5]=materiales[i].cantidad;
     mat.push(m);
   }
   if (centro=='') {
@@ -199,8 +222,9 @@ function guardarCasaComercial() {
     m[0]=materiales[i].tipo;
     m[1]=materiales[i].id;
     m[2]=materiales[i].material;
-    m[3]=materiales[i].cantidad;
+    m[3]=materiales[i].cantidadMat;
     m[4]=materiales[i].combo;
+    m[5]=materiales[i].cantidad;
     mat.push(m);
   }
   if (res=='') {
@@ -268,19 +292,14 @@ function guardarKit() {
   console.log(options.data.nomKit);
   $.ajax(options)
   .done(function(data) {
-    //Cuando todo es correcto
-    alert(data);
-    cerrarModal();
-    //window.location="inicio.php";
-    console.log(data);
+    if(data==1){
+      $('#contenidoExito').text('Registro Existoso!!');
+      $("#alertExito").modal('show');
+    }else{
+      $('#contenidoError').text('Error al insertar!!');
+      $("#alertError").modal('show');
+    }
   })
-  .fail(function(xhr) {
-    alert('Hubo un error al guardar :(');
-    console.log(xhr.responseText);
-  })
-  .always(function() {
-    //Se ejecuta en ambos casos después de la respuesta
-  });
 }
 
 function cancelar() {

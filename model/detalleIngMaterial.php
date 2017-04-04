@@ -17,28 +17,29 @@ class detalleIngMaterial {
     $conexion=new cado();
 		$conexion->conectar();
     $l=count($mat);
-    $sql="INSERT INTO sisesterilizacion.detalle_ingmaterial(id_ingreso_material, tipo_ingreso, id_mat, cantidad_material, codigo_est, ubicacion, procesozr, procesoza,id_set,id_kit,descripcion,ultrazonica,lv_mecanico,lv_manual,sec_mecanico,sec_manual) VALUES ";
+    $sql="INSERT INTO sisesterilizacion.detalle_ingmaterial(id_ingreso_material, tipo_ingreso, id_mat, cantidad_material, codigo_est, ubicacion, procesozr, procesoza,id_set,id_kit,descripcion,ultrazonica,lv_mecanico,lv_manual,sec_mecanico,sec_manual,cantidad_tipo) VALUES ";
     for ($i=0; $i <$l ; $i++) {
       $tipo=$mat[$i][0];
       $idMatSet=$mat[$i][1];
       $descripcion=$mat[$i][2];
       $numPiezas=$mat[$i][3];
       $tipoEste=$mat[$i][4];
+      $cantipo=$mat[$i][5];
       if ($i==0) {
         if($tipo=='Set'){
-          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
         }elseif($tipo=='Mat'){
-          $stringInser="('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser="('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
         }else{
-          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
         }
       }else{
         if($tipo=='Set'){
-          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
         }elseif($tipo=='Mat'){
-          $stringInser=",('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser=",('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
         }else{
-          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE')";
+          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
         }
       }
       $sql=$sql.$stringInser;

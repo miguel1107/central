@@ -85,6 +85,7 @@ window.IngresoMaterial={
             $fi.find('#codigo').val(ui.item.id_set);
             $fi.find('#nombre').val(ui.item.nombre_set);
             $fi.find('#cantidad').val('1');
+            $fi.find('#cantidadMat').val(ui.item.total_piezas);
             $('#cantidadPz').val(suma('cantidad'));
           },
         });
@@ -100,6 +101,9 @@ window.IngresoMaterial={
             $fi.find('#id').val(ui.item.id_mat);
             $fi.find('#codigo').val(ui.item.codigo_mat);
             $fi.find('#nombre').val(ui.item.material);
+            $fi.find('#cantidad').val('1');
+            $fi.find('#cantidadMat').val('1');
+            $('#cantidadPz').val(suma('cantidad'));
           },
         });
       }else {
@@ -116,6 +120,7 @@ window.IngresoMaterial={
             $fi.find('#codigo').val(ui.item.id_kit);
             $fi.find('#nombre').val(ui.item.descripcion);
             $fi.find('#cantidad').val('1');
+            $fi.find('#cantidadMat').val(ui.item.num_materiales);
             $('#cantidadPz').val(suma('cantidad'));
           },
         });
@@ -128,7 +133,7 @@ window.IngresoMaterial={
 
     $fila.find("input[name='cantidad[]']").blur(function(){
       if(self.data.materiales[index].tipo=='Mat'){
-          self.data.materiales[index].cantidadMat = $(this).val();
+          self.data.materiales[index].cantidad = $(this).val();
       }
       self.data.materiales[index].cantidad = $(this).val();
       $('#cantidadPz').val(suma('cantidad'));
@@ -155,7 +160,7 @@ window.IngresoMaterial={
       material : '',
       combo : 'AU',
       cantidad : 0,
-      cantidadMat : 0
+      cantidadMat : 1
     };
     self.data.materiales.push(m);
     self.render();
@@ -169,7 +174,7 @@ window.IngresoMaterial={
       id : '',
       material : '',
       combo : 'AU',
-      cantidad : 0,
+      cantidad : 1,
       cantidadMat : 0
     };
     self.data.materiales.push(m);

@@ -55,18 +55,25 @@ window.secadora={
         for(var x in parsed){
           arr.push(parsed[x]);
         }
-        for (var i = 0; i < arr.length; i++) {
-          var m={
-            idDetalle : arr[i].id_detalle,
-            estado :'FALSE',
-            tipo : arr[i].tipo_ingreso,
-            descripcion : arr[i].descripcion,
-            cantidad : arr[i].cantidad_material
-          };
-          self.data.materiales.push(m);
+        if (arr.length==0) {
+          debugger;
+          $('#contenidoWarning').text('Esperando descarga');
+          $("#alertWarning").modal('show');
+        }else{
+          for (var i = 0; i < arr.length; i++) {
+            var m={
+              idDetalle : arr[i].id_detalle,
+              estado :'FALSE',
+              tipo : arr[i].tipo_ingreso,
+              descripcion : arr[i].descripcion,
+              cantidad : arr[i].cantidad_material
+            };
+            self.data.materiales.push(m);
+          }
+          self.data.servicio='true';
+          self.render();
+          $("#modal-table").modal('show');
         }
-        self.data.servicio='true';
-        self.render();
       });
     }
   },

@@ -6,6 +6,9 @@
   $lsn=$ctr->listaRecepcionesEnProcesoLav();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
+  <div class="progress progress-pink progress-striped active">
+    <div class="bar" style="width: 100%"></div>
+  </div>
   <ul class="breadcrumb">
       <li>
           <a href="#">Ingreso de material</a>
