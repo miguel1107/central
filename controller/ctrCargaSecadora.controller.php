@@ -12,14 +12,14 @@ class ctrCargaSecadora{
   public function registraCargaSec(){
     $mat=$_POST['materiales'];
     $idsec=$_POST['secadora'];
-    $iding=$_POST['iding'];
+    //$iding=$_POST['iding'];
     $csec=new cargaSecadora();
     $sec=new secadora();
-    $ingmat=new ingresoMaterial();
+    //$ingmat=new ingresoMaterial();
     $rs=$csec->registroCargaSec($mat,$idsec);
     if($rs=="true"){
       $rs2=$sec->actualizaEstadoSec($idsec,'O');
-      $ingmat->entraSaleSec($iding,'P');
+      //$ingmat->entraSaleSec($iding,'P');
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();
@@ -52,18 +52,19 @@ class ctrCargaSecadora{
     $mat=$_POST['materiales'];
     $det=new detalleIngMaterial();
     $ingmat=new ingresoMaterial();
-    $iding=$_POST['iding'];
+    //$iding=$_POST['iding'];
     $l=count($mat);
     $aux=0;
     for ($i=0; $i < $l ; $i++) {
       $iddet=$mat[$i][0];
+      $iding=$mat[$i][1];
+      $ingmat->entraSaleSec($iding,'P');
       $rs=$det->actualizaSecadoManual($iddet,'T');
       if($rs=="false"){
         $aux=1;
       }
     }
     if($aux==0){
-      $ingmat->entraSaleSec($iding,'P');
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();
@@ -71,6 +72,12 @@ class ctrCargaSecadora{
     echo count($rpta);
   }
 
+  public function verCarga(){
+    $sec=$_POST['id'];
+    $se=new secadora();
+    $rs=$se->verCarga($sec);
+    echo json_encode($rs);
+  }
 }
 
 ?>

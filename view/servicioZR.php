@@ -1,9 +1,20 @@
 <?php
   require_once 'model/tipoesterilizacion.php';
+  require_once 'model/empleado.php';
+  require_once 'model/servicio.php';
   $ctr=new tipoesterilizacion();
+  $ctr1=new empleado();
+  $ctr2=new servicio();
   $ls=$ctr->listartipos();
+  $empleado=$ctr1->listaempleados();
+  $servicio=$ctr2->listadoServicio();
   $id=$_SESSION["idusuario"];
 ?>
+<link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css">
+<link rel="stylesheet" href="css/chosen.css" />
+<link rel="stylesheet" href="assets/css/chosen.css" />
+
+
 <div class="breadcrumbs" id="breadcrumbs">
   <div class="progress progress-pink progress-striped active">
     <div class="bar" style="width: 100%"></div>
@@ -25,21 +36,33 @@
     <div class="control-group">
       <label class="control-label" for="form-field-1">Pesona que entrega: </label>
       <div class="controls">
-        <input type="text" id="empleado" placeholder="Empleado">
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="form-field-1">Dni: </label>
-      <div class="controls">
-        <input readonly="" type="text" id="form-input-readonly" value="Dni">
-        <input readonly="" type="hidden" id="idempleado">
+        <select class="chosen-select" id="empleado" name="empleado" data-placeholder="empleado" required="required">
+          <option value=""></option>
+        <?php
+          foreach ($empleado as $em) {
+        ?>
+        <option value="<?php echo $em->emp_id ?>"> <?php echo $em->nombres; ?></option>
+        <?php
+          }
+        ?>
+        </select>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="form-field-1">Servicio: </label>
       <div class="controls">
-        <input type="text" id="servicio" placeholder="servicio">
-        <input readonly="" type="hidden" id="idservicio" name="idservicio">
+        <select class="chosen-select" id="servicio" name="servicio" data-placeholder="servicio" style="display: none;">
+          <option value=""></option>
+        <?php
+          foreach ($servicio as $ser) {
+        ?>
+        <option value="<?php echo $ser->id_servicio ?>"> <?php echo $ser->nombre_servicio; ?></option>
+        <?php
+          }
+        ?>
+        </select>
+        <!-- <input type="text" id="servicio" placeholder="servicio">
+        <input readonly="" type="hidden" id="idservicio" name="idservicio"> -->
       </div>
     </div>
     <?php require_once("view/html/ZR/buttonsZR.php"); ?>
@@ -67,7 +90,8 @@
 <?php require_once ("view/alerts.php") ?>
 
 <script src="assets/js/jquery-2.0.3.min.js"></script>
-
+<script src="js/chosen.jquery.min.js"></script>
+<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 <script src="js/ZR/app.js"></script>
 <script src="js/ZR/autocompletes.js"></script>
 <script src="js/ZR/servicios.js"></script>
@@ -77,4 +101,10 @@
     window.IngresoMaterial.combo = <?php echo json_encode($ls); ?>;
     window.IngresoMaterial.init();
   });
+</script>
+<script type="text/javascript">
+  $(function () {
+    $(".chosen-select").chosen({width: "290px"});
+
+  })
 </script>

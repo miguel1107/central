@@ -1,6 +1,7 @@
 <?php
 require_once "cado.php";
 require_once __DIR__.'/../model/detalleIngMaterial.php';
+require_once __DIR__.'/../model/ingresoMaterial.php';
 
 class cargaSecadora{
 
@@ -13,6 +14,7 @@ class cargaSecadora{
   public function registroCargaSec($materiales,$idSec){
     $mat=$materiales;
     $det=new detalleIngMaterial();
+    $ingmat=new ingresoMaterial();
     $conexion=new cado();
 		$conexion->conectar();
     $fecha=$this->fecha();
@@ -20,7 +22,9 @@ class cargaSecadora{
 		$sql="INSERT INTO sisesterilizacion.carga_secadora(id_detalle, fecha_carga,id_secadora,estado) VALUES ";
     for ($i=0; $i <$l ; $i++) {
       $iddet=$mat[$i][0];
+      $iding=$mat[$i][1];
       $det->actualizaSecadora($iddet,'P');
+      $ingmat->entraSaleSec($iding,'P');
       if($i==0){
         $stringInser="('".$iddet."','".$fecha."','".$idSec."','P')";
       }else{

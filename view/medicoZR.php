@@ -1,9 +1,15 @@
 <?php
   require_once 'model/tipoesterilizacion.php';
+  require_once 'model/empleado.php';
   $ctr=new tipoesterilizacion();
+  $ctr1=new empleado();
+  $empleado=$ctr1->listaempleados();
   $ls=$ctr->listartipos();
   $id=$_SESSION["idusuario"];
 ?>
+<link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css">
+<link rel="stylesheet" href="css/chosen.css" />
+<link rel="stylesheet" href="assets/css/chosen.css" />
 <div class="breadcrumbs" id="breadcrumbs">
   <div class="progress progress-pink progress-striped active">
     <div class="bar" style="width: 100%"></div>
@@ -25,11 +31,21 @@
     <div class="control-group">
       <label class="control-label" for="form-field-1">Pesona que entrega: </label>
       <div class="controls">
-        <input type="text" id="empleado" placeholder="Empleado">
+        <select class="chosen-select" id="empleado" name="empleado" data-placeholder="empleado" style="display: none;">
+          <option value=""></option>
+        <?php
+          foreach ($empleado as $em) {
+        ?>
+        <option value="<?php echo $em->emp_id ?>"> <?php echo $em->nombres; ?></option>
+        <?php
+          }
+        ?>
+        </select>
+        <!-- <input type="text" id="empleado" placeholder="Empleado"> -->
       </div>
       <div class="controls">
-        <input readonly="" type="text" id="form-input-readonly" value="Dni">
-        <input readonly="" type="hidden" id="idempleado">
+        <!-- <input readonly="" type="text" id="form-input-readonly" value="Dni">
+        <input readonly="" type="hidden" id="idempleado"> -->
       </div>
     </div>
     <?php require_once("view/html/ZR/buttonsZR.php"); ?>
@@ -56,6 +72,8 @@
 <?php require_once ("view/alerts.php") ?>
 
 <script src="assets/js/jquery-2.0.3.min.js"></script>
+<script src="js/chosen.jquery.min.js"></script>
+<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 
 <script src="js/ZR/app.js"></script>
 <script src="js/ZR/autocompletes.js"></script>
@@ -67,4 +85,10 @@
     window.IngresoMaterial.combo = <?php echo json_encode($ls); ?>;
     window.IngresoMaterial.init();
   });
+</script>
+<script type="text/javascript">
+$(function () {
+  $(".chosen-select").chosen({width: "290px"});
+
+})
 </script>

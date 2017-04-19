@@ -3,7 +3,6 @@
 	if(isset($_GET['msj'])){
 		$msje=$_GET['msj'];
 	}
-
 ?>
 
 	<html lang="en">
@@ -36,10 +35,13 @@
 								<div class="center">
 									<h1>
 										<i class="icon-leaf green"></i>
-										<span class="red">Sistema de Trazabilidad</span>
-										<!--<span class="white"></span>-->
+										<span class="red">SISCE-HRL</span>
 									</h1>
-									<!--<h4 class="blue">&copy; Company Name</h4><--></-->
+									<h1>
+										<span class="white">Application</span>
+									</h1>
+									<h4 class="blue">DIVISIÓN DE TECNOLOGÍAS DE LA INFORMACIÓN</h4>
+									<h5 class="blue">&copy; Unidad de Desarrollo de Sistemas</h5>
 								</div>
 							</div>
 

@@ -16,14 +16,14 @@ class ctrCargaLavadora{
     $mat=$_POST['materiales'];
     $tipo=$_POST['tipo'];
     $idLav=$_POST['lavadora'];
-    $iding=$_POST['iding'];
+    //$iding=$_POST['iding'];
     $cla=new cargaLavadora();
     $lav=new lavadora();
-    $ingmat=new ingresoMaterial();
+    //$ingmat=new ingresoMaterial();
     $rs=$cla->registroCargaLav($mat,$idLav,$tipo);
     if($rs=="true"){
       $rs2=$lav->actualizaEstado($idLav,'O');
-      $ingmat->entraSaleLav($iding,'P',$tipo);
+      //$ingmat->entraSaleLav($iding,'P',$tipo);
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();
@@ -56,18 +56,19 @@ class ctrCargaLavadora{
     $mat=$_POST['materiales'];
     $det=new detalleIngMaterial();
     $ingmat=new ingresoMaterial();
-    $iding=$_POST['iding'];
+    //$iding=$_POST['iding'];
     $l=count($mat);
     $aux=0;
     for ($i=0; $i < $l ; $i++) {
       $iddet=$mat[$i][0];
+      $iding=$mat[$i][1];
+      $ingmat->entraSaleLav($iding,'P','LA');
       $rs=$det->actualizaLavadoraManual($iddet,'T');
       if($rs=="false"){
         $aux=1;
       }
     }
     if($aux==0){
-      $ingmat->entraSaleLav($iding,'P');
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();

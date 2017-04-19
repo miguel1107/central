@@ -14,15 +14,15 @@ class ctrCargaUltrazonica{
   public function registraCarga(){
     $mat=$_POST['materiales'];
     $idultra=$_POST['ultra'];
-    $iding=$_POST['iding'];
+    //$iding=$_POST['iding'];
     $l=count($mat);
     $ca=new cargaUltrazonica();
     $ul=new ultrazonica();
-    $ingmat=new ingresoMaterial();
+    //$ingmat=new ingresoMaterial();
     $rs=$ca->registroCarga($mat,$idultra);
     if($rs=="true"){
       $ul->actualizaEstado($idultra,'O');
-      $ingmat->entraSaleUltra($iding,'P');
+      //$ingmat->entraSaleUltra($iding,'P');
       $rpta = array('estado' => "true", );
     }else{
       $rpta = array();

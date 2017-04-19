@@ -1,6 +1,7 @@
 <?php
 require_once "cado.php";
 require_once __DIR__.'/../model/detalleIngMaterial.php';
+require_once __DIR__.'/../model/ingresoMaterial.php';
 
 /**
  *
@@ -16,6 +17,7 @@ class cargaLavadora{
   public function registroCargaLav($materiales,$idLav,$tipo){
     $mat=$materiales;
     $det=new detalleIngMaterial();
+    $ingmat=new ingresoMaterial();
     $conexion=new cado();
 		$conexion->conectar();
     $fecha=$this->fecha();
@@ -23,7 +25,9 @@ class cargaLavadora{
 		$sql="INSERT INTO sisesterilizacion.carga_lavadora( id_detalle, fecha_carga,id_lavadora, proceso, estado) VALUES ";
     for ($i=0; $i <$l ; $i++) {
       $iddet=$mat[$i][0];
+      $iding=$mat[$i][1];
       $det->actualizaLavadora($iddet,$tipo,'P');
+      $ingmat->entraSaleLav($iding,'P',$tipo);
       if($i==0){
         $stringInser="('".$iddet."','".$fecha."','".$idLav."','".$tipo."','P')";
       }else{

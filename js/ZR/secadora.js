@@ -7,13 +7,18 @@ function llenaCargaSec(){
   $("#modal-table").modal('hide');
 }
 
+function verCarga(id){
+  window.secadora.llenavercarga(id);
+  $("#ver_carga").modal('show');
+}
+
 function cancelar() {
   window.secadora.cancelar();
 }
 
 function registroCargaSec(){
   var materiales=(window.secadora.data.materiales);
-  var iding=(window.secadora.data.iding);
+  //var iding=(window.secadora.data.iding);
   var mat=[];
   var aux=0;
   var secadora=$('#secadora').val();
@@ -22,6 +27,7 @@ function registroCargaSec(){
       aux=1;
       var m=[];
       m[0]=materiales[i].idDetalle;
+      m[1]=materiales[i].id;
       mat.push(m);
     }
   }
@@ -36,7 +42,7 @@ function registroCargaSec(){
       type : 'post',
       url : 'index.php?c=ctrCargaSecadora&a=registraCargaSec',
       data: {
-        'iding' : iding,
+        //'iding' : iding,
         'secadora' : secadora,
         'materiales' : mat
       },
@@ -74,7 +80,7 @@ function desocupaSecadora(id) {
 
 function registroSecManual(){
   var materiales=(window.secadora.data.materiales);
-  var iding=(window.secadora.data.iding);
+  //var iding=(window.secadora.data.iding);
   var mat=[];
   var aux=0;
   for (var i = 0; i < materiales.length; i++) {
@@ -82,6 +88,7 @@ function registroSecManual(){
       aux=1;
       var m=[];
       m[0]=materiales[i].idDetalle;
+      m[1]=materiales[i].id;
       mat.push(m);
     }
   }
@@ -93,7 +100,7 @@ function registroSecManual(){
       type : 'post',
       url : 'index.php?c=ctrCargaSecadora&a=registroCargaSecMan',
       data: {
-        'iding' : iding,
+        //'iding' : iding,
         'materiales' : mat
       },
     };

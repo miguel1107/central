@@ -18,7 +18,7 @@ function cancelar() {
 
 function registroCarga(){
   var materiales=(window.lavadora.data.materiales);
-  var iding=(window.lavadora.data.iding);
+  //var iding=(window.lavadora.data.iding);
   var mat=[];
   var aux=0;
   var lavadora=$('#lavadora').val();
@@ -28,6 +28,7 @@ function registroCarga(){
       aux=1;
       var m=[];
       m[0]=materiales[i].idDetalle;
+      m[1]=materiales[i].id;
       mat.push(m);
     }
   }
@@ -47,7 +48,7 @@ function registroCarga(){
       url : 'index.php?c=ctrCargaLavadora&a=registraCargaLav',
       data: {
         'tipo' : tipo,
-        'iding' : iding,
+        //'iding' : iding,
         'lavadora' : lavadora,
         'materiales' : mat
       },
@@ -85,7 +86,7 @@ function desocupaLavadora(id) {
 
 function registroLavManual(){
   var materiales=(window.lavadora.data.materiales);
-  var iding=(window.lavadora.data.iding);
+  //var iding=(window.lavadora.data.iding);
   var mat=[];
   var aux=0;
   for (var i = 0; i < materiales.length; i++) {
@@ -93,6 +94,7 @@ function registroLavManual(){
       aux=1;
       var m=[];
       m[0]=materiales[i].idDetalle;
+      m[1]=materiales[i].id;
       mat.push(m);
     }
   }
@@ -104,7 +106,7 @@ function registroLavManual(){
       type : 'post',
       url : 'index.php?c=ctrCargaLavadora&a=registroCargaLavMan',
       data: {
-        'iding' : iding,
+        //'iding' : iding,
         'materiales' : mat
       },
     };

@@ -1,6 +1,7 @@
 <?php
 require_once "cado.php";
 require_once __DIR__.'/../model/detalleIngMaterial.php';
+require_once __DIR__.'/../model/ingresoMaterial.php';
 
 /**
  *
@@ -15,6 +16,7 @@ class cargaUltrazonica{
 
   public function registroCarga($materiales,$idultra){
     $mat=$materiales;
+    $ingmat=new ingresoMaterial();
     $det=new detalleIngMaterial();
     $conexion=new cado();
 		$conexion->conectar();
@@ -23,7 +25,9 @@ class cargaUltrazonica{
 		$sql="INSERT INTO sisesterilizacion.carga_ultrazonica(id_detalle, fecha_carga, id_ultrazonica,estado) VALUES";
     for ($i=0; $i <$l ; $i++) {
       $iddet=$mat[$i][0];
+      $iding=$mat[$i][1];
       $det->actualizaUltrazonica($iddet,'P');
+      $ingmat->entraSaleUltra($iding,'P');
       if($i==0){
         $stringInser="('".$iddet."','".$fecha."','".$idultra."','P')";
       }else{

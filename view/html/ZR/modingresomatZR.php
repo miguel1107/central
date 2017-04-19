@@ -1,4 +1,4 @@
-<div id="nuevo_kit" class="modal fade" role="dialog" >
+<div id="nuevo_kit" class="modal hide fade" role="dialog" >
   <form class="form-horizontal" onsubmit="return false;">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()">&times;</button>

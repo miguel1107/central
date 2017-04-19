@@ -1,33 +1,3 @@
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="assets/font-awesome-4.3.0/css/font-awesome.css" />
-
-        <!--[if IE 7]>
-          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
-        <![endif]-->
-
-        <!--page specific plugin styles-->
-
-        <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
-        <link rel="stylesheet" href="assets/css/jquery.gritter.css" />
-
-        <!--fonts-->
-
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
-
-        <!--ace styles-->
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="assets/css/ace-responsive.min.css" />
-        <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
-
-        <!--DATATABLES-->
-        <link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css" />
-        <link rel="stylesheet" href="assets/plugins/datatables/dataTables.responsive.css" />
-
-
-
-        <script src="assets/js/jquery-1.10.2.min.js"></script>
 
 <?php
 $navegacion=$_SESSION['navegacion'];
@@ -37,6 +7,7 @@ $zona=$_SESSION['zona'];
 <div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
+            <i class="icon-home home-icon"></i>
             <a href="#">Inicio</a>
             <span class="divider">
                 <i class="icon-angle-right arrow-icon"></i>
@@ -45,7 +16,35 @@ $zona=$_SESSION['zona'];
         <li class="active"><?php echo $zona ?></li>
     </ul><!--.breadcrumb-->
  </div>
-<p class="t-center">
+ <div class="page-content">
+  <div class="page-header position-relative">
+		<h1>
+			SISCE-HRL
+			<small>
+				<i class="icon-double-angle-right"></i>
+				Sistema de Central de Estirilización-Hospital Regional Lambayeque
+			</small>
+		</h1>
+	</div>
+  <div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">
+			<i class="icon-remove"></i>
+		</button>
+    <i class="icon-ok green"></i>
+		<strong>Bienvenidos al SISCE-HRL (V1.0);</strong>
+    para cualquier información favor de comunicarse con el administrador del sistema anexo
+    <strong class="green">1208</strong>
+		<br>
+	</div>
+  <div class="col-lg-12 center">
+    <div class="col-md-3">
+      <img src="img/logoditi.jpg" id="img_logo"  aling="center">
+    </div>
+    <div class="col-md-9">
+      <h2 class="text-info">Bienvenido al Sistema Central de Esterilización</h2>
+      <h4 class="text-info">Hospital Regional Lambayeque</h4>
+      <br><br>
+    </div>
+  </div>
 
-    <img src="assets/img/central2.jpg" width="85%" height="100%" alt="hospital"/>
-</p>
+ </div>

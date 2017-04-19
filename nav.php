@@ -4,8 +4,36 @@ $zona=$_SESSION["zona"];
 <a class="menu-toggler display" id="menu-toggler" href="#">
 	<span class="menu-text"></span>
 </a>
-<div class="sidebar menu-min" id="sidebar">
-	<img class="nav-user-photo" src="assets/img/logo.jpg" alt="Logo CEHRL" align="center" />
+<div class="sidebar" id="sidebar">
+	<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<button class="btn btn-small btn-success">
+							<i class="icon-signal"></i>
+						</button>
+
+						<button class="btn btn-small btn-info">
+							<i class="icon-pencil"></i>
+						</button>
+
+						<button class="btn btn-small btn-warning">
+							<i class="icon-group"></i>
+						</button>
+
+						<button class="btn btn-small btn-danger">
+							<i class="icon-cogs"></i>
+						</button>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						<span class="btn btn-danger"></span>
+					</div>
+				</div>
 	<ul class="nav nav-list">
 <?php
 switch ($zona) {
@@ -57,26 +85,26 @@ switch ($zona) {
 		<li>
 			<a href='#' class='dropdown-toggle'>
 				<i class="icon-edit"></i>
-			 	<span class='menu-text'> Ingreso de material </span>
+			 	<span class='menu-text'>Recepcion material</span>
 				<b class="arrow icon-angle-down"></b>
 		 	</a>
 	 		<ul class='submenu'>
 	 			<li>
 	 				<a href="?menu=servicioZR">
 						<i class='icon-plus'></i>
-						Servicio
+						por Servicio
 					</a>
 				</li>
 	 			<li>
 	 				<a href="?menu=medicoZR">
 						<i class='icon-plus'></i>
-						Medico
+						por Medico
 					</a>
 				</li>
 	 			<li>
 	 				<a href='?menu=tercerosZR'>
 						<i class='icon-plus'></i>
-						Terceros
+						 por Terceros
 					</a>
 				</li>
 	 			<li>
@@ -89,7 +117,7 @@ switch ($zona) {
  		</li>
 		<li>
 			<a href='?menu=cargaultrazonica2' class="dropdown-togle">
-				<i class="icon-cloud-upload"></i>
+				<i class="icon-archive" aria-hidden="true"></i>
 			 	<span class='menu-text'> Carga Ultrazonica </span>
 			</a>
 		</li>
@@ -101,7 +129,7 @@ switch ($zona) {
 		</li>
 		<li>
 			<a href='?menu=lavadoManual'>
-				<i class="icon-hand-right icon-animated-hand-pointer"></i>
+				<i class="icon-hand-paper icon-animated-hand-pointer"></i>
 				<span class='menu-text'> Lavado Manual </span>
 			</a>
 		</li>
@@ -147,6 +175,6 @@ switch ($zona) {
 		?>
 		</ul>
 		<div class="sidebar-collapse" id="sidebar-collapse">
-						<i class="icon-double-angle-left icon-double-angle-right"></i>
+						<i class="icon-double-angle-left"></i>
 				</div>
 	</div>

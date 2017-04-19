@@ -198,6 +198,9 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
                     <span class="tag"><?php echo $ocupa->nombre_secadora ?>
                       <button title="desocupar secadora" type="button" class="close" onclick="desocupaSecadora(<?php echo $ocupa->id_secadora ?>)">×</button>
                     </span>
+                    <a href="javascript" title="Ver carga" onclick="verCarga(<?php echo $ocupa->id_secadora ?>)" role="button" class="green" data-toggle="modal">
+                      <i class="icon-eye-open"></i>
+                    </a>
                   <?php } ?>
                 </div>
               </div>
@@ -254,7 +257,7 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
       <i class="icon-ok bigger-110"></i>
       Guardar
     </button>
-    <button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="secadora.cancelar();return false">
+    <button class="btn btn-small btn-danger pull-left" data-dismiss="modal">
       <i class="icon-remove"></i>
       Close
     </button>

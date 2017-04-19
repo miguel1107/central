@@ -14,7 +14,7 @@ function llenaCargaUl(){
 
 function registroCarga() {
   var materiales=(window.ultrazonica.data.materiales);
-  var iding=(window.ultrazonica.data.iding);
+  //var iding=(window.ultrazonica.data.iding);
   var mat=[];
   var ultra=$('#ultrazonica').val();
   var aux=0;
@@ -23,10 +23,11 @@ function registroCarga() {
       aux=1;
       var m=[];
       m[0]=materiales[i].idDetalle;
+      m[1]=materiales[i].id;
       mat.push(m);
     }
   }
-  //console.log(ultra);
+  console.log(mat);
   if(ultra=='0'){
     $('#contenidoWarning').text('Escoja una ultrazonica');
     $("#alertWarning").modal('show');
@@ -39,7 +40,7 @@ function registroCarga() {
       url : 'index.php?c=ctrCargaUltrazonica&a=registraCarga',
       data: {
         'ultra' : ultra,
-        'iding' : iding,
+        //'iding' : iding,
         'materiales' : mat
       },
     };

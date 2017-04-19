@@ -59,9 +59,9 @@ function soloNumeros(evt) {
 }
 
 function guardarServicio(){
-  var id=$('#idempleado').val();
+  var id=$('#empleado').val();
   var idrec=$('#idrecibe').val();
-  var idserv=$('#idservicio').val();
+  var idserv=$('#servicio').val();
   var total=$('#cantidadPz').val();
   var materiales=(window.IngresoMaterial.data.materiales);
   var mat=[];
@@ -111,7 +111,7 @@ function guardarServicio(){
 }
 
 function guardarMedicos(){
-  var id=$('#idempleado').val();
+  var id=$('#empleado').val();
   var idrec=$('#idrecibe').val();
   var total=$('#cantidadPz').val();
   var materiales=(window.IngresoMaterial.data.materiales);

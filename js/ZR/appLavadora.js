@@ -14,7 +14,8 @@ window.lavadora={
       iding :0,
       servicio:'false',
       materiales :[],
-      carga: []
+      carga: [],
+      ids:[]
     };
 
     self.render();
@@ -24,32 +25,41 @@ window.lavadora={
   llenatabla: function (id) {
     var self=this;
     var c=0; //0->llena denuevo 1->esta lleno e id iguales 2->esta lleno id dif
-    if (self.data.iding == 0) {
-      self.data.iding=id;
-    }else{
-      if(self.data.servicio =='false'){
-        self.data.iding=id;
-      }else{
-        if(self.data.iding==id){
-          c=1;
-        }else{
-          c=2;
-          $('#contenidoWarning').text('Servicio en uso');
-          $("#alertWarning").modal('show');
-        }
+    for (var i = 0; i < self.data.ids.length; i++) {
+      if (self.data.ids[i]==id) {
+        c=2;
       }
     }
-    var options={
-      type : 'post',
-      url : 'index.php?c=ctrDetalleIngresoMaterial&a=retornaDetalleLav',
-      data: {
-        'id' : id
-      },
-    };
-    if(c==1){
-      $("#modal-table").modal('show');
+    if (c!=2) {
+      self.data.ids.push(id);
     }
-    if(c==0){
+    // if (self.data.iding == 0) {
+    //   self.data.iding=id;
+    // }else{
+    //   if(self.data.servicio =='false'){
+    //     self.data.iding=id;
+    //   }else{
+    //     if(self.data.iding==id){
+    //       c=1;
+    //     }else{
+    //       c=2;
+    //       $('#contenidoWarning').text('Servicio en uso');
+    //       $("#alertWarning").modal('show');
+    //     }
+    //   }
+    // }
+    if (c==2) {
+      self.render(id);
+      console.log('id existe');
+      $("#modal-table").modal('show');
+    }else{
+      var options={
+        type : 'post',
+        url : 'index.php?c=ctrDetalleIngresoMaterial&a=retornaDetalleLav',
+        data: {
+          'id' : id
+        },
+      };
       console.log('llena denuevo');
       $.ajax(options)
       .done(function(data) {
@@ -69,24 +79,26 @@ window.lavadora={
               estado :'FALSE',
               tipo : arr[i].tipo_ingreso,
               descripcion : arr[i].descripcion,
-              cantidad : arr[i].cantidad_material
+              cantidad : arr[i].cantidad_material,
+              id:id
             };
             self.data.materiales.push(m);
           }
-
           self.data.servicio='true';
-          self.render();
+          self.render(id);
           $("#modal-table").modal('show');
         }
       });
     }
   },
 
-  render: function(){
+  render: function(id){
     var self = this;
     $('#detalleIngMaterial').empty();
     self.data.materiales.forEach(function(el, i){
-      self.renderDetalle(i, el).appendTo('#detalleIngMaterial');
+      if (self.data.materiales[i].id==id) {
+          self.renderDetalle(i, el).appendTo('#detalleIngMaterial');
+      }
     });
   },
 
