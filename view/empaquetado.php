@@ -2,14 +2,14 @@
 require_once 'model/detalleIngMaterial.php';
 require_once 'model/ingresoMaterial.php';
 require_once 'model/secadora.php';
+require_once 'model/tipoenvoltura.php';
 $ctr=new ingresoMaterial();
 $ctr2=new detalleIngMaterial();
 $ctr3=new secadora();
+$ctr4=new tipoenvoltura();
+$env=$ctr4->listado();
 $ls=$ctr->listaRecepcionesEmpaquetado();
 $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
-//$d=$ctr->inicioSecadora();
-//$lsl=$ctr3->retornaSecadoras();
-//$lsocu=$ctr3->retornaSecadorasOcupadas();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
   <ul class="breadcrumb">
@@ -150,24 +150,26 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
             <table class="table table-striped table-bordered table-hover dataTable dt-responsive">
               <thead>
                 <tr>
-                  <th>Empacar</th>
-                  <th>Id</th>
-                  <th>Tipo</th>
-                  <th>Descripcion</th>
-                  <th>Cantidad de materiales</th>
-                  <th>Cantidad a empacar</th>
+                  <th width="10px">Id</th>
+                  <th width="15px">Tipo</th>
+                  <th width="80px" >Descripcion</th>
+                  <th width="15px">Cantidad de materiales</th>
+                  <th width="20px">Empacar</th>
                 </tr>
               </thead>
               <tbody id="carVpro">
                 <script type="text/template" id="tmpl-empaca">
                   <tr><th colspan="6"class="paquete"></th></tr>
                   <tr>
-                    <th class="check"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th>
+                    <!-- <th class="check"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th> -->
                     <th class="idCarga"></th>
                     <th class="tipoCarga"></th>
                     <th class="descripcionCarga"></th>
                     <th class="cantidadCarga"></th>
-                    <th><input type="text" id="cantEmpacar" value="" disabled="true"  style="width: 20px;"></th>
+                    <!-- <th><input type="text" id="cantEmpacar" value="" disabled="true"  style="width: 20px;"></th> -->
+                    <th><button id="empacarBtn" name="empacarBtn" class="btn btn-info" type="button" onclick="registroCargaSec()">
+                      Empacar
+                    </button></th>
                   </tr>
                 </script>
               </tbody>
@@ -187,12 +189,11 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
             <table class="table table-striped table-bordered table-hover dataTable dt-responsive">
               <thead>
                 <tr>
-                  <th>Empacar</th>
-                  <th>Id</th>
-                  <th>Tipo</th>
-                  <th>Descripcion</th>
-                  <th>Cantidad de materiales</th>
-                  <th>Cantidad a empacar</th>
+                  <th width="10px">Id</th>
+                  <th width="15px">Tipo</th>
+                  <th width="80px" >Descripcion</th>
+                  <th width="15px">Cantidad de materiales</th>
+                  <th width="20px">Empacar</th>
                 </tr>
               </thead>
               <tbody id="carAu">
@@ -204,55 +205,49 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
       </div>
     </div>
   </div>
-  <div class="form-actions">
-    <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCargaSec()">
-      <i class="icon-ok bigger-110"></i>Empacar
-    </button>
-    <button id="set" class="btn btn-info" type="button" onclick="cancelar()">
-      <i class="icon-ok bigger-110"></i>Cancelar
-    </button>
-  </div>
-</div>
 
-<div id="modal-table" class="modal hide fade" tabindex="-1">
-  <div class="modal-header no-padding">
-    <div class="table-header">
-      Detalle ingreso
+
+<div id="emp" class="modal hide fade" tabindex="-1">
+  <form class="form-horizontal" onsubmit="return false;">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" >&times;</button>
+      <h4 class="modal-title">Empaquetado</h4>
     </div>
-  </div>
-  <div class="modal-body no-padding">
-    <input type="hidden" id="idc" value="">
-    <div class="row-fluid">
-      <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
-        <thead>
-          <tr>
-            <th>Tipo</th>
-            <th>Descripcion</th>
-            <th>Cantidad</th>
-          </tr>
-        </thead>
-        <tbody id="detalleEmpaque">
-          <script type="text/template" id="tmpl-empaque">
-            <tr>
-              <th class="tipo"></th>
-              <th class="descripcion"></th>
-              <th class="cantidad"></th>
-            </tr>
-          </script>
-        </tbody>
-      </table>
+    <input type="hidden" id="iddetalle" name="iddetalle" value="">
+    <div class="control-group">
+  		<label class="control-label" for="form-field-1">Tipo de envoltura</label>
+  		<div class="controls">
+        <select class="envoltura" name="envoltura">
+  			<?php
+          foreach ($env as $e) {
+        ?>
+          <option value="<?php echo $e->id_tipo_envoltura ?>"> <?php echo $e->nombre_tipo_envoltura; ?></option>
+        <?php
+          }
+        ?>
+        </select>
+  		</div>
+  	</div>
+    <div class="control-group">
+  		<label class="control-label" for="form-field-1">Cantidad a empacar</label>
+  		<div class="controls">
+        <input type="hidden" name="iddetalleMod" id="iddetalleMod" value="">
+        <input type="hidden" name="cantMat" id="cantMat" value="">
+        <input type="text" name="cantEmapacar" id="cantEmapacar" value="">
+  		</div>
+  	</div>
+    <div class="modal-footer">
+      <button class="btn btn-small btn-info pull-left" id="enviar" type="button" onclick="llenaCargaEmp()">
+        <i class="icon-ok bigger-110"></i>
+        Empacar
+      </button>
+      <button class="btn btn-small btn-danger pull-left" data-dismiss="modal">
+        <i class="icon-remove"></i>
+        Cacelar
+      </button>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-small pull-left" id="enviar" type="button" onclick="llenaCargaEmp()">
-      <i class="icon-ok bigger-110"></i>
-      Empacar
-    </button>
-    <button class="btn btn-small btn-danger pull-left" data-dismiss="modal" onclick="empaque.cancelar();return false">
-      <i class="icon-remove"></i>
-      Close
-    </button>
-  </div>
+  </form>
+
 </div>
 
 

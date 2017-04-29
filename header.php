@@ -1,13 +1,25 @@
 
 <?php
 	$R=$_SESSION["nomusuario"];
-	//$_SESSION['usuario']=$R;
 	$d=$_SESSION["dniusuario"];
-	//$_SESSION["dniusu"]=$d;
 	$id=$_SESSION["idusuario"];
 ?>
-
+<?php
+ 	if ($zona=='Zona Roja') {
+?>
+<!-- <div class="navbar-inner" style="background:rgb(250,60,60);"> -->
 <div class="navbar-inner">
+<?php
+ 	}else if ($zona=='Zona Azul') {
+?>
+<div class="navbar-inner">
+<?php
+ 	}else if ($zona=='Zona Verde') {
+?>
+<div class="navbar-inner" style="background:rgb(0,204,102);">
+<?php
+ 	}
+?>
 	<input type="hidden" name="idusuario" value="<?php echo $id ?>">
 	<div class="container-fluid">
 		<a href="inicio.php" class="brand">

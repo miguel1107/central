@@ -238,7 +238,7 @@
         <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
           <thead>
             <tr>
-              <th>Estado</th>
+              <th>estado</th>
               <th>Tipo</th>
               <th>Descripcion</th>
               <th>Cantidad</th>

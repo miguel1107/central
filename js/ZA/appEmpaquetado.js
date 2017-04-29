@@ -18,22 +18,23 @@ window.empaque={
 
   llenatabla: function (id) {
     var self=this;
+    self.data.materiales=[];
     var c=0; //0->llena denuevo 1->esta lleno y id iguales 2->esta lleno id dif
-    if (self.data.iding == 0) {
-      self.data.iding=id;
-    }else{
-      if(self.data.servicio =='false'){
-        self.data.iding=id;
-      }else{
-        if(self.data.iding==id){
-          c=1;
-        }else{
-          c=2;
-          alert('SERIVICO EN USO');
-
-        }
-      }
-    }
+    // if (self.data.iding == 0) {
+    //   self.data.iding=id;
+    // }else{
+    //   if(self.data.servicio =='false'){
+    //     self.data.iding=id;
+    //   }else{
+    //     if(self.data.iding==id){
+    //       c=1;
+    //     }else{
+    //       c=2;
+    //       alert('SERIVICO EN USO');
+    //
+    //     }
+    //   }
+    // }
     var options={
       type : 'post',
       url : 'index.php?c=ctrDetalleIngresoMaterial&a=retornaDetalleEmpaquetado',
@@ -41,10 +42,10 @@ window.empaque={
         'id' : id
       },
     };
-    if(c==1){
-      self.render();
-    }
-    if(c==0){
+    // if(c==1){
+    //   self.render();
+    // }
+    // if(c==0){
       $.ajax(options)
       .done(function(data) {
         var json=data;
@@ -66,9 +67,15 @@ window.empaque={
           self.data.materiales.push(m);
         }
         self.data.servicio='true';
-        self.render();
+        self.llenaCarga();
       });
-    }
+    //}
+  },
+  // reder para modal(cantidad y tipo de envoltura), aun no se utiliza
+  llenaparaempacar: function (id,cant) {
+    var self=this;
+    $("#iddetalleMod").val(id);
+    $("#cantMat").val(cant);
   },
 
   render: function(){
@@ -87,7 +94,7 @@ window.empaque={
     $m.find('.cantidad').text(self.data.materiales[index].cantidad);
     return $m;
   },
-
+//---fin--
   renderCarga: function (index, elemento) {
     var self=this;
     var $m=$(self.tmpl2);
@@ -102,6 +109,8 @@ window.empaque={
       $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
     }
     $m.find("#cantEmpacar").val('0');
+    $m.find("#empacarBtn").removeAttr("onclick");
+    $m.find("#empacarBtn").attr('onclick', 'empacar('+self.data.materiales[index].idDetalle+','+self.data.materiales[index].cantidad+')');
     self.addEvents(index,$m);
     return $m;
   },
