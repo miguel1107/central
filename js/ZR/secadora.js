@@ -27,6 +27,10 @@ function eliminaCarga(id) {
   }
 }
 
+function selecciongeneral() {
+  window.secadora.selecciongeneral();
+}
+
 function registroCargaSec(){
   var materiales=(window.secadora.data.materiales);
   //var iding=(window.secadora.data.iding);

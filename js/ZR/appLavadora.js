@@ -24,6 +24,7 @@ window.lavadora={
 
   llenatabla: function (id) {
     var self=this;
+    self.data.iding=id;
     var c=0; //0->llena denuevo 1->esta lleno e id iguales 2->esta lleno id dif
     for (var i = 0; i < self.data.ids.length; i++) {
       if (self.data.ids[i]==id) {
@@ -203,6 +204,28 @@ window.lavadora={
     $m.find('.cantidad').text(self.data.carga[index].cantidad);
     console.log('llena');
     return $m;
+  },
+
+  selecciongeneral: function () {
+    var self=this;
+    var id=self.data.iding;
+    console.log(id);
+    if( $('#selecciongeneral').prop('checked') ) {
+      self.data.materiales.forEach(function(el, i){
+        if(self.data.materiales[i].id==id){
+          self.data.materiales[i].estado='TRUE';
+        }
+        console.log('aquise');
+      });
+    }else{
+      self.data.materiales.forEach(function(el, i){
+        if(self.data.materiales[i].id==id){
+          self.data.materiales[i].estado='FALSE';
+        }
+        console.log('aquidese');
+      });
+    }
+    self.render(id);
   }
 
 };

@@ -240,7 +240,7 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
         <thead>
           <tr>
             <th class="check" style="width:55px;">Estado
-              <input name="form-field-checkbox" type="checkbox" id ="" style="opacity:1;padding-lef:10px;" ></th>
+              <input name="form-field-checkbox" type="checkbox" id ="selecciongeneral" style="opacity:1;padding-lef:10px;" onclick="selecciongeneral()"></th>
             <th>Tipo</th>
             <th>Descripcion</th>
             <th>Cantidad</th>
@@ -249,7 +249,7 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
         <tbody id="detalleIngMaterialSec">
           <script type="text/template" id="tmpl-detalle">
             <tr>
-              <th class="check" style="aling-text:center;"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th>
+              <th class="check"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th>
               <th class="tipo"></th>
               <th class="descripcion"></th>
               <th class="cantidad"></th>

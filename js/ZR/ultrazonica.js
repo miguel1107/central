@@ -23,6 +23,10 @@ function eliminaCarga(id) {
   }
 }
 
+function selecciongeneral() {
+  window.ultrazonica.selecciongeneral();
+}
+
 function registroCarga() {
   var materiales=(window.ultrazonica.data.materiales);
   //var iding=(window.ultrazonica.data.iding);

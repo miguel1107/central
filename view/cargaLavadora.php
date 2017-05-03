@@ -239,7 +239,8 @@
       <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
         <thead>
           <tr>
-            <th>Estado</th>
+            <th class="check" style="width:55px;">Estado
+              <input name="form-field-checkbox" type="checkbox" id ="selecciongeneral" style="opacity:1;padding-lef:10px;" onclick="selecciongeneral()" ></th>
             <th>Tipo</th>
             <th>Descripcion</th>
             <th>Cantidad</th>

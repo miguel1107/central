@@ -27,6 +27,10 @@ function eliminaCarga(id) {
   }
 }
 
+function selecciongeneral() {
+  window.lavadora.selecciongeneral();
+}
+
 function registroCarga(){
   var materiales=(window.lavadora.data.materiales);
   //var iding=(window.lavadora.data.iding);
