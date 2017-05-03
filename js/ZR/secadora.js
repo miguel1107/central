@@ -16,6 +16,17 @@ function cancelar() {
   window.secadora.cancelar();
 }
 
+function eliminaCarga(id) {
+  for (var i = 0; i < window.secadora.data.materiales.length; i++) {
+    if (window.secadora.data.materiales[i].estado=='TRUE') {
+      if (window.secadora.data.materiales[i].idDetalle==id) {
+        window.secadora.data.materiales[i].estado='FALSE';
+        window.secadora.llenaCarga();
+      }
+    }
+  }
+}
+
 function registroCargaSec(){
   var materiales=(window.secadora.data.materiales);
   //var iding=(window.secadora.data.iding);

@@ -12,9 +12,6 @@ $lsl=$ctr3->retornaSecadoras();
 $lsocu=$ctr3->retornaSecadorasOcupadas();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
-  <div class="progress progress-pink progress-striped active">
-    <div class="bar" style="width: 100%"></div>
-  </div>
   <ul class="breadcrumb">
       <li>
           <a href="#">Ingreso de material</a>
@@ -154,15 +151,23 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
                   <th>Tipo</th>
                   <th>Descripcion</th>
                   <th>cantidad</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody id="carSecadora">
                 <script type="text/template" id="tmpl-carga">
                   <tr>
-                    <th class="idCarga"></th>
-                    <th class="tipoCarga"></th>
-                    <th class="descripcionCarga"></th>
-                    <th class="cantidadCarga"></th>
+                    <td class="idCarga"></td>
+                    <td class="tipoCarga"></td>
+                    <td class="descripcionCarga"></td>
+                    <td class="cantidadCarga"></td>
+                    <td class="td-actions">
+                      <div class="action-buttons">
+                        <a class="red" id="" onclick="eliminaCarga(id);" role="button" title="Eliminar">
+                          <i class="icon-trash bigger-130"></i>
+                        </a>
+                      </div>
+                    </td>
                   </tr>
                 </script>
               </tbody>
@@ -204,20 +209,21 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
                   <?php } ?>
                 </div>
               </div>
+              <div class="form-actions">
+                <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCargaSec()">
+                  <i class="icon-ok bigger-110"></i>Agregar Carga Secadora
+                </button>
+                <button id="set" class="btn btn-danger" type="button" onclick="cancelar()">
+                  <i class="icon-ok bigger-110"></i>Cancelar
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div><!--/span-->
     </div>
   </div>
-  <div class="form-actions">
-    <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCargaSec()">
-      <i class="icon-ok bigger-110"></i>Agregar Carga Secadora
-    </button>
-    <button id="set" class="btn btn-danger" type="button" onclick="cancelar()">
-      <i class="icon-ok bigger-110"></i>Cancelar
-    </button>
-  </div>
+
 </div>
 <?php require_once ("view/alerts.php") ?>
 <?php require_once ("view/html/ZR/vercarga.php") ?>
@@ -233,7 +239,8 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
       <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
         <thead>
           <tr>
-            <th>Estado</th>
+            <th class="check" style="width:55px;">Estado
+              <input name="form-field-checkbox" type="checkbox" id ="" style="opacity:1;padding-lef:10px;" ></th>
             <th>Tipo</th>
             <th>Descripcion</th>
             <th>Cantidad</th>
@@ -242,7 +249,7 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
         <tbody id="detalleIngMaterialSec">
           <script type="text/template" id="tmpl-detalle">
             <tr>
-              <th class="check"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th>
+              <th class="check" style="aling-text:center;"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th>
               <th class="tipo"></th>
               <th class="descripcion"></th>
               <th class="cantidad"></th>

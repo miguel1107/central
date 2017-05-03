@@ -12,9 +12,6 @@
   $lsocu=$ctr3->retornaLavadorasOcupadas();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
-  <div class="progress progress-pink progress-striped active">
-    <div class="bar" style="width: 100%"></div>
-  </div>
   <ul class="breadcrumb">
       <li>
           <a href="#">Ingreso de material</a>
@@ -148,28 +145,29 @@
                   <th>Tipo</th>
                   <th>Descripcion</th>
                   <th>cantidad</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody id="carLavadora">
                 <script type="text/template" id="tmpl-carga">
                   <tr>
-                    <th class="idCarga"></th>
-                    <th class="tipoCarga"></th>
-                    <th class="descripcionCarga"></th>
-                    <th class="cantidadCarga"></th>
+                    <td class="idCarga"></td>
+                    <td class="tipoCarga"></td>
+                    <td class="descripcionCarga"></td>
+                    <td class="cantidadCarga"></td>
+                    <td class="td-actions">
+                      <div class="action-buttons">
+                        <a class="red" id="" onclick="eliminaCarga(id);" role="button" title="Eliminar">
+                          <i class="icon-trash bigger-130"></i>
+                        </a>
+                      </div>
+                    </td>
                   </tr>
                 </script>
               </tbody>
             </table>
             <hr>
-            <div class="controls">
-              <label class="control-label" for="form-field-1">Seleccion un tipo: </label>
-              <select class="redondear" id="lavadoraTipo" name="lavadoraTipo">
-                <option value="0"> --Escoja Proceso-- </option>
-                <option value="LA"> Lavado </option>
-                <option value="LS"> Lavado y secado </option>
-              </select>
-						</div>
+
           </div>
         </div>
       </div>
@@ -182,13 +180,18 @@
         <div class="widget-body">
           <div class="widget-main">
             <div class="control-gropup">
-              <label class="control-label" for="form-field-1">Lavadoras Disponibles: </label>
+              <label class="control-label" for="form-field-1">Lavadoras Disponibles:</label>
               <div class="controls">
                 <select class="redondear" id="lavadora" name="lavadora">
                   <option value="0">--Escoja Lavadora--</option>
                   <?php foreach ($lsl as $lav) { ?>
                     <option value="<?php echo $lav->id_lavadora ?>"> <?php echo $lav->nombre_lavadora; ?></option>
                   <?php } ?>
+                </select>
+                <select class="redondear" id="lavadoraTipo" name="lavadoraTipo">
+                  <option value="0"> --Escoja Proceso-- </option>
+                  <option value="LA"> Lavado </option>
+                  <option value="LS"> Lavado y secado </option>
                 </select>
               </div>
             </div>
@@ -206,19 +209,19 @@
                   <?php } ?>
                 </div>
               </div>
+              <div class="form-actions">
+                <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCarga()">
+                  <i class="icon-ok bigger-110"></i>Agregar Carga Lavadora
+                </button>
+                <button id="set" class="btn btn-danger" type="button" onclick="cancelar()">
+                  <i class="icon-ok bigger-110"></i>Cancelar
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div><!--/span-->
     </div>
-  </div>
-  <div class="form-actions">
-    <button id="material" name="material" class="btn btn-info" type="button" onclick="registroCarga()">
-      <i class="icon-ok bigger-110"></i>Agregar Carga Lavadora
-    </button>
-    <button id="set" class="btn btn-danger" type="button" onclick="cancelar()">
-      <i class="icon-ok bigger-110"></i>Cancelar
-    </button>
   </div>
 </div>
 

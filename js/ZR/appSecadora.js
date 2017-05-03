@@ -145,6 +145,7 @@ window.secadora={
       $m.find('.tipoCarga').text(self.data.materiales[index].tipo);
       $m.find('.descripcionCarga').text(self.data.materiales[index].descripcion);
       $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
+      $m.find(".red").attr('id',self.data.materiales[index].idDetalle);
       return $m;
   },
 

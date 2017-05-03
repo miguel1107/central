@@ -12,6 +12,17 @@ function llenaCargaUl(){
   $("#modal-table").modal('hide');
 }
 
+function eliminaCarga(id) {
+  for (var i = 0; i < window.ultrazonica.data.materiales.length; i++) {
+    if (window.ultrazonica.data.materiales[i].estado=='TRUE') {
+      if (window.ultrazonica.data.materiales[i].idDetalle==id) {
+        window.ultrazonica.data.materiales[i].estado='FALSE';
+        window.ultrazonica.llenaCarga();
+      }
+    }
+  }
+}
+
 function registroCarga() {
   var materiales=(window.ultrazonica.data.materiales);
   //var iding=(window.ultrazonica.data.iding);

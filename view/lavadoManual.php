@@ -6,9 +6,6 @@
   $lsn=$ctr->listaRecepcionesEnProcesoLav();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
-  <div class="progress progress-pink progress-striped active">
-    <div class="bar" style="width: 100%"></div>
-  </div>
   <ul class="breadcrumb">
       <li>
           <a href="#">Ingreso de material</a>
@@ -137,15 +134,23 @@
               <th>Tipo</th>
               <th>Descripcion</th>
               <th>cantidad</th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="carLavadora">
             <script type="text/template" id="tmpl-carga">
               <tr>
-                <th class="idCarga"></th>
-                <th class="tipoCarga"></th>
-                <th class="descripcionCarga"></th>
-                <th class="cantidadCarga"></th>
+                <td class="idCarga"></td>
+                <td class="tipoCarga"></td>
+                <td class="descripcionCarga"></td>
+                <td class="cantidadCarga"></td>
+                <td class="td-actions">
+                  <div class="action-buttons">
+                    <a class="red" id="" onclick="eliminaCarga(id);" role="button" title="Eliminar">
+                      <i class="icon-trash bigger-130"></i>
+                    </a>
+                  </div>
+                </td>
               </tr>
             </script>
           </tbody>

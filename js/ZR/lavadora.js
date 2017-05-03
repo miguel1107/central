@@ -16,6 +16,17 @@ function cancelar() {
   window.lavadora.cancelar();
 }
 
+function eliminaCarga(id) {
+  for (var i = 0; i < window.lavadora.data.materiales.length; i++) {
+    if (window.lavadora.data.materiales[i].estado=='TRUE') {
+      if (window.lavadora.data.materiales[i].idDetalle==id) {
+        window.lavadora.data.materiales[i].estado='FALSE';
+        window.lavadora.llenaCarga();
+      }
+    }
+  }
+}
+
 function registroCarga(){
   var materiales=(window.lavadora.data.materiales);
   //var iding=(window.lavadora.data.iding);
