@@ -144,7 +144,7 @@
                   <th>Id</th>
                   <th>Tipo</th>
                   <th>Descripcion</th>
-                  <th>cantidad</th>
+                  <th>Cant. Piezas</th>
                   <th></th>
                 </tr>
               </thead>
@@ -243,7 +243,7 @@
               <input name="form-field-checkbox" type="checkbox" id ="selecciongeneral" style="opacity:1;padding-lef:10px;" onclick="selecciongeneral()" ></th>
             <th>Tipo</th>
             <th>Descripcion</th>
-            <th>Cantidad</th>
+            <th>Cant. Piezas</th>
           </tr>
         </thead>
         <tbody id="detalleIngMaterial">

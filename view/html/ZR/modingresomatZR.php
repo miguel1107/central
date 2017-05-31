@@ -35,7 +35,7 @@
               <td><input type="text"id="cantidadKit" name="cantidadKit[]" onkeypress="return soloNumeros(event);" style="width:10px;"></td>
               <td class="td-actions">
                 <div class="action-buttons">
-                  <a class="red" id="eliminarKit">
+                  <a class="red" id="eliminarKit" onclick="eliminarFilaKit(id);" role="button" title="Eliminar">
                     <i class="icon-trash bigger-130"></i>
                   </a>
                 </div>

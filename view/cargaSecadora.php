@@ -150,7 +150,7 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
                   <th>Id</th>
                   <th>Tipo</th>
                   <th>Descripcion</th>
-                  <th>cantidad</th>
+                  <th>Cant. Piezas</th>
                   <th></th>
                 </tr>
               </thead>
@@ -243,7 +243,7 @@ $lsocu=$ctr3->retornaSecadorasOcupadas();
               <input name="form-field-checkbox" type="checkbox" id ="selecciongeneral" style="opacity:1;padding-lef:10px;" onclick="selecciongeneral()"></th>
             <th>Tipo</th>
             <th>Descripcion</th>
-            <th>Cantidad</th>
+            <th>Cant. Piezas</th>
           </tr>
         </thead>
         <tbody id="detalleIngMaterialSec">

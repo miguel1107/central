@@ -211,13 +211,15 @@ window.IngresoMaterial={
 
   renderKit: function(){
     var self = this;
+    aux=0;
     $('#app-materialesKit').empty();
     self.data.materialKit.forEach(function(el, i){
-      self.renderKitMaterial(i, el).appendTo('#app-materialesKit');
+      self.renderKitMaterial(i, el,aux).appendTo('#app-materialesKit');
+      aux=aux+1;
     });
   },
 
-  renderKitMaterial: function (index,$fila) {
+  renderKitMaterial: function (index,$fila,aux) {
     var self = this;
     var $m = $(self.tmpl2);
     $m.find('.tipoKit').text(self.data.materialKit[index].tipo);
@@ -230,6 +232,7 @@ window.IngresoMaterial={
       $m.remove();
       self.render();
     });
+    $m.find(".red").attr('id',aux);
     self.addEventsKit(index, $m);
     return $m;
   },
@@ -272,7 +275,19 @@ window.IngresoMaterial={
       }
     }
     self.data.materiales=aux;
-    this.render();
+    this.renderKit();
+  },
+
+  eliminarFilaKit:function (id) {
+    var self=this;
+    var aux=[];
+    for (var i = 0; i < self.data.materialKit.length; i++) {
+      if (id!=i) {
+        aux.push(self.data.materialKit[i]);
+      }
+    }
+    self.data.materialKit=aux;
+    this.renderKit();
   },
 
   llenatabla: function (id,tipo) {

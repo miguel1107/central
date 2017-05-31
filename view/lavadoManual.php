@@ -133,7 +133,7 @@
               <th>Id</th>
               <th>Tipo</th>
               <th>Descripcion</th>
-              <th>cantidad</th>
+              <th>Cantidad Piezas</th>
               <th></th>
             </tr>
           </thead>

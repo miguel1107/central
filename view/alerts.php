@@ -20,6 +20,16 @@
 		<button class="btn btn-small btn-success" onclick="redireccionar()">Aceptar</button>
 	</div>
 </div>
+<div id="alertExitoKit" class="modal fade" role="dialog">
+	<div class="alert alert-info">
+	  <button type="button" class="close" data-dismiss="modal">
+	  	<i class="icon-remove"></i>
+	  </button>
+	  <strong>Correcto</strong>
+	  <label id='contenidoExitoKit'></label>
+		<button class="btn btn-small btn-success" onclick="cerrarModalKit()">Aceptar</button>
+	</div>
+</div>
 <div id="alertWarning" class="modal fade" role="dialog">
 	<div class="alert alert-warning">
 		<button type="button" class="close" data-dismiss="modal">

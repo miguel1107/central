@@ -81,6 +81,12 @@
   $(document).ready(function(){
     window.IngresoMaterial.combo = <?php echo json_encode($ls); ?>;
     window.IngresoMaterial.init();
+
+    $('#nombreKit').blur(function() {
+  		var est=$('#nombreKit').val();
+  		var ne=est.toUpperCase();
+  		$('#nombreKit').val(ne);
+  	});
   });
 </script>
 <script type="text/javascript">

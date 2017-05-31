@@ -293,8 +293,8 @@ function guardarKit() {
   $.ajax(options)
   .done(function(data) {
     if(data==1){
-      $('#contenidoExito').text('Registro Existoso!!');
-      $("#alertExito").modal('show');
+      $('#contenidoExitoKit').text('Registro Existoso!!');
+      $("#alertExitoKit").modal('show');
     }else{
       $('#contenidoError').text('Error al insertar!!');
       $("#alertError").modal('show');
@@ -319,8 +319,22 @@ function cerrarModal() {
   $("#nuevo_kit").modal('hide');
 }
 
+function cerrarModalKit() {
+  while(window.IngresoMaterial.data.materialKit.length > 0) {
+    window.IngresoMaterial.data.materialKit.pop();
+  }
+  $('#nombreKit').val('');
+  $('#cantidadPzKit').val('');
+  $("#nuevo_kit").modal('hide');
+  $('#alertExitoKit').modal('hide');
+}
+
 function eliminarFila(id) {
   window.IngresoMaterial.eliminarFila(id);
+}
+
+function eliminarFilaKit(id) {
+  window.IngresoMaterial.eliminarFilaKit(id);
 }
 
 function ver(id) {

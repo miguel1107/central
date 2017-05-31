@@ -17,7 +17,11 @@ class kit{
 		$conexion->conectar();
 		$sql="INSERT INTO sisesterilizacion.kit(descripcion, num_materiales,id_recibe)VALUES ('".$nombre."', '".$totalkit."','".$idrec."');";
 		$rs=pg_query($sql) or die(false);
-		return $rs;
+    if ($rs==true) {
+      return true;
+    }else{
+      return false;
+    }
   }
 
   public function retornaId(){

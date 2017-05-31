@@ -18,17 +18,19 @@ class ctrKit{
       $ki=new kit();
       $detKit= new detalleKit();
       $rs=$ki->registrarKit($nomKit,$idrec,$totalkit);
-      if($rs=true){
+      echo $rs;exit;
+      if($rs=="true"){
         $idKit=$ki->retornaId();
         $rs2=$detKit->regIngresoDetalleKit($k,$idKit);
-        echo $rs2;
+        $rpta = array('estado' => true, );
       }else{
-        echo $rs;
+        $rpta= array();
       }
+      echo count($rpta);
   }
 
   public function autocomplete(){
-		$filtromat = ($_REQUEST['term']);
+		$filtromat = strtoupper($_REQUEST['term']);
 		$newmat = '%'.$filtromat.'%';
 		$kit = new kit ();
 		$listakit = $kit->listasautocomplete($newmat);
