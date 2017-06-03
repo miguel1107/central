@@ -12,7 +12,7 @@
           <tr>
             <th>Tipo</th>
             <th>Descripcion</th>
-            <th >Cantidad</th>
+            <th >Piezas</th>
           </tr>
         </thead>
         <tbody id="detalle">

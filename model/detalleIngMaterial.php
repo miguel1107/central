@@ -289,7 +289,7 @@ class detalleIngMaterial {
 
   //ZA-empaquetado
   public function retornaDetalleEmp($id){
-    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle,codigo_est FROM sisesterilizacion.detalle_ingmaterial where ubicacion='SEC' and procesozr='T' and id_ingreso_material='".$id."' ;");
+    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle,codigo_est,empaques,id_set,id_kit FROM sisesterilizacion.detalle_ingmaterial where ubicacion='SEC' and procesozr='T' and id_ingreso_material='".$id."' ;");
     $stmt->execute();
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;

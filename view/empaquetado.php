@@ -153,23 +153,31 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
                   <th width="10px">Id</th>
                   <th width="15px">Tipo</th>
                   <th width="80px" >Descripcion</th>
-                  <th width="15px">Cantidad de materiales</th>
+                  <th width="15px">Cantidad de piezas</th>
                   <th width="20px">Empacar</th>
+                  <th width="10px"></th>
                 </tr>
               </thead>
               <tbody id="carVpro">
                 <script type="text/template" id="tmpl-empaca">
-                  <tr><th colspan="6"class="paquete"></th></tr>
+                  <tr><td colspan="6"class="paquete"></td></tr>
                   <tr>
                     <!-- <th class="check"><input name="form-field-checkbox" type="checkbox" id ="estado" style="opacity:1;" ></th> -->
-                    <th class="idCarga"></th>
-                    <th class="tipoCarga"></th>
-                    <th class="descripcionCarga"></th>
-                    <th class="cantidadCarga"></th>
+                    <td class="idCarga"></td>
+                    <td class="tipoCarga"></td>
+                    <td class="descripcionCarga"></td>
+                    <td class="cantidadCarga"></td>
                     <!-- <th><input type="text" id="cantEmpacar" value="" disabled="true"  style="width: 20px;"></th> -->
-                    <th><button id="empacarBtn" name="empacarBtn" class="btn btn-info" type="button" onclick="registroCargaSec()">
+                    <td><button id="empacarBtn" name="empacarBtn" class="btn btn-info" type="button" onclick="registroCargaSec()">
                       Empacar
-                    </button></th>
+                    </button></td>
+                    <td class="td-actions">
+                      <div class="action-buttons">
+                        <a class="green" id="ver" title="Ver Detalle" onclick="verMat(id)" role="button" >
+                          <i class="icon-eye-open"></i>
+                        </a>
+                      </div>
+                    </td>
                   </tr>
                 </script>
               </tbody>
@@ -191,9 +199,10 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
                 <tr>
                   <th width="10px">Id</th>
                   <th width="15px">Tipo</th>
-                  <th width="80px" >Descripcion</th>
-                  <th width="15px">Cantidad de materiales</th>
+                  <th width="80px">Descripcion</th>
+                  <th width="15px">Cantidad de piezas</th>
                   <th width="20px">Empacar</th>
+                  <th width="10px"></th>
                 </tr>
               </thead>
               <tbody id="carAu">
@@ -206,6 +215,7 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
     </div>
   </div>
 
+<?php require_once ("view/html/ZR/modDetalleSetKit.php") ?>
 
 <div id="emp" class="modal hide fade" tabindex="-1">
   <form class="form-horizontal" onsubmit="return false;">
@@ -247,7 +257,6 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
       </button>
     </div>
   </form>
-
 </div>
 
 

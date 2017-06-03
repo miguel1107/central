@@ -22,3 +22,22 @@ function soloNumeros(evt) {
 function cancelar() {
   window.empaque.cancelar();
 }
+
+function verMat(id) {
+  var ingreso=window.empaque.data.materiales;
+  for (var i = 0; i < ingreso.length; i++) {
+    if (id==i) {
+      var tip=window.empaque.data.materiales[i].tipo;
+      if (tip=='Mat') {
+      }else if(tip=='Set'){
+        var det=window.empaque.data.materiales[i].idset;
+        $("#modal-table").modal('show');
+        window.empaque.llenaDetalle(det,tip);
+      }else if (tip=='Kit') {
+        var det=window.empaque.data.materiales[i].idkit;
+        $("#modal-table").modal('show');
+        window.empaque.llenaDetalle(det,tip);
+      }
+    }
+  }
+}
