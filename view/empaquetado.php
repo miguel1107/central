@@ -38,11 +38,6 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th colspan="5">
-            Libres
-          </th>
-        </tr>
         <?php
         if (count($ls)>0) {
         foreach ($ls as $lsr2){
@@ -84,57 +79,6 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
         }
       }
         ?>
-        <tr>
-          <th colspan="5">
-            Recepciones en Proceso
-          </th>
-        </tr>
-        <?php
-        if(count($lsn)>0){
-        foreach ($lsn as $lsr2n){
-          $idn=$lsr2n->id_ingreso;
-          $pron=$lsr2n->tipo_propietario;
-          $lsm=$ctr->retornaRecpcionEmpaquetadoProceso($idn,$pron);
-          if (count($lsm)>0) {
-          foreach ($lsm as $lsr3n) {
-        ?>
-        <tr>
-          <td><?php echo $idn; ?></td>
-          <td><?php
-            $fen=date_create($lsr3n->fecha);
-            echo date_format($fen, 'd-m-Y (H:i:s)'); ?>
-          </td>
-          <td><?php
-            $sn=$lsr3->prop;
-            if($sn=='S'){
-              echo "Servicio";
-            }elseif ($sn=='M') {
-              echo "Médico";
-            }elseif ($sn=='T') {
-              echo "Terceros";
-            }else {
-              echo "Casa Comercial";
-            }
-            ?>
-          </td>
-          <td><?php echo $lsr3n->descripcion; ?></td>
-          <td class="td-actions">
-            <div class="action-buttons">
-              <a href="javascript" title="Ver Detalle" onclick="ver(<?php echo $id ?>)" role="button" class="green" data-toggle="modal">
-                <i class="icon-eye-open"></i>
-              </a>
-              <!-- <a href="javascript" onclick="ver(<?php echo $id ?>)" role="button" class="green" data-toggle="modal">
-                <i class="icon-hand-right icon-animated-hand-pointer blue"></i>
-              </a> -->
-            </div>
-          </td>
-        </tr>
-        <?php
-          }
-        }
-      }
-      }
-        ?>
       </tbody>
     </table>
   </div>
@@ -168,7 +112,7 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
                     <td class="descripcionCarga"></td>
                     <td class="cantidadCarga"></td>
                     <!-- <th><input type="text" id="cantEmpacar" value="" disabled="true"  style="width: 20px;"></th> -->
-                    <td><button id="empacarBtn" name="empacarBtn" class="btn btn-info" type="button" onclick="registroCargaSec()">
+                    <td><button id="empacarBtn" name="empacarBtn" class="btn btn-info" type="button" onclick="">
                       Empacar
                     </button></td>
                     <td class="td-actions">
@@ -227,7 +171,7 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
     <div class="control-group">
   		<label class="control-label" for="form-field-1">Tipo de envoltura</label>
   		<div class="controls">
-        <select class="envoltura" name="envoltura">
+        <select class="envoltura" name="envoltura" id="envoltura">
   			<?php
           foreach ($env as $e) {
         ?>
@@ -241,13 +185,15 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
     <div class="control-group">
   		<label class="control-label" for="form-field-1">Cantidad a empacar</label>
   		<div class="controls">
+        <input type="hidden" name="idingreso" id="idingreso" value="">
         <input type="hidden" name="iddetalleMod" id="iddetalleMod" value="">
-        <input type="hidden" name="cantMat" id="cantMat" value="">
+        <input type="hidden" name="cantEmp" id="cantEmp" value="">
+        <input type="hidden" name="ti" id="ti" value="">
         <input type="text" name="cantEmapacar" id="cantEmapacar" value="">
   		</div>
   	</div>
     <div class="modal-footer">
-      <button class="btn btn-small btn-info pull-left" id="enviar" type="button" onclick="llenaCargaEmp()">
+      <button class="btn btn-small btn-info pull-left" id="enviar" type="button" onclick="registroEmpaque()">
         <i class="icon-ok bigger-110"></i>
         Empacar
       </button>
@@ -256,7 +202,9 @@ $lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
         Cacelar
       </button>
     </div>
+
   </form>
+
 </div>
 
 

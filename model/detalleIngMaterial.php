@@ -289,10 +289,27 @@ class detalleIngMaterial {
 
   //ZA-empaquetado
   public function retornaDetalleEmp($id){
-    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle,codigo_est,empaques,id_set,id_kit FROM sisesterilizacion.detalle_ingmaterial where ubicacion='SEC' and procesozr='T' and id_ingreso_material='".$id."' ;");
+    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle,codigo_est,empaques,id_set,id_kit,falta_empacar FROM sisesterilizacion.detalle_ingmaterial where ubicacion='SEC' and procesozr='T' and id_ingreso_material='".$id."' ;");
     $stmt->execute();
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;
+  }
+
+  public function actualizaEmpaquetado($iddt,$faltaemp){
+    $conexion=new cado();
+    $conexion->conectar();
+    if ($faltaemp==0) {
+      $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EMP',procesoza='T',falta_empacar='".$faltaemp."'  WHERE id_detalle='".$iddt."';";
+    }else{
+      $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET falta_empacar='".$faltaemp."'  WHERE id_detalle='".$iddt."';";
+    }
+
+    $rs=pg_query($sql) or die(false);
+    if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
   }
 }
 ?>

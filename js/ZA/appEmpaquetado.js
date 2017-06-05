@@ -38,6 +38,7 @@ window.empaque={
       for (var i = 0; i < arr.length; i++) {
         var m={
           estado : false,
+          iding:id,
           idDetalle : arr[i].id_detalle,
           idset:arr[i].id_set,
           idkit:arr[i].id_kit,
@@ -46,6 +47,7 @@ window.empaque={
           descripcion : arr[i].descripcion,
           cantidad : arr[i].cantidad_material,
           numeroempaques:arr[i].empaques,
+          faltaempacar:arr[i].falta_empacar,
           cantidadEmpacar : 0
         };
         self.data.materiales.push(m);
@@ -55,10 +57,13 @@ window.empaque={
     });
   },
   // reder para modal(cantidad y tipo de envoltura), aun no se utiliza
-  llenaparaempacar: function (id,cant) {
+  llenaparaempacar: function (id,cant,t,iding) {
     var self=this;
+    $("#idingreso").val(iding);
     $("#iddetalleMod").val(id);
-    $("#cantMat").val(cant);
+    $("#cantEmp").val(cant);
+    $('#ti').val(t);
+    $("#cantEmapacar").val('');
   },
 //---fin--
 
@@ -106,7 +111,6 @@ window.empaque={
   },
 
   renderDetalle: function (index,elemento) {
-    console.log(index);
     var self=this;
     var $m=$(self.tmpl);
     $m.find('.tipo').text(self.data.detalle[index].tipo);
@@ -123,18 +127,16 @@ window.empaque={
 
     $m.find('.paquete').text(self.data.materiales[index].numeroempaques +' paquete(s)');
     $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
-    // if(self.data.materiales[index].tipo=='Mat'){
-    //   $m.find('.paquete').text(self.data.materiales[index].cantidad +' paquete(s)');
-    //   $m.find('.cantidadCarga').text('1');
-    // }else{
-    //   $m.find('.paquete').text('1 paquete');
-    //   $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
-    // }
+
     $m.find("#cantEmpacar").val('0');
     $m.find("#empacarBtn").removeAttr("onclick");
-    $m.find("#empacarBtn").attr('onclick', 'empacar('+self.data.materiales[index].idDetalle+','+self.data.materiales[index].cantidad+')');
+    if (self.data.materiales[index].faltaempacar=='0') {
+      $m.find("#empacarBtn").attr('disabled', 'disabled');
+    }else{
+      $m.find("#empacarBtn").attr('onclick', 'empacar('+self.data.materiales[index].idDetalle+','+self.data.materiales[index].faltaempacar+','+aux+')');
+    }
     $m.find(".green").attr('id',aux);
-    self.addEvents(index,$m);
+    //self.addEvents(index,$m);
     return $m;
   },
 
