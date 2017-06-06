@@ -50,10 +50,24 @@ window.empaque={
           faltaempacar:arr[i].falta_empacar,
           cantidadEmpacar : 0
         };
+        var ii=i;
         self.data.materiales.push(m);
       }
+      var t=0;
+      while (ii>=0) {
+        if (self.data.materiales[ii].faltaempacar!=0) {
+          t=1;
+        }
+        ii=ii-1;
+      }
       self.data.servicio='true';
-      self.llenaCarga();
+      if (t==1) {
+        self.llenaCarga();
+      }else{
+        self.cambiaEstadoGeneral(id);
+        location.reload(true);
+      }
+
     });
   },
   // reder para modal(cantidad y tipo de envoltura), aun no se utiliza
@@ -102,6 +116,7 @@ window.empaque={
       self.render();
     });
   },
+
   render: function(){
     var self = this;
     $('#detalle').empty();
@@ -118,6 +133,7 @@ window.empaque={
     $m.find('.cantidad').text(self.data.detalle[index].cantidad);
     return $m;
   },
+
   renderCarga: function (index, elemento, aux) {
     var self=this;
     var $m=$(self.tmpl2);
@@ -176,6 +192,23 @@ window.empaque={
     var self=this;
     self.data.iding=0;
     self.init();
+  },
+
+  cambiaEstadoGeneral: function (iding) {
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrEmpaque&a=actualizaEmpaquetadoTotal',
+      data: {
+        'id' : iding
+      },
+    };
+    $.ajax(options).done(function (data) {
+      if (data==1) {
+        console.log('cambio estado');
+      }else{
+        console.log('no cambio estado');
+      }
+    });
   },
 
 };

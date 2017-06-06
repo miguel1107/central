@@ -298,12 +298,7 @@ class detalleIngMaterial {
   public function actualizaEmpaquetado($iddt,$faltaemp){
     $conexion=new cado();
     $conexion->conectar();
-    if ($faltaemp==0) {
-      $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EMP',procesoza='T',falta_empacar='".$faltaemp."'  WHERE id_detalle='".$iddt."';";
-    }else{
-      $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET falta_empacar='".$faltaemp."'  WHERE id_detalle='".$iddt."';";
-    }
-
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET falta_empacar='".$faltaemp."'  WHERE id_detalle='".$iddt."';";
     $rs=pg_query($sql) or die(false);
     if($rs==true){
       return "true";
@@ -311,5 +306,18 @@ class detalleIngMaterial {
       return "false";
     }
   }
+
+  public function actualizaEmpaquetadoTotal($iding){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EMP' WHERE id_ingreso_material='".$iding."';";
+    $rs=pg_query($sql) or die(false);
+    if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
+
 }
 ?>

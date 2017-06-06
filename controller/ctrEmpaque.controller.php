@@ -2,6 +2,7 @@
 
 
 require_once __DIR__.'/../model/empaquetado.php';
+require_once __DIR__.'/../model/ingresoMaterial.php';
 require_once __DIR__.'/../model/detalleIngMaterial.php';
 /**
  *
@@ -34,6 +35,19 @@ class ctrEmpaque{
     echo count($rpta);
   }
 
+  public function actualizaEmpaquetadoTotal(){
+    $iding=$_POST['id'];
+    $ingmat=new ingresoMaterial();
+    $detmat=new detalleIngMaterial();
+    $rs=$ingmat->actualizaEmpaqueTotal($iding);
+    $rs2=$detmat->actualizaEmpaquetadoTotal($iding);
+    if ($rs2=="true") {
+        $rpta = array('estado' => true, );
+    }else{
+      $rpta = array();
+    }
+    echo count($rpta);
+  }
 }
 
 ?>

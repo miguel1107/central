@@ -9,7 +9,7 @@ $ctr3=new secadora();
 $ctr4=new tipoenvoltura();
 $env=$ctr4->listado();
 $ls=$ctr->listaRecepcionesEmpaquetado();
-$lsn=$ctr->listaRecepcionesEmpaquetadoProceso();
+
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
   <ul class="breadcrumb">

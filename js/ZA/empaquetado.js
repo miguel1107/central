@@ -81,6 +81,7 @@ function registroEmpaque() {
   }
 }
 
+
 $(document).ready(function() {
   $('#cantEmapacar').blur(function() {
     var emp=$('#cantEmapacar').val();
