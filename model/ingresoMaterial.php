@@ -416,6 +416,44 @@ class ingresoMaterial{
 
   }
 
+  //ZA-cargaEsterilizacion
+  public function listaRecepcionesCargaEsterilizacion($tipo){
+    $stmt = $this->objPDO->prepare("SELECT distinct (im.id_ingreso), im.tipo_propietario from sisesterilizacion.detalle_ingmaterial dim
+inner join sisesterilizacion.ingreso_material im on dim.id_ingreso_material=im.id_ingreso
+where dim.codigo_est='".$tipo."' and dim.ubicacion='EMP' and procesoza='T' order by im.id_ingreso");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
+
+
+  public function retornaRecpcionDetalleCargaEste($id,$prop){
+    if ($prop=='S') {
+      $stmt = $this->objPDO->prepare("SELECT id_ingreso,fecha_ingreso as fecha,tipo_propietario as prop,nombre_servicio as descripcion FROM sisesterilizacion.ingreso_material im inner join sisesterilizacion.servicio on im.id_servicio=sisesterilizacion.servicio.id_servicio where ubicacion='EMP' and estado='T'  and id_ingreso='".$id."'; ");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='M'){
+      $stmt = $this->objPDO->prepare("SELECT id_ingreso,fecha_ingreso as fecha,tipo_propietario as prop,(emp_appaterno||' '|| emp_apmaterno||','|| emp_nombres) as descripcion FROM sisesterilizacion.ingreso_material im inner join empleados em on em.emp_id=im.id_ingresa where ubicacion='EMP' and estado='T' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='T'){
+      $stmt = $this->objPDO->prepare("SELECT id_ingreso,fecha_ingreso as fecha,tipo_propietario as prop,(centro_procedencia||'->'||responsable) as descripcion FROM sisesterilizacion.ingreso_material where ubicacion='EMP' and estado='T' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+    if($prop=='C'){
+      $stmt = $this->objPDO->prepare("SELECT id_ingreso,fecha_ingreso as fecha, tipo_propietario as prop,(responsable|| '->'||centro_medico) as descripcion FROM sisesterilizacion.ingreso_material where ubicacion='EMP' and estado='T' and id_ingreso='".$id."'");
+      $stmt->execute();
+  		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+  		return $ls;
+    }
+  }
+
 }
 
   ?>

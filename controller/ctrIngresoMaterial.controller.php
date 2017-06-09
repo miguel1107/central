@@ -10,7 +10,7 @@
 
     function __construct(){
     }
-
+    //ZR
     public function regIngresoMaterialServicio(){
       $rpta = array();
       $mat=($_POST['materiales']);
@@ -104,7 +104,35 @@
       echo count($rpta);
     }
 
-    
+    //ZA
+    public function retornaIngresosparaCargaEste(){
+      $det=new ingresoMaterial();
+      $det=new ingresoMaterial();
+      $tipo=$_POST['tipoEste'];
+     $ls=$det->listaRecepcionesCargaEsterilizacion($tipo);
+      $retur = array();
+      $i=0;
+      foreach ($ls as $key ) {
+        $aux = array();
+        $id=$key->id_ingreso;
+        $prop=$key->tipo_propietario;
+        $ls2=$det->retornaRecpcionDetalleCargaEste($id,$prop);
+        foreach ($ls2 as $key2) {
+          $iding=$key2->id_ingreso;
+          $propi=$key2->prop;
+          $fecha=$key2->fecha;
+          $descripcion=$key2->descripcion;
+          array_push($aux,$iding);
+          array_push($aux,$propi);
+          array_push($aux,$fecha);
+          array_push($aux,$descripcion);
+        }
+        array_push($retur,$aux);
+      }
+      echo json_encode($retur);
+    }
+
+
 
   }
 

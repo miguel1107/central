@@ -164,6 +164,11 @@ switch ($zona) {
 				<span class='menu-text'> Empaquetado </span>
 			</a>
 		</li>
+		<li>
+			<a href='?menu=cargaEsterilizador'>
+				<span class='menu-text'> Carga Estirilizador </span>
+			</a>
+		</li>
 <?php
 				break;
 

@@ -310,13 +310,21 @@ class detalleIngMaterial {
   public function actualizaEmpaquetadoTotal($iding){
     $conexion=new cado();
     $conexion->conectar();
-    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EMP' WHERE id_ingreso_material='".$iding."';";
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EMP', procesoza='T' WHERE id_ingreso_material='".$iding."';";
     $rs=pg_query($sql) or die(false);
     if($rs==true){
       return "true";
     }else{
       return "false";
     }
+  }
+
+  //ZA-carga esterilizaion
+  public function retornaDetalleEste($id,$este){
+    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle,codigo_est,empaques,id_set,id_kit,falta_empacar FROM sisesterilizacion.detalle_ingmaterial where ubicacion='EMP' and procesozr='T' and id_ingreso_material='".$id."' and codigo_est='".$este."' ;");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
   }
 
 }

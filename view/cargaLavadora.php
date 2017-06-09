@@ -8,6 +8,7 @@
   $ls=$ctr->listaRepcionesParaLavadora();
   $lsn=$ctr->listaRecepcionesEnProcesoLav();
   $d=$ctr->inicioLavadora();
+  $ds=$ctr->inicioSecadora();
   $lsl=$ctr3->retornaLavadoras();
   $lsocu=$ctr3->retornaLavadorasOcupadas();
 ?>

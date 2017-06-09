@@ -158,7 +158,7 @@ $ls=$ctr->listaRecepcionesEmpaquetado();
       </div>
     </div>
   </div>
-
+</div>
 <?php require_once ("view/html/ZR/modDetalleSetKit.php") ?>
 
 <div id="emp" class="modal hide fade" tabindex="-1">

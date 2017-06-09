@@ -37,6 +37,15 @@
       $rs=$dim->retornaDetalleEmp($id);
       echo json_encode($rs);
     }
+
+    public function retornaDetalleCargaesterilizacion(){
+      $id=$_POST['id'];
+      $este=$_POST['tipo'];
+      $dim=new detalleIngMaterial();
+      $rs=$dim->retornaDetalleEste($id,$este);
+      echo json_encode($rs);
+    }
+
   }
 
 ?>

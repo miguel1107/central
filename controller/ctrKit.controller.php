@@ -10,6 +10,17 @@ class ctrKit{
   function __construct(){
   }
 
+  public function autocomplete(){
+    $filtromat = strtoupper($_REQUEST['term']);
+    $newmat = '%'.$filtromat.'%';
+    $kit = new kit ();
+    $listakit = $kit->listasautocomplete($newmat);
+    foreach ($listakit as $key => $val) {
+      $val->label = $val->descripcion;
+    }
+    echo json_encode($listakit);
+  }
+
   public function registroKit(){
       $k=($_POST['k']);
       $idrec=$_POST['idrec'];
@@ -29,16 +40,7 @@ class ctrKit{
       echo count($rpta);
   }
 
-  public function autocomplete(){
-		$filtromat = strtoupper($_REQUEST['term']);
-		$newmat = '%'.$filtromat.'%';
-		$kit = new kit ();
-		$listakit = $kit->listasautocomplete($newmat);
-		foreach ($listakit as $key => $val) {
-			$val->label = $val->descripcion;
-		}
-		echo json_encode($listakit);
-	}
+
 }
 
 
