@@ -107,9 +107,8 @@
     //ZA
     public function retornaIngresosparaCargaEste(){
       $det=new ingresoMaterial();
-      $det=new ingresoMaterial();
       $tipo=$_POST['tipoEste'];
-     $ls=$det->listaRecepcionesCargaEsterilizacion($tipo);
+      $ls=$det->listaRecepcionesCargaEsterilizacion($tipo);
       $retur = array();
       $i=0;
       foreach ($ls as $key ) {

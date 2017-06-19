@@ -8,7 +8,8 @@ function empacar(id,cant,aux) {
   $("#emp").modal('show');
   var t=window.empaque.data.materiales[aux].tipo;
   var iding=window.empaque.data.materiales[aux].iding;
-  window.empaque.llenaparaempacar(id,cant,t,iding);
+  var falta=window.empaque.data.materiales[aux].faltaempacar;
+  window.empaque.llenaparaempacar(id,cant,t,iding,falta);
 }
 
 function soloNumeros(evt) {

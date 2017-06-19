@@ -71,13 +71,14 @@ window.empaque={
     });
   },
   // reder para modal(cantidad y tipo de envoltura), aun no se utiliza
-  llenaparaempacar: function (id,cant,t,iding) {
+  llenaparaempacar: function (id,cant,t,iding,falta) {
     var self=this;
     $("#idingreso").val(iding);
     $("#iddetalleMod").val(id);
     $("#cantEmp").val(cant);
     $('#ti').val(t);
     $("#cantEmapacar").val('');
+    $("#faltaempacar").val(falta);
   },
 //---fin--
 
@@ -140,15 +141,15 @@ window.empaque={
     $m.find('.idCarga').text(self.data.materiales[index].idDetalle);
     $m.find('.tipoCarga').text(self.data.materiales[index].tipo);
     $m.find('.descripcionCarga').text(self.data.materiales[index].descripcion);
-
-    $m.find('.paquete').text(self.data.materiales[index].numeroempaques +' paquete(s)');
     $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
 
     $m.find("#cantEmpacar").val('0');
     $m.find("#empacarBtn").removeAttr("onclick");
     if (self.data.materiales[index].faltaempacar=='0') {
-      $m.find("#empacarBtn").attr('disabled', 'disabled');
+      $m.find("#empacado").attr('style','display:block');
+      $m.find("#empacarBtn").attr('style','display:none');
     }else{
+      $m.find('.paquete').text(self.data.materiales[index].numeroempaques +' paquete(s): Falta empacar '+self.data.materiales[index].faltaempacar+' paquete(s)');
       $m.find("#empacarBtn").attr('onclick', 'empacar('+self.data.materiales[index].idDetalle+','+self.data.materiales[index].faltaempacar+','+aux+')');
     }
     $m.find(".green").attr('id',aux);

@@ -419,13 +419,21 @@ class ingresoMaterial{
   //ZA-cargaEsterilizacion
   public function listaRecepcionesCargaEsterilizacion($tipo){
     $stmt = $this->objPDO->prepare("SELECT distinct (im.id_ingreso), im.tipo_propietario from sisesterilizacion.detalle_ingmaterial dim
-inner join sisesterilizacion.ingreso_material im on dim.id_ingreso_material=im.id_ingreso
-where dim.codigo_est='".$tipo."' and dim.ubicacion='EMP' and procesoza='T' order by im.id_ingreso");
+    inner join sisesterilizacion.ingreso_material im on dim.id_ingreso_material=im.id_ingreso
+    where dim.codigo_est='".$tipo."' and dim.ubicacion='EMP' and procesoza='T' and dim.falta_cargareste>0 order by im.id_ingreso");
     $stmt->execute();
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;
   }
 
+  public function listaRecepcionesCargaEsterilizacionInicio(){
+    $stmt = $this->objPDO->prepare("SELECT distinct (im.id_ingreso), im.tipo_propietario from sisesterilizacion.detalle_ingmaterial dim
+    inner join sisesterilizacion.ingreso_material im on dim.id_ingreso_material=im.id_ingreso
+    where dim.ubicacion='EMP' and procesoza='T' order by im.id_ingreso");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
 
   public function retornaRecpcionDetalleCargaEste($id,$prop){
     if ($prop=='S') {
@@ -452,6 +460,27 @@ where dim.codigo_est='".$tipo."' and dim.ubicacion='EMP' and procesoza='T' order
   		$ls=$stmt->fetchAll(PDO::FETCH_OBJ);
   		return $ls;
     }
+  }
+
+  public function inicioCargaCargaEste(){
+    $ls=$this->listaRecepcionesCargaEsterilizacionInicio();
+    $det=new detalleIngMaterial();
+    foreach ($ls as $l) {
+      $idIng=$l->id_ingreso;
+      $ls2=$det->retornaCantidadDetalleVarlorEste($idIng);//falta
+      $ls3=$det->retornaCantidadDetallaEste($idIng);//falta
+      if (($ls2)==($ls3)) {
+        $this->actualizaCargaEsteTotal($idIng);
+        $det->actualizaCargaEstetadoTotal($idIng);
+      }
+    }
+  }
+
+  public function actualizaCargaEsteTotal($iding){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="UPDATE sisesterilizacion.ingreso_material SET ubicacion='EST', estado='T' WHERE id_ingreso='".$iding."'; ";
+    $rs=pg_query($sql) or die(false);
   }
 
 }

@@ -319,13 +319,64 @@ class detalleIngMaterial {
     }
   }
 
-  //ZA-carga esterilizaion
+  //ZA-carga esterilizacion
   public function retornaDetalleEste($id,$este){
-    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle,codigo_est,empaques,id_set,id_kit,falta_empacar FROM sisesterilizacion.detalle_ingmaterial where ubicacion='EMP' and procesozr='T' and id_ingreso_material='".$id."' and codigo_est='".$este."' ;");
+    $stmt = $this->objPDO->prepare("SELECT tipo_ingreso,cantidad_material, descripcion,id_detalle,codigo_est,empaques,id_set,id_kit,falta_cargareste FROM sisesterilizacion.detalle_ingmaterial where ubicacion='EMP' and procesozr='T' and id_ingreso_material='".$id."' and codigo_est='".$este."' ;");
     $stmt->execute();
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;
   }
+
+  public function actualizaCargaEste($iddet,$cantidad){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET falta_cargareste='".$cantidad."' WHERE id_detalle='".$iddet."';";
+    $rs=pg_query($sql) or die(false);
+    if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
+
+  public function retornaCantidadDetalleVarlorEste($idIng){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql=("SELECT count(*) FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$idIng."' and procesoza='T' and ubicacion='EMP' and falta_cargareste='0';");
+    $rs=pg_query($sql);
+    if(pg_num_rows($rs)==1){
+      if($row=pg_fetch_array($rs)){
+        $can=$row[0];
+      }
+    }
+    return $can;
+  }
+
+  public function retornaCantidadDetallaEste($idIng){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql=("SELECT count(*) FROM sisesterilizacion.detalle_ingmaterial where id_ingreso_material='".$idIng."';");
+    $rs=pg_query($sql);
+    if(pg_num_rows($rs)==1){
+      if($row=pg_fetch_array($rs)){
+        $can=$row[0];
+      }
+    }
+    return $can;
+  }
+
+  public function actualizaCargaEstetadoTotal($iding){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EST', procesoza='T' WHERE id_ingreso_material='".$iding."';";
+    $rs=pg_query($sql) or die(false);
+    if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
+
 
 }
 ?>

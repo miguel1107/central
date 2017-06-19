@@ -112,9 +112,12 @@ $ls=$ctr->listaRecepcionesEmpaquetado();
                     <td class="descripcionCarga"></td>
                     <td class="cantidadCarga"></td>
                     <!-- <th><input type="text" id="cantEmpacar" value="" disabled="true"  style="width: 20px;"></th> -->
-                    <td><button id="empacarBtn" name="empacarBtn" class="btn btn-info" type="button" onclick="">
+                    <td>
+                      <p color="green" id="empacado" nane="empacado" class="empacado" style="display:none">EMPACADO!!!</p>
+                      <button id="empacarBtn" name="empacarBtn" class="btn btn-info" type="button" onclick="">
                       Empacar
-                    </button></td>
+                      </button>
+                    </td>
                     <td class="td-actions">
                       <div class="action-buttons">
                         <a class="green" id="ver" title="Ver Detalle" onclick="verMat(id)" role="button" >
@@ -183,6 +186,12 @@ $ls=$ctr->listaRecepcionesEmpaquetado();
   		</div>
   	</div>
     <div class="control-group">
+      <label for="form-field-1" class="control-label">Falta empacar</label>
+      <div class="controls">
+        <input type="text" name="faltaempacar" id="faltaempacar" value="" readonly>
+      </div>
+    </div>
+    <div class="control-group">
   		<label class="control-label" for="form-field-1">Cantidad a empacar</label>
   		<div class="controls">
         <input type="hidden" name="idingreso" id="idingreso" value="">
@@ -204,7 +213,6 @@ $ls=$ctr->listaRecepcionesEmpaquetado();
     </div>
 
   </form>
-
 </div>
 
 

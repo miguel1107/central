@@ -10,15 +10,20 @@ window.cargaesterilizador={
     if(!self.tmpl3){
       self.tmpl3 = $("#tmpl-detalle").text();
     };
+    if (!self.tmpl4) {
+      self.tmpl4=$("#tmpl-este").text();
+    }
     self.data={
       iding :0,
       servicio:'false',
       ingresos:[],
       materiales :[],
-      detalle:[]
+      detalle:[],
+      carga:[]
     };
     self.llenaCarga();
     self.render();
+    self.cambiaEstadoGeneral();
   },
 
   llenaingresos: function (tipo) {
@@ -80,7 +85,7 @@ window.cargaesterilizador={
     return $m;
   },
 
-  llenatabla: function (id,tipo) {
+  llenatabla: function (id,tipo,descripcion) {
     var self=this;
     self.data.materiales=[];
     var options={
@@ -111,26 +116,29 @@ window.cargaesterilizador={
           descripcion : arr[i].descripcion,
           cantidad : arr[i].cantidad_material,
           numeroempaques:arr[i].empaques,
-          faltaempacar:arr[i].falta_empacar,
-          cantidadEmpacar : 0
+          faltacargar:arr[i].falta_cargareste,
+          cantidadEmpacar : 0,
+          descripcioning: descripcion,
+          porcargar:arr[i].falta_cargareste
         };
         var ii=i;
         self.data.materiales.push(m);
       }
       var t=0;
       while (ii>=0) {
-        if (self.data.materiales[ii].faltaempacar!=0) {
+        if (self.data.materiales[ii].faltacargar!=0) {
           t=1;
         }
         ii=ii-1;
       }
       self.data.servicio='true';
+      //console.log(t);
       //if (t==1) {
         self.llenaCarga();
-      //}else{
-        //self.cambiaEstadoGeneral(id);
-        //location.reload(true);
-      //}
+      // }else{
+      //   self.cambiaEstadoGeneral(id);
+      //   location.reload(true);
+      // }
     });
   },
 
@@ -150,16 +158,16 @@ window.cargaesterilizador={
     $m.find('.idCarga').text(self.data.materiales[index].idDetalle);
     $m.find('.tipoCarga').text(self.data.materiales[index].tipo);
     $m.find('.descripcionCarga').text(self.data.materiales[index].descripcion);
-
-    $m.find('.paquete').text(self.data.materiales[index].numeroempaques +' paquete(s)');
     $m.find('.cantidadCarga').text(self.data.materiales[index].cantidad);
 
     $m.find("#cantEmpacar").val('0');
     $m.find("#empacarBtn").removeAttr("onclick");
-    if (self.data.materiales[index].faltaempacar=='0') {
-      $m.find("#empacarBtn").attr('disabled', 'disabled');
+    if (self.data.materiales[index].porcargar=='0') {
+      $m.find("#empacado").attr('style','display:block');
+      $m.find("#empacarBtn").attr('style','display:none');
     }else{
-      $m.find("#empacarBtn").attr('onclick', 'empacar('+self.data.materiales[index].idDetalle+','+self.data.materiales[index].faltaempacar+','+aux+')');
+      $m.find('.paquete').text(self.data.materiales[index].numeroempaques +' paquete(s): faltan cargar '+self.data.materiales[index].porcargar+' paquete(s)');
+      $m.find("#empacarBtn").attr('onclick', 'cargar('+self.data.materiales[index].idDetalle+','+self.data.materiales[index].porcargar+','+aux+')');
     }
     $m.find(".green").attr('id',aux);
     //self.addEvents(index,$m);
@@ -217,6 +225,77 @@ window.cargaesterilizador={
     $m.find('.descripcion').text(self.data.detalle[index].descripcion);
     $m.find('.cantidad').text(self.data.detalle[index].cantidad);
     return $m;
+  },
+
+  llenaparacarga:function (id,cant,falta,aux) {
+    var self=this;
+    var desing=window.cargaesterilizador.data.materiales[aux].descripcioning;
+    $("#iddetalleMod").val(id);
+    $("#cantEmp").val(cant);
+    $("#cantEmapacar").val('');
+    $("#faltaempacar").val(falta);
+    $("#position").val(aux);
+  },
+
+  agregaCarga:function(iddet,cant,position,tipo) {
+    var self=this;
+    var poremcar=self.data.materiales[position].porcargar;
+    var poremcardespues=poremcar-cant;
+    console.log(poremcardespues);
+    self.data.materiales[position].porcargar=poremcardespues;
+    var m={
+      iddetalle: iddet,
+      faltacargar:poremcardespues,
+      cantidad: cant,
+      descripcion: self.data.materiales[position].descripcion,
+      tipo: self.data.materiales[position].tipo,
+      desing: self.data.materiales[position].descripcioning,
+      numpiezas:self.data.materiales[position].cantidad,
+    };
+    self.data.carga.push(m);
+    self.llenaCargaEste();
+    self.llenaCarga();
+    //self.llenatabla(self.data.materiales[position].iding,tipo,self.data.materiales[position].descripcioning);
+    $("#emp").modal('hide');
+  },
+
+  llenaCargaEste: function () {
+    var self=this;
+    $('#cargaEste').empty();
+    var aux=0;
+    self.data.carga.forEach(function(el, i){
+      self.renderCargaEste(i, el,aux).appendTo('#cargaEste');
+      aux=aux+1;
+    });
+  },
+
+  renderCargaEste: function (index,elemento,aux) {
+    var self=this;
+    var $m=$(self.tmpl4);
+    $m.find('.idCarga').text(self.data.carga[index].iddetalle);
+    $m.find('.descring').text(self.data.carga[index].desing);
+    $m.find('.empaques').text(self.data.carga[index].cantidad);
+    $m.find('.tipoCarga').text(self.data.carga[index].tipo);
+    $m.find('.descripcionCarga').text(self.data.carga[index].descripcion);
+    $m.find('.piezas').text(self.data.carga[index].numpiezas);
+    $m.find(".red").attr('id',aux);
+    return $m;
+  },
+
+  cancelar: function () {
+    var self=this;
+    self.data.iding=0;
+    self.init();
+  },
+
+  cambiaEstadoGeneral: function () {
+    var options={
+      type : 'post',
+      url : 'index.php?c=ctrCargaEsterilizacion&a=actualizaCargaEsteTotal',
+      data: {
+      },
+    };
+    $.ajax(options).done(function () {});
   },
 
 
