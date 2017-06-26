@@ -4,7 +4,7 @@ $zona=$_SESSION["zona"];
 <a class="menu-toggler display" id="menu-toggler" href="#">
 	<span class="menu-text"></span>
 </a>
-<div class="sidebar" id="sidebar">
+<div class="sidebar menu-min" id="sidebar">
 	<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
 						<button class="btn btn-small btn-success">
@@ -170,16 +170,35 @@ switch ($zona) {
 			</a>
 		</li>
 <?php
-				break;
-
-			default:
-
-				break;
-		}
-
+		break;
+	case 'Zona Verde':
+	?>
+			<li>
+				<a href='?menu=descargaEsterilizador'>
+					<span class='menu-text'> Descarga Esterilizador </span>
+				</a>
+			</li>
+			<!-- <li>
+				<a href='typography.html'>
+					<span class='menu-text'> Empaquetado de ropa </span>
+				</a>
+			</li>
+			<li>
+				<a href='?menu=empaquetado'>
+					<span class='menu-text'> Empaquetado </span>
+				</a>
+			</li>
+			<li>
+				<a href='?menu=cargaEsterilizador'>
+					<span class='menu-text'> Carga Estirilizador </span>
+				</a>
+			</li> -->
+	<?php
+		break;
+}
 		?>
 		</ul>
 		<div class="sidebar-collapse" id="sidebar-collapse">
-						<i class="icon-double-angle-left"></i>
+						<i class="icon-double-angle-left icon-double-angle-right"></i>
 				</div>
 	</div>

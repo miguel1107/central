@@ -104,7 +104,7 @@
       echo count($rpta);
     }
 
-    //ZA
+    //ZA-carga esterilizador
     public function retornaIngresosparaCargaEste(){
       $det=new ingresoMaterial();
       $tipo=$_POST['tipoEste'];

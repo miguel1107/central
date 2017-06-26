@@ -14,6 +14,7 @@ class cargaEsterilizacion{
     $this->objPDO = new cado();
   }
 
+  //ZA-carga esterilizador
   public function registroCarga($materiales,$idEste){
     $mat=$materiales;
     $idusu=$_SESSION["idusuario"];
@@ -59,12 +60,17 @@ class cargaEsterilizacion{
     return $fecha;
   }
 
-  // public function retornaDetalleDescargar($idlav){
-  //   $stmt = $this->objPDO->prepare("SELECT (id_detalle) as detalle FROM sisesterilizacion.carga_lavadora WHERE id_lavadora='".$idlav."' and estado='P'");
-  //   $stmt->execute();
-  //   $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
-  //   return $ls;
-  // }
+  //ZV-descargar esterilizador
+  public function retornaDetalleDescargar($idEste){
+    $stmt = $this->objPDO->prepare("SELECT im.tipo_propietario,im.id_ingreso,dim.id_detalle,ce.paquetes,dim.descripcion,dim.cantidad_material,dim.tipo_ingreso,ce.id_carga,ce.id_esterilizador
+      FROM sisesterilizacion.carga_esterilizador ce
+      INNER JOIN sisesterilizacion.detalle_ingmaterial dim ON dim.id_detalle=ce.id_detalle
+      INNER JOIN sisesterilizacion.ingreso_material im ON im.id_ingreso=dim.id_ingreso_material
+      WHERE ce.estado='P' and ce.id_esterilizador='".$idEste."';");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
   //
   // public function actulizaDescargaLav($iddetalle){
   //   $conexion=new cado();

@@ -368,7 +368,7 @@ class detalleIngMaterial {
   public function actualizaCargaEstetadoTotal($iding){
     $conexion=new cado();
     $conexion->conectar();
-    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EST', procesoza='T' WHERE id_ingreso_material='".$iding."';";
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EST', procesoza='p' WHERE id_ingreso_material='".$iding."';";
     $rs=pg_query($sql) or die(false);
     if($rs==true){
       return "true";

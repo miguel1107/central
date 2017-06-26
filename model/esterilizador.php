@@ -31,6 +31,12 @@ class esterilizador{
     }
   }
 
+  public function retornaEsterilizadoresConCarga(){
+    $stmt = $this->objPDO->prepare("SELECT distinct(es.id_esterilizador),es.descripcion as desc,ce.fecha_carga as fecha FROM sisesterilizacion.esterilizador es inner join sisesterilizacion.carga_esterilizador ce on ce.id_esterilizador=es.id_esterilizador where es.estado='O' and ce.estado='P' order by es.id_esterilizador");
+    $stmt->execute();
+    $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
+    return $ls;
+  }
 }
 
 
