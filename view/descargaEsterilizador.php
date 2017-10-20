@@ -1,7 +1,10 @@
 <?php
   require_once 'model/esterilizador.php';
+  require_once 'model/ingresoMaterial.php';
   $este= new esterilizador();
   $ls=$este->retornaEsterilizadoresConCarga();
+  $ingresoMaterial=new ingresoMaterial();
+  $ingresoMaterial->inicioDescargaEste();
 ?>
 <div class="breadcrumbs" id="breadcrumbs">
   <ul class="breadcrumb">
@@ -90,7 +93,7 @@
                     <td class="piezas"></td>
                     <td class="td-actions">
                       <div class="action-buttons">
-                        <a aling="center" class="green" id="" onclick="resset(id);" role="button" title="Reesterilizar">
+                        <a aling="center" class="green" id="" onclick="abreModal(id);" role="button" title="Reesterilizar">
                           <i class="icon-refresh bigger-130s"></i>
                         </a>
                       </div>
@@ -106,7 +109,7 @@
     </div>
   </div>
   <div class="form-actions">
-    <button id="material" name="material" class="btn btn-info" type="button" onclick="#">
+    <button id="material" name="material" class="btn btn-info" type="button" onclick="terminar()">
       <i class="icon-ok bigger-110"></i>Terminar Descarga
     </button>
     <button id="set" class="btn btn-danger" type="button" onclick="cancelar()">
@@ -116,6 +119,43 @@
 </div>
 <?php require_once ("view/alerts.php") ?>
 <?php require_once ("view/html/ZR/vercarga.php") ?>
+<div id="rees" class="modal hide fade" tabindex="-1">
+  <form class="form-horizontal" onsubmit="return false;">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" >&times;</button>
+      <h4 class="modal-title">Reestirilizar</h4>
+    </div>
+    <input type="hidden" id="iddetalle" name="iddetalle" value="">
+    <br>
+    <div class="control-group">
+      <label class="control-label" for="form-field-1">Cantidad de paquetes:</label>
+  		<div class="controls">
+        <input type="text" name="cantEmp" id="cantEmp" value="" readonly>
+      </div>
+    </div>
+    <div class="control-group">
+  		<label class="control-label" for="form-field-1">Paquetes para reesterilizar:</label>
+  		<div class="controls">
+        <input type="hidden" name="idcargaeste" id="idcargaeste" value="">
+
+        <input type="text" name="cantRees" id="cantRees" value="">
+        <input type="hidden" name="position" id="position" value="">
+  		</div>
+  	</div>
+    <div class="modal-footer">
+      <button class="btn btn-small btn-info pull-left" id="enviar" type="button" onclick="reseet()">
+        <i class="icon-ok bigger-110"></i>
+        reesterilizar
+      </button>
+      <button class="btn btn-small btn-danger pull-left" data-dismiss="modal">
+        <i class="icon-remove"></i>
+        Cacelar
+      </button>
+    </div>
+
+  </form>
+
+</div>
 <script src="assets/js/jquery-2.0.3.min.js"></script>
 <script src="js/ZV/descargaEsterilizador.js"></script>
 <script src="js/ZV/appDescargaEsterilizador.js"></script>

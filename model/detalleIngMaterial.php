@@ -17,7 +17,7 @@ class detalleIngMaterial {
     $conexion=new cado();
 		$conexion->conectar();
     $l=count($mat);
-    $sql="INSERT INTO sisesterilizacion.detalle_ingmaterial(id_ingreso_material, tipo_ingreso, id_mat, cantidad_material, codigo_est, ubicacion, procesozr, procesoza,id_set,id_kit,descripcion,ultrazonica,lv_mecanico,lv_manual,sec_mecanico,sec_manual,cantidad_tipo) VALUES ";
+    $sql="INSERT INTO sisesterilizacion.detalle_ingmaterial(id_ingreso_material, tipo_ingreso, id_mat, cantidad_material, codigo_est, ubicacion, procesozr, procesoza,id_set,id_kit,descripcion,ultrazonica,lv_mecanico,lv_manual,sec_mecanico,sec_manual,cantidad_tipo,empaques,falta_empacar,falta_cargareste) VALUES ";
     for ($i=0; $i <$l ; $i++) {
       $tipo=$mat[$i][0];
       $idMatSet=$mat[$i][1];
@@ -27,19 +27,19 @@ class detalleIngMaterial {
       $cantipo=$mat[$i][5];
       if ($i==0) {
         if($tipo=='Set'){
-          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
+          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."','".$cantipo."','".$cantipo."','".$cantipo."')";
         }elseif($tipo=='Mat'){
-          $stringInser="('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
+          $stringInser="('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."','".$cantipo."','".$cantipo."','".$cantipo."')";
         }else{
-          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
+          $stringInser="('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."','".$cantipo."','".$cantipo."','".$cantipo."')";
         }
       }else{
         if($tipo=='Set'){
-          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
+          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','".$idMatSet."','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."','".$cantipo."','".$cantipo."','".$cantipo."')";
         }elseif($tipo=='Mat'){
-          $stringInser=",('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
+          $stringInser=",('".$id."','".$tipo."','".$idMatSet."','".$numPiezas."','".$tipoEste."','REC','P','P','0','0','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."','".$cantipo."','".$cantipo."','".$cantipo."')";
         }else{
-          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."')";
+          $stringInser=",('".$id."','".$tipo."','0','".$numPiezas."','".$tipoEste."','REC','P','P','0','".$idMatSet."','".$descripcion."','FALSE','FALSE','FALSE','FALSE','FALSE','".$cantipo."','".$cantipo."','".$cantipo."','".$cantipo."')";
         }
       }
       $sql=$sql.$stringInser;
@@ -368,7 +368,7 @@ class detalleIngMaterial {
   public function actualizaCargaEstetadoTotal($iding){
     $conexion=new cado();
     $conexion->conectar();
-    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EST', procesoza='p' WHERE id_ingreso_material='".$iding."';";
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EST', procesoza='P' WHERE id_ingreso_material='".$iding."';";
     $rs=pg_query($sql) or die(false);
     if($rs==true){
       return "true";
@@ -377,6 +377,29 @@ class detalleIngMaterial {
     }
   }
 
+  //ZV-descarga esterilizacion
+  public function actualizaReesterilizacion($cant,$iddetalle){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EMP', procesoza='T',falta_cargareste='".$cant."' WHERE id_detalle='".$iddetalle."';";
+    $rs=pg_query($sql) or die(false);
+    if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
 
+  public function actualizaDescargaEsterilizacion($iddet){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="UPDATE sisesterilizacion.detalle_ingmaterial SET ubicacion='EST', procesoza='T' WHERE id_detalle='".$iddet."';";
+    $rs=pg_query($sql) or die(false);
+    if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
 }
 ?>

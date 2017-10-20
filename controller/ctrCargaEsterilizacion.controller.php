@@ -32,6 +32,7 @@ class ctrCargaEsterilizacion{
     $ingmat=new ingresoMaterial();
     $ingmat->inicioCargaCargaEste();
   }
+
   //descarga esterilizador
   public function listaDescarga(){
     $ideste=$_POST['idEste'];
@@ -71,5 +72,37 @@ class ctrCargaEsterilizacion{
     echo json_encode($retur);
 
   }
+
+  public function terminardescarga(){
+    $m=$_POST['materiales'];
+    foreach ($m as $key => $value) {
+      $iddet=$value['iddet'];
+      $idcarga=$value['idcarga'];
+      $ideste=$value['ideste'];
+
+      $esterilizador= new esterilizador();
+      $res=$esterilizador->actualizaEsterilizador($ideste,'D');
+
+      $cargaEsterilizacion=new cargaEsterilizacion();
+      $res1=$cargaEsterilizacion->actulizaDescarga($idcarga,'T',0);
+
+      $detalleIngMaterial=new detalleIngMaterial();
+      $res2=$detalleIngMaterial->actualizaDescargaEsterilizacion($iddet);
+
+      if ($res=='true' && $res1=='true' && $res2=='true') {
+        echo "true";
+      }else{
+        echo "false";
+      }
+    }
+  }
+
+  public function desocupeEsterilizador(){
+    $este=$_POST['es'];
+    $esterilizador= new esterilizador();
+    $res=$esterilizador->actualizaEsterilizador($este,'D');
+    echo $res;
+  }
+
 }
 ?>

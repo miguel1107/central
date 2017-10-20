@@ -483,7 +483,28 @@ class ingresoMaterial{
     $rs=pg_query($sql) or die(false);
   }
 
-  //ZA- descarga esterilizador
+  //ZV- descarga esterilizador
+
+  public function inicioDescargaEste(){
+    $ls=$this->listaRecepcionesCargaEsterilizacionInicio();
+    $det=new detalleIngMaterial();
+    foreach ($ls as $l) {
+      $idIng=$l->id_ingreso;
+      $ls2=$det->retornaCantidadDetalleVarlorEste($idIng);//falta
+      $ls3=$det->retornaCantidadDetallaEste($idIng);//falta
+      if (($ls2)!=($ls3)) {
+        $this->actualizaDescargaEsteTotal($idIng);
+      }
+    }
+  }
+
+  public function actualizaDescargaEsteTotal($iding){
+    $conexion=new cado();
+    $conexion->conectar();
+    $sql="UPDATE sisesterilizacion.ingreso_material SET ubicacion='EMP', estado='T' WHERE id_ingreso='".$iding."'; ";
+    $rs=pg_query($sql) or die(false);
+  }
+
   public function retornaRecpcionDetalleDescargaEste($id,$prop){
     if ($prop=='S') {
       $stmt = $this->objPDO->prepare("SELECT id_ingreso,fecha_ingreso as fecha,tipo_propietario as prop,nombre_servicio as descripcion FROM sisesterilizacion.ingreso_material im inner join sisesterilizacion.servicio on im.id_servicio=sisesterilizacion.servicio.id_servicio where ubicacion='EST' and estado='P'  and id_ingreso='".$id."'; ");

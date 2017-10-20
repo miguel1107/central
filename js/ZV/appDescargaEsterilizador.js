@@ -70,11 +70,91 @@ window.descargaEsterilizador={
     $m.find('.tipoCarga').text(self.data.carga[index].tipo);
     $m.find('.descripcionCarga').text(self.data.carga[index].descmat);
     $m.find('.piezas').text(self.data.carga[index].piezas);
-    $m.find(".green").attr('id',self.data.carga[index].idcarga);
+    $m.find(".green").attr('id',self.data.carga[index].idcarga+','+aux+','+self.data.carga[index].iddet);
     return $m;
   },
 
-  reesterilizar:function (idcarga) {
+  reesterilizar:function (idcargaeste,cantrees,cantnorees,i,iddet) {
+    var self=this;
+    self.data.servicio='true';
+    var este=self.data.carga[i].ideste;
+    var options={
+      type: 'post',
+      url: 'index.php?c=ctrReesterilizacion&a=reseet',
+      data:{
+        idcargaeste: idcargaeste,
+        cantrees: cantrees,
+        cantnorees: cantnorees,
+        este:este,
+        iddet: iddet
+      }
+    };
+    $.ajax(options).done(function (data) {
+      if (data==1) {
+        alert('correcto');
+        var es=self.data.carga[i].ideste;
+        self.eliminar(i);
+        if (self.data.carga.length==0) {
+          //terminar carga
+          self.desocupaEsterilizador(es);
+        }else{
+          //sigue carga para terminar
+          self.llenaCarga(este,idcargaeste);
+        }
+      }else{
+        alert('incorrecto');
+      }
+    });
+  },
 
-  }
+  eliminar: function (pos) {
+    var self=this;
+    var aux=self.data.carga;
+    var aux2=[];
+    for (var i = 0; i < aux.length; i++) {
+      if (i!=pos) {
+        aux2.push(aux[i]);
+      }
+    }
+    self.data.carga=aux2;
+  },
+
+  terminardescarga:function () {
+    var self=this;
+    var m=self.data.carga;
+    if (m.length==0) {
+      alert("NO TIENE CARGA!!");
+    }else{
+      var options={
+        type: 'post',
+        url: 'index.php?c=ctrCargaEsterilizacion&a=terminardescarga',
+        data:{
+          'materiales': m
+        }
+      };
+      $.ajax(options).done(function (data) {
+        console.log(data);
+        if (data=='true') {
+          location.reload(true);
+        }
+      })
+    }
+  },
+
+  desocupaEsterilizador:function (es) {
+    var options={
+      type: 'post',
+      url: 'index.php?c=ctrCargaEsterilizacion&a=desocupeEsterilizador',
+      data:{
+        'es':es
+      }
+    };
+    $.ajax(options).done(function (data) {
+      //console.log(data);
+      if (data=='true') {
+        location.reload(true);
+      }
+    })
+  },
+
 };

@@ -85,9 +85,9 @@ function registroEmpaque() {
 
 $(document).ready(function() {
   $('#cantEmapacar').blur(function() {
-    var emp=$('#cantEmapacar').val();
-    var cant=$('#cantEmp').val();
-    if (emp>cant) {
+    var emp=parseInt($('#cantEmapacar').val(),"10");
+    var cant=parseInt($('#cantEmp').val(),"10");
+    if (emp>cant || emp==0) {
       alert('ERROR: la cantidad de empaques no es correcta');
       $('#cantEmapacar').val('');
       $('#cantEmapacar').focus();

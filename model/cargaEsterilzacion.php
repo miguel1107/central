@@ -71,19 +71,27 @@ class cargaEsterilizacion{
     $ls=$stmt->fetchAll(PDO::FETCH_OBJ);
     return $ls;
   }
-  //
-  // public function actulizaDescargaLav($iddetalle){
-  //   $conexion=new cado();
-	// 	$conexion->conectar();
-  //   $fecha=$this->fecha();
-	// 	$sql="UPDATE sisesterilizacion.carga_lavadora SET fecha_descarga='".$fecha."', estado= 'T' WHERE id_detalle='".$iddetalle."';";
-	// 	$rs=pg_query($sql) or die(false);
-	// 	if($rs=true){
-  //     return "true";
-  //   }else{
-  //     return "false";
-  //   }
-  // }
+
+  public function actulizaDescarga($idcarga,$estado,$cantnorees){
+    $conexion=new cado();
+		$conexion->conectar();
+    $fecha=$this->fecha();
+    if ($estado=='T') {
+      $sql="UPDATE sisesterilizacion.carga_esterilizador SET fecha_descargar='".$fecha."', estado= '".$estado."' WHERE id_carga='".$idcarga."';";
+    }elseif ($estado=='R') {
+      $sql="UPDATE sisesterilizacion.carga_esterilizador SET estado= '".$estado."' WHERE id_carga='".$idcarga."';";
+    }
+    else if($estado=='P'){
+      $sql="UPDATE sisesterilizacion.carga_esterilizador SET estado= '".$estado."',paquetes='".$cantnorees."'  WHERE id_carga='".$idcarga."';";
+    }
+    //echo $estado;exit;
+		$rs=pg_query($sql) or die(false);
+		if($rs==true){
+      return "true";
+    }else{
+      return "false";
+    }
+  }
 
 }
 

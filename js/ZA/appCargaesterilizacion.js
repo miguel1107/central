@@ -295,7 +295,7 @@ window.cargaesterilizador={
       data: {
       },
     };
-    $.ajax(options).done(function () {});
+    $.ajax(options).done(function (data) {console.log(data);});
   },
 
 
