@@ -178,11 +178,11 @@ switch ($zona) {
 					<span class='menu-text'> Descarga Esterilizador </span>
 				</a>
 			</li>
-			<!-- <li>
-				<a href='typography.html'>
-					<span class='menu-text'> Empaquetado de ropa </span>
+			 <li>
+				<a href='?menu=salidamateriales'>
+					<span class='menu-text'> Salida de Materiales </span>
 				</a>
-			</li>
+			</li><!--
 			<li>
 				<a href='?menu=empaquetado'>
 					<span class='menu-text'> Empaquetado </span>
